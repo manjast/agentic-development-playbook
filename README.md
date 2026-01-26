@@ -4,10 +4,10 @@ Lean, spec-driven, provider-agnostic workflow for AI coding agents; repo is the
 source of truth.
 
 This playbook keeps specs as the source of truth, enforces small tasks, and
-requires verification before commit. It is intentionally lean to reduce drift
-across projects.
+requires verification before commit. It is intentionally lean and designed to
+reduce drift across projects.
 
-Status: Stable, seeking feedback.
+Status: v1.0, seeking feedback.
 
 ---
 
@@ -38,7 +38,7 @@ What this is NOT:
 
 - BMAD: full methodology with roles and ceremony; use it if you want an end-to-end framework. This playbook is the thin execution layer.
 - Spec Kit / OpenSpec: focus on spec generation and tooling; this playbook assumes specs exist and focuses on safe execution.
-- GSD: tool/prompt oriented; this playbook is repo-native and tool-agnostic.
+- GSD: minimal / anti-ceremony; this playbook adds repo-native structure.
 
 ---
 
@@ -150,7 +150,7 @@ Examples:
 A task is small enough if:
 - Reviewable in under 5 minutes.
 - 3-7 acceptance checks.
-- Tight file set.
+- Tight file set (typically <10 files).
 - One risk type (DB or auth or parsing, not all).
 
 If it fails any rule, split it.
@@ -224,7 +224,7 @@ Multi-agent split:
 
 Test-first tasks:
 - Trigger: bugfix or behavior change with a clear spec.
-- Rule: include a failing test and do not modify tests.
+- Rule: include a failing test and do not modify the test you're trying to make pass.
 
 Human review step:
 - Trigger: multiple contributors or high-risk task.
@@ -291,7 +291,9 @@ Weekly:
 
 ---
 
-## 17) Risk checklists (generic)
+## 17) Risk checklists (examples)
+
+These are examples; customize them for your domain and risk profile.
 
 Data isolation (RLS or equivalent):
 - Default deny without tenant context.
@@ -367,3 +369,5 @@ Tradeoff: more structure reduces ambiguity but increases maintenance and drift.
 - `examples/worked-example.md`
 
 Roadmap: see `ROADMAP.md` for deferred v1.1 items.
+
+Getting help: open an issue on GitHub.

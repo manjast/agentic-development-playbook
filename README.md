@@ -1,5 +1,8 @@
 # Agentic Development Playbook
 
+[![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
+[![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
+
 Lean, spec-driven, provider-agnostic workflow for AI coding agents; repo is the
 source of truth.
 

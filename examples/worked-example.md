@@ -15,8 +15,10 @@ This is a minimal, end-to-end example that shows the execution flow.
 
 # Task: T-012 Add health endpoints
 
-Goal:
-Add `/healthz` and `/readyz` to the API with correlation ID propagation.
+Status: ready
+Owner: You
+Created: 2026-01-26
+Last updated: 2026-01-26
 
 Risk: low
 Optional policies: not required for this task.
@@ -27,38 +29,83 @@ Depends:
 Blocks:
 - T-020 (reverse proxy config)
 
-Scope:
-- Allowed paths: `src/api/**`, `src/core/**`, `tests/**`
-- Forbidden paths: `src/db/**`, `<SPEC_ROOT>/**`, `infra/**`
-- Create: `src/api/routes/health.py`, `tests/unit/test_health.py`
-- Modify: `src/api/middleware/correlation.py`, `src/main.py`
+## Task validity gate (must be true before starting)
+- [x] Goal is specific and user-visible.
+- [x] Scope is explicit (allowed/forbidden paths + create/modify/delete/move/rename).
+- [x] Acceptance criteria are measurable (3-7 checks).
+- [x] Verify commands are executable.
 
-Non-goals:
+## Goal
+
+Add `/healthz` and `/readyz` to the API with correlation ID propagation.
+
+## Scope
+
+In scope:
+- Add the health endpoints and correlation ID propagation.
+
+Out of scope (non-goals):
 - No LLM provider checks in `/readyz`.
 - No metrics or tracing endpoints.
 
-Acceptance:
+Allowed paths (edit/create within these only):
+- `src/api/**`
+- `src/core/**`
+- `tests/**`
+
+Forbidden paths (must not touch):
+- `src/db/**`
+- `<SPEC_ROOT>/**`
+- `infra/**`
+
+Create:
+- `src/api/routes/health.py`
+- `tests/unit/test_health.py`
+
+Modify:
+- `src/api/middleware/correlation.py`
+- `src/main.py`
+
+Delete:
+- none
+
+Move/Rename:
+- none
+
+## Acceptance criteria
+
 - [ ] `GET /healthz` returns 200 with `{"status": "ok"}`.
 - [ ] `GET /readyz` returns 200 when DB is reachable.
 - [ ] `GET /readyz` returns 503 when DB is unreachable.
 - [ ] `X-Correlation-Id` returned in responses.
 
-Verify:
-- `pytest tests/unit/test_health.py -v` -> 0 failed
+## Verification
+
+- `uv run pytest tests/unit/test_health.py -v` -> 0 failed
 - `curl -f http://localhost:8000/healthz` -> 200 + body contains `status`
 - `curl -f http://localhost:8000/readyz` -> 200 when DB is up
 
-Context pack (handoff):
+Expected outputs / artifacts:
+- `reports/20260126-T-012-health-endpoints.md` (optional summary)
+- Raw outputs/logs/caches -> `runs/<run_id>/` (ignored)
+
+## Context pack (handoff)
+
 - Task card snapshot
 - Last command outputs (last 20-50 lines)
 - Relevant spec links
 - Current branch + commit hash
 
-Commit:
-- feat(api): add health endpoints
-  Task: T-012
+## Commit message
 
-References:
+```text
+feat(api): add health endpoints
+
+Task: T-012
+```
+
+## References (spec/evidence)
+
 - <SPEC_ROOT>/architecture.md#health-endpoints
 
 Notes:
@@ -67,7 +114,7 @@ Notes:
 ## 3) Verification results (example)
 
 ```
-pytest tests/unit/test_health.py -v
+uv run pytest tests/unit/test_health.py -v
 ... 0 failed
 ```
 
@@ -88,4 +135,12 @@ Task: T-012
 
 ```
 - [x] T-012: Add health endpoints (commit: abc1234)
+```
+
+## 6) Archive the task card
+
+Move the completed task card to the archive (keep it for history):
+
+```
+mv tasks/T-012.md tasks/archive/T-012.md
 ```

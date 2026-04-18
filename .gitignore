@@ -2,6 +2,8 @@
 Thumbs.db
 .idea/
 .vscode/
+.venv/
+LOCAL-BRANCH-NOTES.md
 *.swp
 *.swo
 *.tmp

@@ -1,0 +1,10 @@
+# PoC local artifacts (recommended)
+runs/
+data/
+
+# Secrets / local env
+.env
+
+# Logs
+*.log
+

@@ -1,10 +1,18 @@
 # Roadmap
 
-This playbook is intentionally lean. The items below are deferred to v1.1+ and
-will be considered after real-world use surfaces concrete friction.
+This repo is maintained and intentionally selective. Near-term changes are meant
+to keep the core execution path clear while improving the public PoC/evaluation
+layer through real use.
 
-## Candidate v1.1 items
+## Near-term priorities
 
-- Context pack completeness: optional guidance for env vars, partial state, and large handoffs.
-- Feedback loop: lightweight mechanism to capture recurring failures or stop-condition patterns.
-- Scaling path detail: clearer guidance on multi-contributor workflows beyond the `.workflow/` trigger.
+- Keep the README and quick start lean and current.
+- Keep core templates and PoC/evaluation templates aligned with real use.
+- Improve one stronger public example rather than expanding the template surface.
+- Simplify or hold any asset that feels too internal for the public repo.
+
+## Not the goal
+
+- Expanding into a broader public framework
+- Publishing the full upstream/downstream methodology stack
+- Adding surface area faster than the repo's examples and real use can support

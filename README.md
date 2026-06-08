@@ -8,6 +8,10 @@
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 [![Conformance](https://github.com/manjast/agentic-development-playbook/actions/workflows/eval.yml/badge.svg)](https://github.com/manjast/agentic-development-playbook/actions/workflows/eval.yml)
 
+> **Note on the folder name:** `eval/` is historical. This is a conformance check
+> (structural lint), not a behavioral evaluation. See [`docs/rationale.md`](docs/rationale.md)
+> for why outcome-based evals are out of scope.
+
 ## Conformance check (latest run)
 
 ```

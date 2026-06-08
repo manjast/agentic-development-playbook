@@ -1,5 +1,10 @@
 # Eval
 
+> **Note on the folder name:** `eval/` is historical. This is a
+> conformance check (structural lint), not a behavioral evaluation.
+> See [`../docs/rationale.md`](../docs/rationale.md) for why outcome-based
+> evals are out of scope.
+
 A **conformance check** for the Agentic Development Playbook. Verifies
 structural integrity of templates, run manifests, and ML-eval gates.
 

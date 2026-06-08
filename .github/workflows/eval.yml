@@ -1,0 +1,26 @@
+name: eval
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run conformance check
+        run: python eval/check.py
+      - name: Run self-test
+        run: python eval/check.py --self-test
+      - name: Upload eval output as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-output
+          path: eval/sample-run-*.txt

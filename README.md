@@ -2,7 +2,7 @@
 
 > AI coding with the receipts: deterministic, spec-gated, decision-logged, human-in-the-loop. A lean, spec-driven workflow for AI coding agents with the repo as the source of truth.
 >
-> Built for the Claude Code / Cursor / Codex era — when most teams are still vibe-coding and shipping un-reviewable mega-diffs.
+> Built for the Claude Code / Cursor / Codex / Gemini CLI era — when most teams are still vibe-coding and shipping un-reviewable mega-diffs.
 
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)

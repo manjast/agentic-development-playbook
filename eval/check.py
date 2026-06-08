@@ -178,20 +178,14 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
 
 # Files in templates/ that are NOT field-checked templates.
 # Skipped by check_template_fields.
-# - 3 promoted (checked by other checks (b, c) or are onboarding-only docs)
-# - 5 private-only (not checked at all; advanced patterns that stay in the
-#   dev branch and are intentionally not in the public)
+# - 2 promoted (checked by other checks (b, c))
+# - 1 onboarding (no spec; included for completeness, not structurally enforced)
 PROMOTED_NON_TEMPLATE_FILES: set[str] = {
-    # Promoted (3) — checked by checks (b), (c), or onboarding-only
+    # Promoted (2) — checked by checks (b), (c)
     "run-manifest.json",    # checked by check_run_manifest_any
     "GATES.ml-eval.md",     # checked by check_gates_ml_eval_any
-    "START-HERE.md",        # onboarding doc
-    # Private-only (5) — advanced patterns, not checked
-    "TASKS.pointer.md",
-    "TRACKER.agent-backlog.snippet.md",
-    "task-card-experiment.md",
-    "artifact-pointer.json",
-    "gitignore-binaries.append.txt",
+    # Onboarding (1) — no spec; included for completeness
+    "START-HERE.md",
 }
 
 # ---------------------------------------------------------------------------
@@ -232,6 +226,14 @@ RUN_MANIFEST_SCHEMA: dict = {
         "reproducibility": ["seed_policy", "seed_values", "nondeterminism_notes", "acceptable_variance"],
         "environment": ["python", "key_libraries", "hardware"],
         "budget": ["runtime_minutes", "cost_usd"],
+    },
+    # Type checks for high-leverage fields (4): presence-only on the rest.
+    # A wrong type (e.g. seed_policy: 42 instead of "fixed") is a FAIL.
+    "types": {
+        ("reproducibility", "seed_policy"): str,
+        ("reproducibility", "seed_values"): list,
+        ("inputs", "artifact_pointers"): list,
+        ("environment", "python"): str,
     },
 }
 
@@ -391,6 +393,21 @@ def check_run_manifest_any(repo_root: Path) -> list[CheckResult]:
                 if ck not in sub:
                     issues.append(f"missing nested key: {parent!r}.{ck!r}")
 
+        # Type checks (4 high-leverage fields). Presence-only on the rest.
+        # True is OK for nullable string fields (e.g. environment.python: null).
+        for (parent, child), expected_type in RUN_MANIFEST_SCHEMA["types"].items():
+            sub = data.get(parent)
+            if not isinstance(sub, dict):
+                continue  # already reported as missing/non-object
+            value = sub.get(child)
+            if value is None:
+                continue  # null is allowed for these fields
+            if not isinstance(value, expected_type):
+                issues.append(
+                    f"wrong type for {parent}.{child}: "
+                    f"expected {expected_type.__name__}, got {type(value).__name__}"
+                )
+
         if issues:
             results.append(CheckResult(
                 name=f"check_run_manifest/{rel}",
@@ -547,7 +564,7 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
     return [CheckResult(
         name="check_self_test",
         status="PASS",
-        detail="all 5 breaks caught by conformance check",
+        detail="all 5 breaks caught (4 presence + 1 type) by conformance check",
     )]
 
 

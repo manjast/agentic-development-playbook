@@ -26,7 +26,7 @@ good" is a human judgment, made at the GATES.md decision point.
 
 ## 3. Lean is a discipline, not a posture
 
-19 templates (16 user-facing + 3 eval-meta) is selective on purpose.
+19 templates (16 user-facing + 2 eval-meta + 1 onboarding) is selective on purpose.
 Every template that ships in the public repo costs the next maintainer
 time to keep consistent. The discipline is: a template earns its slot
 by being used in real work, not by being clever. The conformance check

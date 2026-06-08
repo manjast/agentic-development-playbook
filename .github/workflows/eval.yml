@@ -18,6 +18,10 @@ jobs:
         run: python eval/check.py
       - name: Run self-test
         run: python eval/check.py --self-test
+      - name: "Stale-guard: verify sample-run artifact matches a fresh run"
+        run: |
+          python eval/check.py > /tmp/eval-fresh.txt
+          diff -u eval/sample-run-2026-06-08.txt /tmp/eval-fresh.txt
       - name: Upload eval output as artifact
         if: always()
         uses: actions/upload-artifact@v4

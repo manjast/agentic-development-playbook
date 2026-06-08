@@ -1,6 +1,6 @@
 # Agentic Development Playbook
 
-> AI coding with the receipts: deterministic, eval-gated, decision-logged, human-in-the-loop. A lean, spec-driven workflow for AI coding agents with the repo as the source of truth.
+> AI coding with the receipts: deterministic, spec-gated, decision-logged, human-in-the-loop. A lean, spec-driven workflow for AI coding agents with the repo as the source of truth.
 >
 > Built for the Claude Code / Cursor / Codex era — when most teams are still vibe-coding and shipping un-reviewable mega-diffs.
 
@@ -41,13 +41,13 @@ The conformance check verifies (a) every template has its required fields, (b) a
 
 ## What this prevents
 
-The Playbook's discipline prevents five specific failure modes that plague AI-assisted coding work. Each prevention is enforced by one or more templates in this repo, and verified by the conformance check above.
+The Playbook's discipline prevents five specific failure modes that plague AI-assisted coding work. Each prevention is **supported by** templates in this repo. **#4 is structurally verified by the conformance check; #1–#3 and #5 are template-presence-supported but not content-verified by the current check — a known scope limit, see [`docs/rationale.md`](docs/rationale.md).**
 
 1. **Lost decisions across context windows** — `DECISIONS.md` (every `D-NNN` entry is dated: question, options, decision, follow-up; append-only)
 2. **Drift between TASKS and reality** — `TASKS.md` (4 sections: In Progress, Ready, Blocked, Done) + `STATUS.md` (Date + Tracker + one-line current state)
 3. **Unreviewable mega-diffs** — `task-card.md` (explicit "In scope" / "Out of scope" sub-bullets)
 4. **Eval claims without evidence** — `GATES.ml-eval.md` (7 sub-checks) + `run-manifest.json` (structured run record: commit, seed, environment, budget)
-5. **Template sprawl that no one maintains** — the 19-template discipline (16 user-facing + 3 eval-meta, with structure enforcement)
+5. **Template sprawl that no one maintains** — the 19-template discipline (16 user-facing + 2 eval-meta + 1 onboarding, with structure enforcement)
 
 ## What this is
 
@@ -132,10 +132,13 @@ This path is useful when you need to:
 - `questions-triage.md`
 - `gitignore-poc.append.txt`
 
-### Eval-meta (3 — promoted from the dev branch, structurally enforced)
+### Eval-meta (2 — promoted from the dev branch, structurally enforced)
 
 - `GATES.ml-eval.md` (ML-eval decision gate with 7 sub-checks)
 - `run-manifest.json` (run reproducibility schema)
+
+### Onboarding (1 — no spec, included for completeness)
+
 - `START-HERE.md` (agent-friendly onboarding loop)
 
 ## Quick start

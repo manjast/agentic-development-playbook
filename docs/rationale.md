@@ -14,7 +14,9 @@ Three checks, all in `eval/check.py`:
 2. **Run-manifest schema** — for every `**/run-manifest.json` in the repo,
    verify it conforms to the run-reproducibility schema (per `RUN_MANIFEST_SCHEMA`).
 3. **ML-eval gate structure** — for every `**/GATES.ml-eval.md` in the repo,
-   verify the 7 required sub-checks are present AND non-empty.
+   verify the 7 required sub-checks are present (each as a markdown checkbox;
+   per-check content is not verified — see `eval/check.py:481-488` deviation
+   comment for the design rationale).
 
 ## What the conformance check does NOT do
 

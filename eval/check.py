@@ -57,9 +57,6 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
     "CLAUDE.md": {
         "required_strings": ["AGENTS.md"],
     },
-    "GEMINI.md": {
-        "required_strings": ["AGENTS.md"],
-    },
     "TASKS.md": {
         "required_sections": [
             "## In Progress",

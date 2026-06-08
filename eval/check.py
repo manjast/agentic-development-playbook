@@ -160,8 +160,6 @@ PROMOTED_NON_TEMPLATE_FILES: set[str] = {
     # Promoted (2) — checked by checks (b), (c)
     "run-manifest.json",    # checked by check_run_manifest_any
     "GATES.ml-eval.md",     # checked by check_gates_ml_eval_any
-    # Onboarding (1) — no spec; included for completeness
-    "START-HERE.md",
 }
 
 # ---------------------------------------------------------------------------

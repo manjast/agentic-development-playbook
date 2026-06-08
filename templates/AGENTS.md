@@ -144,6 +144,17 @@ Task: T-XXX
 - If iterative work is needed, use a task branch and squash into one final task
   commit before merging to main.
 
+## Starter loop (new agents)
+
+If you are a new agent, run this loop:
+
+1. Read this file fully, then open `TASKS.md` (or follow it if it is a pointer).
+2. Pick one Ready item (WIP=1) and create a task card under `tasks/` using `templates/task-card.md`.
+3. Implement the task, running verification commands as you go.
+4. Commit (one task = one commit), update `TASKS.md` with `commit: <hash>`, archive the task card.
+5. Update `DECISIONS.md` only if a real decision was made; update `questions-triage.md` if a question was answered.
+6. For the full workflow details, see the "Before Starting a Task" / "While Working" / "After Completing" sections above.
+
 ## Starter prompt (copy/paste)
 
 Use this when asking a coding agent to start executing tasks in a repo using this playbook:

@@ -1,0 +1,30 @@
+{
+  "task_id": "T-XXX",
+  "run_id": "<YYYYMMDD-HHMMSS>-T-XXX-<slug>",
+  "commit": "<git_commit_hash>",
+  "started_at_utc": null,
+  "finished_at_utc": null,
+  "inputs": {
+    "artifact_pointers": [
+      "artifacts/<id>.<kind>.artifact.json"
+    ],
+    "config": "<path_or_hash>",
+    "baseline_ref": "<task|commit|run_id|null>"
+  },
+  "reproducibility": {
+    "seed_policy": "<fixed|multi-seed|n/a>",
+    "seed_values": [],
+    "nondeterminism_notes": null,
+    "acceptable_variance": null
+  },
+  "environment": {
+    "python": null,
+    "key_libraries": {},
+    "hardware": null
+  },
+  "budget": {
+    "runtime_minutes": null,
+    "cost_usd": null
+  },
+  "notes": null
+}

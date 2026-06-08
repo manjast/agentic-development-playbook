@@ -19,7 +19,6 @@ check_template_fields/AGENTS.md                                     PASS  all re
 check_template_fields/CLAUDE.md                                     PASS  all required fields present
 check_template_fields/DECISIONS.md                                  PASS  all required fields present
 check_template_fields/GATES.md                                      PASS  all required fields present
-check_template_fields/GEMINI.md                                     PASS  all required fields present
 check_template_fields/POC-BRIEF.md                                  PASS  all required fields present
 check_template_fields/POC-CLOSURE.md                                PASS  all required fields present
 check_template_fields/REPORT.md                                     PASS  all required fields present
@@ -28,15 +27,13 @@ check_template_fields/STATUS.md                                     PASS  all re
 check_template_fields/TASKS.md                                      PASS  all required fields present
 check_template_fields/gitignore-poc.append.txt                      PASS  all required fields present
 check_template_fields/questions-triage.md                           PASS  all required fields present
-check_template_fields/task-card-example-high-risk.md                PASS  all required fields present
-check_template_fields/task-card-example.md                          PASS  all required fields present
 check_template_fields/task-card.md                                  PASS  all required fields present
 check_run_manifest/eval/fixtures/example-project/run-manifest.json  PASS  all required keys present (8 top-level)
 check_run_manifest/templates/run-manifest.json                      PASS  all required keys present (8 top-level)
 check_gates_ml_eval/eval/fixtures/example-project/GATES.ml-eval.md  PASS  7/7 sub-checks present
 check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 sub-checks present
 
-Total: 20  Pass: 20  Fail: 0
+Total: 17  Pass: 17  Fail: 0
 ```
 
 The conformance check verifies (a) every template has its required fields, (b) any `run-manifest.json` conforms to the run-reproducibility schema, (c) any `GATES.ml-eval.md` has the 7 required sub-checks (each as a markdown checkbox; per-check content is not verified — see `eval/check.py:481-488` deviation comment for the design rationale). Runs in <5 sec on stdlib Python 3.12 or 3.13.
@@ -101,7 +98,6 @@ The public first pass includes templates for:
 - `questions-triage.md`
 - `GATES.ml-eval.md` (ML-eval gate, with 7 sub-checks)
 - `run-manifest.json` (run reproducibility schema)
-- `START-HERE.md` (agent-friendly onboarding loop)
 
 The `eval/` folder in this repo is itself a working PoC of this path.
 
@@ -112,20 +108,17 @@ This path is useful when you need to:
 - write reports that can support a gate decision
 - close a PoC cleanly instead of letting it drift into pseudo-production
 
-## Templates included (19)
+## Templates included (15)
 
-### Core (10)
+### Core (7)
 
 - `AGENTS.md`
-- `CLAUDE.md` (pointer to `AGENTS.md`)
-- `GEMINI.md` (pointer to `AGENTS.md`)
+- `CLAUDE.md` (pointer to `AGENTS.md` for Claude Code)
 - `TASKS.md`
 - `DECISIONS.md`
 - `STATUS.md`
 - `GATES.md`
 - `task-card.md`
-- `task-card-example.md`
-- `task-card-example-high-risk.md`
 
 ### PoC / evaluation (6)
 
@@ -136,14 +129,10 @@ This path is useful when you need to:
 - `questions-triage.md`
 - `gitignore-poc.append.txt`
 
-### Eval-meta (2 — promoted from the dev branch, structurally enforced)
+### Eval-meta (2 — structurally enforced by the conformance check)
 
 - `GATES.ml-eval.md` (ML-eval decision gate with 7 sub-checks)
 - `run-manifest.json` (run reproducibility schema)
-
-### Onboarding (1 — no spec, included for completeness)
-
-- `START-HERE.md` (agent-friendly onboarding loop)
 
 ## Quick start
 
@@ -163,16 +152,15 @@ Recommended minimum layout:
   tasks/
 ```
 
-If your tool expects a different instruction filename, keep it as a short pointer to `AGENTS.md`:
-
-- `CLAUDE.md`
-- `GEMINI.md`
+If your tool expects a different instruction filename, keep it as a short pointer to `AGENTS.md`. For example, if you use Gemini CLI, copy `CLAUDE.md` to `GEMINI.md` in your project.
 
 ## Example
 
 See `examples/worked-example.md` for a simple end-to-end example of the core task flow.
 
 For a short PoC/evaluation-oriented flow, see `examples/worked-example-poc.md`.
+
+For filled-in task card examples (low-risk and high-risk variants), see `examples/task-card-example.md` and `examples/task-card-example-high-risk.md`.
 
 The `eval/` folder in this repo is also a runnable example: `python eval/check.py` shows the structural check in action, and `python eval/check.py --self-test` shows it catching deliberately broken inputs.
 

@@ -6,7 +6,7 @@ structural integrity of templates, run manifests, and ML-eval gates.
 > This is a *structural lint*, not a behavioral evaluation. It does not run
 > agents, score their output, or compare against a baseline. See
 > [`../docs/rationale.md`](../docs/rationale.md) for why outcome-based is
-> out of scope (a v2.x or v3.x addition, not v1.2.0).
+> out of scope.
 
 ## How to run
 

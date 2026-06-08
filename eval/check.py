@@ -205,11 +205,17 @@ RUN_MANIFEST_SCHEMA: dict = {
     },
     # Type checks for high-leverage fields (4): presence-only on the rest.
     # A wrong type (e.g. seed_policy: 42 instead of "fixed") is a FAIL.
+    # Enum checks: catches typos and invalid values that pass type checks
+    # (e.g. nondeterminism_notes: "kinda" — valid string, not in the
+    # closed set).
     "types": {
         ("reproducibility", "seed_policy"): str,
         ("reproducibility", "seed_values"): list,
         ("inputs", "artifact_pointers"): list,
         ("environment", "python"): str,
+    },
+    "enums": {
+        ("reproducibility", "nondeterminism_notes"): ["none", "low", "high", "n/a"],
     },
 }
 
@@ -384,6 +390,21 @@ def check_run_manifest_any(repo_root: Path) -> list[CheckResult]:
                     f"expected {expected_type.__name__}, got {type(value).__name__}"
                 )
 
+        # Enum checks: catches "structurally valid, semantically wrong" values
+        # that pass the type check (e.g. "kinda" for nondeterminism_notes).
+        for (parent, child), allowed_values in RUN_MANIFEST_SCHEMA.get("enums", {}).items():
+            sub = data.get(parent)
+            if not isinstance(sub, dict):
+                continue
+            value = sub.get(child)
+            if value is None:
+                continue  # null is allowed
+            if value not in allowed_values:
+                issues.append(
+                    f"enum mismatch for {parent}.{child}: "
+                    f"{value!r} not in {allowed_values}"
+                )
+
         if issues:
             results.append(CheckResult(
                 name=f"check_run_manifest/{rel}",
@@ -493,8 +514,8 @@ def check_gates_ml_eval_any(repo_root: Path) -> list[CheckResult]:
 def check_self_test(repo_root: Path) -> list[CheckResult]:
     """Run all checks against eval/fixtures/bad-project/ and assert every break is caught.
 
-    The bad-project fixture contains 5 deliberately broken files. This function
-    asserts the conformance check flags all 5.
+    The bad-project fixture contains 6 deliberately broken files. This function
+    asserts the conformance check flags all 6.
     """
     bad_root = repo_root / "eval" / "fixtures" / "bad-project"
     if not bad_root.is_dir():
@@ -519,11 +540,16 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
         if name not in field_results_by_name or field_results_by_name[name].status != "FAIL":
             failures.append(f"expected FAIL: {name}")
 
-    # (b) run-manifest: 1 expected FAIL
+    # (b) run-manifest: 1 expected FAIL (which surfaces both the type and
+    # the enum break). The check itself reports multiple issues in one FAIL
+    # row (joined by "; "), so we just need at least 1 FAIL row, plus a
+    # specific assertion that the enum mismatch is detected.
     manifest_results = check_run_manifest_any(bad_root)
-    manifest_failed = any(r.status == "FAIL" for r in manifest_results)
-    if not manifest_failed:
+    manifest_failed = [r for r in manifest_results if r.status == "FAIL"]
+    if len(manifest_failed) < 1:
         failures.append("expected run-manifest.json to FAIL")
+    if not any("enum mismatch" in (r.detail or "") for r in manifest_failed):
+        failures.append("expected enum mismatch for nondeterminism_notes in run-manifest.json")
 
     # (c) GATES.ml-eval: 1 expected FAIL (5/7 sub-checks)
     gates_results = check_gates_ml_eval_any(bad_root)
@@ -540,7 +566,7 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
     return [CheckResult(
         name="check_self_test",
         status="PASS",
-        detail="all 5 breaks caught (4 presence + 1 type) by conformance check",
+        detail="all 6 breaks caught (4 presence + 1 type + 1 enum) by conformance check",
     )]
 
 

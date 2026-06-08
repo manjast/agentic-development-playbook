@@ -12,7 +12,7 @@
   "reproducibility": {
     "seed_policy": 42,
     "seed_values": [],
-    "nondeterminism_notes": null,
+    "nondeterminism_notes": "kinda",
     "acceptable_variance": null
   },
   "environment": {

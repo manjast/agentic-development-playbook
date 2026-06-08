@@ -33,6 +33,3 @@ by being used in real work, not by being clever. The conformance check
 enforces the discipline: adding a template requires updating
 `TEMPLATE_REQUIRED_FIELDS` and passing the check.
 
-This is why 6 advanced-pattern templates and the `reviews/` synthesis
-work stay in the dev branch (the private repo). They are useful; they
-are not lean.

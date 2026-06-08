@@ -497,7 +497,7 @@ def check_gates_ml_eval_any(repo_root: Path) -> list[CheckResult]:
             results.append(CheckResult(
                 name=f"check_gates_ml_eval/{rel}",
                 status="PASS",
-                detail="7/7 sub-checks present, all with content",
+                detail="7/7 sub-checks present",
             ))
 
     if not results:

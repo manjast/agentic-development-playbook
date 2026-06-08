@@ -29,8 +29,8 @@ check_template_fields/task-card-example.md                          PASS  all re
 check_template_fields/task-card.md                                  PASS  all required fields present
 check_run_manifest/eval/fixtures/example-project/run-manifest.json  PASS  all required keys present (8 top-level)
 check_run_manifest/templates/run-manifest.json                      PASS  all required keys present (8 top-level)
-check_gates_ml_eval/eval/fixtures/example-project/GATES.ml-eval.md  PASS  7/7 sub-checks present, all with content
-check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 sub-checks present, all with content
+check_gates_ml_eval/eval/fixtures/example-project/GATES.ml-eval.md  PASS  7/7 sub-checks present
+check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 sub-checks present
 
 Total: 20  Pass: 20  Fail: 0
 ```

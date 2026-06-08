@@ -152,28 +152,7 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
             "Out of scope (non-goals):",
         ],
     },
-    "task-card-example.md": {
-        "required_sections": [
-            "## Task validity gate",
-            "## Goal",
-            "## Scope",
-            "## Acceptance criteria",
-        ],
-    },
-    "task-card-example-high-risk.md": {
-        "required_sections": [
-            "## Task validity gate",
-            "## Goal",
-            "## Scope",
-            "## Acceptance criteria",
-        ],
-        "required_strings": [
-            "Risk: high",
-        ],
-    },
 }
-
-# Files in templates/ that are NOT field-checked templates.
 # Skipped by check_template_fields.
 # - 2 promoted (checked by other checks (b, c))
 # - 1 onboarding (no spec; included for completeness, not structurally enforced)

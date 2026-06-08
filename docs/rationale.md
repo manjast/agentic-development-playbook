@@ -48,6 +48,13 @@ Even if all four existed, an outcome check would require **LLM API calls**
 (against the very providers we're documenting) and would be flaky by
 construction (temperature > 0, model updates, prompt sensitivity).
 
+The Playbook does not currently prescribe a protocol for agent-tool
+interaction (e.g., MCP, A2A, or function-calling interfaces). That is
+a per-project choice recorded in the task card or `AGENTS.md`. The
+template discipline applies to the agent's reasoning artifacts
+(decisions, status, run records) regardless of which tool protocol the
+agent uses.
+
 ## What we trade off
 
 By choosing a structural check, we trade:

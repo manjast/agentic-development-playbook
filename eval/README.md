@@ -65,16 +65,16 @@ color, so it copies cleanly into the README).
 ## Sample run
 
 See [`eval/sample-run-2026-06-08.txt`](sample-run-2026-06-08.txt) for the
-latest captured run (20/20 PASS, ~1.2s on Python 3.13).
+latest captured run (17/17 PASS, ~1.2s on Python 3.13).
 
 ## Self-test
 
 `--self-test` runs the check against `eval/fixtures/bad-project/`, which
-contains 5 deliberately broken files. The self-test asserts that all 5
+contains 6 deliberately broken files. The self-test asserts that all 6
 breaks are caught. If any break slips through, the self-test exits
 non-zero — meaning the check has a gap and needs fixing.
 
-The 5 breaks are listed in `eval/fixtures/bad-project/_README.md`.
+The 6 breaks are listed in `eval/fixtures/bad-project/_README.md`.
 
 ## Exit codes
 

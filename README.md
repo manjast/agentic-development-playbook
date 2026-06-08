@@ -48,7 +48,7 @@ The Playbook's discipline prevents five specific failure modes that plague AI-as
 2. **Drift between TASKS and reality** — `TASKS.md` (4 sections: In Progress, Ready, Blocked, Done) + `STATUS.md` (Date + Tracker + one-line current state)
 3. **Unreviewable mega-diffs** — `task-card.md` (explicit "In scope" / "Out of scope" sub-bullets)
 4. **Eval claims without evidence** — `GATES.ml-eval.md` (7 sub-checks) + `run-manifest.json` (structured run record: commit, seed, environment, budget)
-5. **Template sprawl that no one maintains** — the 19-template discipline (16 user-facing + 2 eval-meta + 1 onboarding, with structure enforcement)
+5. **Template sprawl that no one maintains** — the 15-template discipline (13 user-facing + 2 eval-meta, with structure enforcement)
 
 ## What this is
 

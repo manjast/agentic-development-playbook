@@ -12,10 +12,10 @@ below corresponds to a concrete change set.
 
 ## v1.2.1 (next)
 
-- Semantic checks on `run-manifest.json`: enum-validate `nondeterminism_notes`
-  against the closed set `[none, low, high, n/a]`.
-- Expand the self-test to cover at least one "structurally correct,
-  semantically wrong" failure class.
+- (Done in v1.2.0) Semantic checks on `run-manifest.json`: enum-validate
+  `nondeterminism_notes` against the closed set `[none, low, high, n/a]`.
+- Add a second adversarial self-test break (e.g. wrong-type on a
+  different field, to make the type check less single-point-of-failure).
 - Update the `task-card-example*` worked examples to reflect the new
   `examples/` location.
 

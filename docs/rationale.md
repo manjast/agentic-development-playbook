@@ -55,19 +55,20 @@ template discipline applies to the agent's reasoning artifacts
 (decisions, status, run records) regardless of which tool protocol the
 agent uses.
 
-## What we trade off
+## What the structural check gives up
 
-By choosing a structural check, we trade:
+A structural check has two specific limits.
 
-- **Credibility with senior peers** (who sniff "real eval" in 5 min) — gained instead by the honesty of saying "this is structural, here's why"
-- **Surface area for surprise** — the check can't catch a "good-looking" template that's still wrong; only a deviation from the spec
+**It does not score agent output.** A reader trained on outcome-based evaluation will see `eval/check.py` and notice that it does not run the agent and does not measure quality. The Playbook is explicit about this rather than over-claiming. See "Why outcome-based is out of scope" above for the four missing prerequisites (reproducible harness, golden test set, scoring function, baseline).
 
-We gain:
+**It catches deviations from the spec, not deviations from the intent of the spec.** A template can have every required heading and still be semantically wrong. The check enforces structure; the GATES decision enforces meaning.
 
-- **Runs in <5 sec on stdlib Python** — no LLM calls, no pip install
-- **Cheap to extend** — add a template to `TEMPLATE_REQUIRED_FIELDS` and it joins the check
-- **Cheap to verify** — the `--self-test` flag runs the check against a deliberately broken fixture and asserts every failure is caught
-- **Cheap to run in CI** — every push, every PR, the badge is honest
+In return:
+
+- **No LLM dependency.** Stdlib Python only. No `pip install`. Runs in under 2 seconds.
+- **Trivial extension.** Adding a template means adding an entry to `TEMPLATE_REQUIRED_FIELDS`. Adding a check means adding a function to `eval/check.py` and calling it from `main()`.
+- **Self-test in the same CI run.** `--self-test` runs the check against a fixture of deliberately broken files and asserts every break is caught. The check's own reliability is verified on every push, not assumed.
+- **A status badge that reflects the actual state of the repo.** The CI badge is wired to a deterministic run of the check, not to an external call that can flake.
 
 ## What we'd add if outcome-based became feasible
 

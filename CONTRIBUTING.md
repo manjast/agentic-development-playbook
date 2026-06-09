@@ -11,8 +11,8 @@ framework.
 - If you change a rule, update the README and relevant templates.
 - If you change a template field, update the examples.
 - Prefer clarity over surface-area growth.
-- If a proposed addition feels too internal, too niche, or too process-heavy
-  for the public repo, discuss it before opening a PR.
+- If a proposed addition feels niche, process-heavy, or out of scope for
+  the Playbook's intent, discuss it before opening a PR.
 
 ## License
 

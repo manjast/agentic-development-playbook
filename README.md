@@ -1,6 +1,6 @@
 # Agentic Development Playbook
 
-> AI coding with the receipts: deterministic, spec-gated, decision-logged, human-in-the-loop. A lean, spec-driven workflow for AI coding agents with the repo as the source of truth.
+> A lean, spec-driven workflow for AI coding agents with the repo as the source of truth — deterministic, spec-gated, decision-logged, human-in-the-loop.
 >
 > Built for the Claude Code / Cursor / Codex / Gemini CLI era — when most teams are still vibe-coding and shipping un-reviewable mega-diffs.
 
@@ -36,7 +36,7 @@ check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 su
 Total: 17  Pass: 17  Fail: 0
 ```
 
-The conformance check verifies (a) every template has its required fields, (b) any `run-manifest.json` conforms to the run-reproducibility schema, (c) any `GATES.ml-eval.md` has the 7 required sub-checks (each as a markdown checkbox; per-check content is not verified — see `eval/check.py:481-488` deviation comment for the design rationale). Runs in <5 sec on stdlib Python 3.12 or 3.13.
+The conformance check verifies (a) every template has its required fields, (b) any `run-manifest.json` conforms to the run-reproducibility schema, (c) any `GATES.ml-eval.md` has the 7 required sub-checks (each as a markdown checkbox; per-check content is not verified — see `eval/check.py:476-481` for the design rationale). Runs in <5 sec on stdlib Python 3.12 or 3.13.
 
 **This is a structural check, not a behavioral evaluation** — see [`docs/rationale.md`](docs/rationale.md) for why outcome-based is out of scope, and `python eval/check.py --self-test` to verify the check itself is not vacuous.
 

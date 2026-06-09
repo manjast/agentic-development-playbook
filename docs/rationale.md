@@ -15,8 +15,8 @@ Three checks, all in `eval/check.py`:
    verify it conforms to the run-reproducibility schema (per `RUN_MANIFEST_SCHEMA`).
 3. **ML-eval gate structure** — for every `**/GATES.ml-eval.md` in the repo,
    verify the 7 required sub-checks are present (each as a markdown checkbox;
-   per-check content is not verified — see `eval/check.py:481-488` deviation
-   comment for the design rationale).
+   per-check content is not verified — see `eval/check.py:476-481` for the
+   design rationale).
 
 ## What the conformance check does NOT do
 
@@ -45,7 +45,7 @@ An outcome-based check would require:
   is process discipline, not model performance.
 
 Even if all four existed, an outcome check would require **LLM API calls**
-(against the very providers we're documenting) and would be flaky by
+(against the very providers the Playbook is built for) and would be flaky by
 construction (temperature > 0, model updates, prompt sensitivity).
 
 The Playbook does not currently prescribe a protocol for agent-tool
@@ -55,21 +55,19 @@ template discipline applies to the agent's reasoning artifacts
 (decisions, status, run records) regardless of which tool protocol the
 agent uses.
 
-## What we trade off
+## What the structural check gives up
 
-By choosing a structural check, we trade:
+A structural check has two specific limits.
 
-- **Credibility with senior peers** (who sniff "real eval" in 5 min) — gained instead by the honesty of saying "this is structural, here's why"
-- **Surface area for surprise** — the check can't catch a "good-looking" template that's still wrong; only a deviation from the spec
+**It does not score agent output.** A reader trained on outcome-based evaluation will see `eval/check.py` and notice that it does not run the agent and does not measure quality. The Playbook is explicit about this rather than over-claiming. See "Why outcome-based is out of scope" above for the four missing prerequisites (reproducible harness, golden test set, scoring function, baseline).
 
-We gain:
+**It catches deviations from the spec, not deviations from the intent of the spec.** A template can have every required heading and still be semantically wrong. The check enforces structure; the GATES decision enforces meaning.
 
-- **Runs in <5 sec on stdlib Python** — no LLM calls, no pip install
-- **Cheap to extend** — add a template to `TEMPLATE_REQUIRED_FIELDS` and it joins the check
-- **Cheap to verify** — the `--self-test` flag runs the check against a deliberately broken fixture and asserts every failure is caught
-- **Cheap to run in CI** — every push, every PR, the badge is honest
+The check itself is a single Python script with no dependencies. How
+that choice interacts with the two limits above is described in the
+README's "What this prevents" section.
 
-## What we'd add if outcome-based became feasible
+## What an outcome-based check would add (when feasible)
 
 A future `eval/outcome.py` (separate from the structural check) could:
 
@@ -78,4 +76,4 @@ A future `eval/outcome.py` (separate from the structural check) could:
 - Score against a baseline
 - Report variance
 
-That would be a v2.x or v3.x addition, not a v1.2.0 deliverable.
+That would be a v2.x or v3.x addition, not a v1.2.x deliverable.

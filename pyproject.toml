@@ -1,6 +1,6 @@
 [project]
 name = "agentic-development-playbook"
-version = "1.2.0"
+version = "1.2.1"
 description = "Lean, spec-driven, provider-agnostic workflow for AI coding agents with the repo as the source of truth"
 readme = "README.md"
 requires-python = ">=3.12"

@@ -473,14 +473,12 @@ def check_gates_ml_eval_any(repo_root: Path) -> list[CheckResult]:
             issues.append(
                 f"{len(missing_subchecks)}/7 sub-checks missing: {missing_subchecks}"
             )
-        # NOTE (deviation from plan §7.1, 2026-06-08): the plan also specified a
-        # "non-empty content under each sub-check" check. The real
-        # templates/GATES.ml-eval.md has 7 consecutive sub-checks with no
-        # per-check content (its natural design — Verify: / Decision: sections
-        # follow the list, not per-check bodies). A literal "next non-blank line
-        # is content" check would FAIL the real template, which is wrong. So
-        # the per-sub-check content check is dropped. The 7-sub-checks-present
-        # check is the right level of strictness for the real template's design.
+        # Sub-checks are matched by canonical name (prefix or substring) on the
+        # line text. Per-sub-check body content is not checked: the natural
+        # design of templates/GATES.ml-eval.md keeps the 7 sub-checks as a
+        # flat list, with `Verify:` and `Decision:` sections following the
+        # list rather than per-check bodies. The 7-sub-checks-present check
+        # is the right level of strictness for that design.
 
         if issues:
             results.append(CheckResult(
@@ -540,7 +538,7 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
 
     # (b) run-manifest: 1 expected FAIL (which surfaces both the type and
     # the enum break). The check itself reports multiple issues in one FAIL
-    # row (joined by "; "), so we just need at least 1 FAIL row, plus a
+    # row (joined by "; "), so at least 1 FAIL row is required, plus a
     # specific assertion that the enum mismatch is detected.
     manifest_results = check_run_manifest_any(bad_root)
     manifest_failed = [r for r in manifest_results if r.status == "FAIL"]

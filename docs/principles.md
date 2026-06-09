@@ -1,7 +1,7 @@
 # Principles
 
 The Agentic Development Playbook is built on three principles that guide
-what this document includes, what it excludes, and how the surface evolves.
+what the Playbook includes, what it excludes, and how the surface evolves.
 
 ## 1. The repo is the source of truth
 

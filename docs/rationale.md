@@ -45,7 +45,7 @@ An outcome-based check would require:
   is process discipline, not model performance.
 
 Even if all four existed, an outcome check would require **LLM API calls**
-(against the very providers we're documenting) and would be flaky by
+(against the very providers this document covers) and would be flaky by
 construction (temperature > 0, model updates, prompt sensitivity).
 
 The Playbook does not currently prescribe a protocol for agent-tool

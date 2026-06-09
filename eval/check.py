@@ -538,7 +538,7 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
 
     # (b) run-manifest: 1 expected FAIL (which surfaces both the type and
     # the enum break). The check itself reports multiple issues in one FAIL
-    # row (joined by "; "), so we just need at least 1 FAIL row, plus a
+    # row (joined by "; "), so at least 1 FAIL row is required, plus a
     # specific assertion that the enum mismatch is detected.
     manifest_results = check_run_manifest_any(bad_root)
     manifest_failed = [r for r in manifest_results if r.status == "FAIL"]

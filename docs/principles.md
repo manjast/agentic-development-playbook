@@ -13,12 +13,12 @@ the agent's provider.
 
 ## 2. Conformance over outcome
 
-We verify that artifacts **adhere to the spec** (a structural check),
-not that they **produce good outcomes** (a behavioral eval). The reason
-isn't that outcomes don't matter — they do. The reason is that outcome
-evals for AI-assisted work require infrastructure that doesn't exist yet
-(reproducible agent harness, golden test set, scoring function, baseline).
-See `docs/rationale.md` for the full discussion.
+The Playbook verifies that artifacts **adhere to the spec** (a structural
+check), not that they **produce good outcomes** (a behavioral eval). The
+reason isn't that outcomes don't matter — they do. The reason is that
+outcome evals for AI-assisted work require infrastructure that doesn't
+exist yet (reproducible agent harness, golden test set, scoring function,
+baseline). See `docs/rationale.md` for the full discussion.
 
 When the infrastructure exists, the Playbook adds outcome checks.
 Until then, "this looks like itself" is the best the check can do

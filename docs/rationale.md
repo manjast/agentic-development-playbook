@@ -63,12 +63,9 @@ A structural check has two specific limits.
 
 **It catches deviations from the spec, not deviations from the intent of the spec.** A template can have every required heading and still be semantically wrong. The check enforces structure; the GATES decision enforces meaning.
 
-In return:
-
-- **No LLM dependency.** Stdlib Python only. No `pip install`. Runs in under 2 seconds.
-- **Trivial extension.** Adding a template means adding an entry to `TEMPLATE_REQUIRED_FIELDS`. Adding a check means adding a function to `eval/check.py` and calling it from `main()`.
-- **Self-test in the same CI run.** `--self-test` runs the check against a fixture of deliberately broken files and asserts every break is caught. The check's own reliability is verified on every push, not assumed.
-- **A status badge that reflects the actual state of the repo.** The CI badge is wired to a deterministic run of the check, not to an external call that can flake.
+The check itself is a single Python script with no dependencies. How
+that choice interacts with the two limits above is described in the
+README's "What this prevents" section.
 
 ## What an outcome-based check would add (when feasible)
 

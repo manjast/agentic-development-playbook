@@ -1,6 +1,6 @@
 # Agentic Development Playbook
 
-> AI coding with the receipts: deterministic, spec-gated, decision-logged, human-in-the-loop. A lean, spec-driven workflow for AI coding agents with the repo as the source of truth.
+> A lean, spec-driven workflow for AI coding agents with the repo as the source of truth — deterministic, spec-gated, decision-logged, human-in-the-loop.
 >
 > Built for the Claude Code / Cursor / Codex / Gemini CLI era — when most teams are still vibe-coding and shipping un-reviewable mega-diffs.
 

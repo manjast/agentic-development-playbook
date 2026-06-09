@@ -6,17 +6,9 @@ below corresponds to a concrete change set.
 
 ## v1.2.1 (this release)
 
-- Doc polish: neutral voice in `docs/rationale.md` and `docs/principles.md`
-  (replace first-person plural with the Playbook / the check as referent).
-- Doc polish: reframe the `eval/check.py` deviation comment as a
-  design-choice note.
-- Doc polish: remove `PROMOTION.md` (release-process internal detail;
-  superseded by the `ROADMAP.md` and the v1.2.0 release notes).
-- Doc polish: drop the README marketing-trope opener, keep the dated
-  "vibe-coding" position.
-- Doc polish: drop the public/private-repo framing in `CONTRIBUTING.md`.
-- No template / check / schema changes. 17/17 PASS, 6/6 self-test, both
-  stale-guards green.
+- Voice pass on `docs/principles.md`, `docs/rationale.md`, the README
+  opener, and `eval/check.py` design notes. No template, check, or
+  schema changes. 17/17 PASS, 6/6 self-test, both stale-guards green.
 
 ## v1.2.0
 

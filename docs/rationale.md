@@ -70,7 +70,7 @@ In return:
 - **Self-test in the same CI run.** `--self-test` runs the check against a fixture of deliberately broken files and asserts every break is caught. The check's own reliability is verified on every push, not assumed.
 - **A status badge that reflects the actual state of the repo.** The CI badge is wired to a deterministic run of the check, not to an external call that can flake.
 
-## What we'd add if outcome-based became feasible
+## What an outcome-based check would add (when feasible)
 
 A future `eval/outcome.py` (separate from the structural check) could:
 

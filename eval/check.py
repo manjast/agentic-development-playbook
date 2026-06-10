@@ -533,10 +533,12 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
         if name not in field_results_by_name or field_results_by_name[name].status != "FAIL":
             failures.append(f"expected FAIL: {name}")
 
-    # (b) run-manifest: 1 expected FAIL (which surfaces both the type and
-    # the enum break). The check itself reports multiple issues in one FAIL
-    # row (joined by "; "), so at least 1 FAIL row is required, plus a
-    # specific assertion that the enum mismatch is detected.
+    # (b) run-manifest: 1 expected FAIL (which surfaces all four type
+    # breaks and the enum break). The check itself reports multiple
+    # issues in one FAIL row (joined by "; "), so at least 1 FAIL row
+    # is required, plus a specific assertion that the enum mismatch is
+    # detected. The four type breaks exist to prove the type check
+    # works for every field it covers.
     manifest_results = check_run_manifest_any(bad_root)
     manifest_failed = [r for r in manifest_results if r.status == "FAIL"]
     if len(manifest_failed) < 1:
@@ -559,7 +561,7 @@ def check_self_test(repo_root: Path) -> list[CheckResult]:
     return [CheckResult(
         name="check_self_test",
         status="PASS",
-        detail="all 6 breaks caught (4 presence + 1 type + 1 enum) by conformance check",
+        detail="all 9 breaks caught (4 presence + 4 type + 1 enum) by conformance check",
     )]
 
 

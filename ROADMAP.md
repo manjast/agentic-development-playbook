@@ -4,7 +4,17 @@ This repo is maintained and intentionally selective. The discipline is
 "a template earns its slot by being used in real work." Each version
 below corresponds to a concrete change set.
 
-## v1.2.1 (this release)
+## v1.2.2 (this release)
+
+- Tighten the README opener (drop the adjective stack) and the
+  `pyproject.toml` description to match.
+- Drop the "16 surgical fixes" process-narration from the v1.2.0
+  entry below; describe the v1.2.0 release as a single change set.
+- Drop the first-person plural from `templates/POC-CLOSURE.md:22`
+  (the only such instance in a user-facing template).
+- Correct stale section-count comments in `eval/check.py`.
+
+## v1.2.1
 
 - Voice pass on `docs/principles.md`, `docs/rationale.md`, the README
   opener, and `eval/check.py` design notes. No template, check, or
@@ -12,13 +22,13 @@ below corresponds to a concrete change set.
 
 ## v1.2.0
 
-- Add conformance check + 2 promoted templates (GATES.ml-eval.md, run-manifest.json)
-- Pre-merge polish: 16 surgical fixes (credibility claims, template count, 2026 currency)
-- See the v1.2.0 release notes for the full list.
+- Add the conformance check + 2 promoted templates
+  (`GATES.ml-eval.md`, `run-manifest.json`) + CI workflow with two
+  stale-guards. See the v1.2.0 release notes for the full list.
 
-## v1.2.2 (next)
+## v1.2.3 (next)
 
-- (Done in v1.2.0) Semantic checks on `run-manifest.json`: enum-validate
+- Semantic checks on `run-manifest.json`: enum-validate
   `nondeterminism_notes` against the closed set `[none, low, high, n/a]`.
 - Add a second adversarial self-test break (e.g. wrong-type on a
   different field, to make the type check less single-point-of-failure).

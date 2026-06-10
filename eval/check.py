@@ -45,7 +45,7 @@ class CheckResult:
 # ---------------------------------------------------------------------------
 
 TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
-    # Core (8)
+    # Core (6)
     "AGENTS.md": {
         "required_strings": [
             "## Source of Truth",
@@ -85,7 +85,7 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
             "Outcome / next step:",
         ],
     },
-    # PoC / evaluation (5)
+    # PoC / evaluation (6)
     "POC-BRIEF.md": {
         "required_sections": [
             "## 1) Decision question",
@@ -139,7 +139,7 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
             "runs/",
         ],
     },
-    # Task cards (3)
+    # Task cards (1)
     "task-card.md": {
         "required_sections": [
             "## Task validity gate",
@@ -153,11 +153,8 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
         ],
     },
 }
-# Skipped by check_template_fields.
-# - 2 promoted (checked by other checks (b, c))
-# - 1 onboarding (no spec; included for completeness, not structurally enforced)
+# Skipped by check_template_fields: 2 promoted (checked by checks (b), (c))
 PROMOTED_NON_TEMPLATE_FILES: set[str] = {
-    # Promoted (2) — checked by checks (b), (c)
     "run-manifest.json",    # checked by check_run_manifest_any
     "GATES.ml-eval.md",     # checked by check_gates_ml_eval_any
 }
@@ -578,7 +575,7 @@ def print_results(results: list[CheckResult]) -> None:
     name_w = max(len(r.name) for r in results)
     status_w = max(len(r.status) for r in results)
     for r in results:
-        # Wrap detail at ~100 chars per line
+        # Aligned text table; no ANSI color (copies cleanly into the README).
         detail = r.detail
         print(f"{r.name:<{name_w}}  {r.status:<{status_w}}  {detail}")
 

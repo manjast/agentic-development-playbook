@@ -4,13 +4,19 @@ This repo is maintained and intentionally selective. The discipline is
 "a template earns its slot by being used in real work." Each version
 below corresponds to a concrete change set.
 
-## v1.2.0 (this release)
+## v1.2.1 (this release)
+
+- Voice pass on `docs/principles.md`, `docs/rationale.md`, the README
+  opener, and `eval/check.py` design notes. No template, check, or
+  schema changes. 17/17 PASS, 6/6 self-test, both stale-guards green.
+
+## v1.2.0
 
 - Add conformance check + 2 promoted templates (GATES.ml-eval.md, run-manifest.json)
 - Pre-merge polish: 16 surgical fixes (credibility claims, template count, 2026 currency)
 - See the v1.2.0 release notes for the full list.
 
-## v1.2.1 (next)
+## v1.2.2 (next)
 
 - (Done in v1.2.0) Semantic checks on `run-manifest.json`: enum-validate
   `nondeterminism_notes` against the closed set `[none, low, high, n/a]`.

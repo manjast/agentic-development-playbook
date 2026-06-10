@@ -1,7 +1,7 @@
 # Principles
 
 The Agentic Development Playbook is built on three principles that guide
-what we include, what we exclude, and how we evolve the surface.
+what the Playbook includes, what it excludes, and how the surface evolves.
 
 ## 1. The repo is the source of truth
 
@@ -13,16 +13,17 @@ the agent's provider.
 
 ## 2. Conformance over outcome
 
-We verify that artifacts **adhere to the spec** (a structural check),
-not that they **produce good outcomes** (a behavioral eval). The reason
-isn't that outcomes don't matter — they do. The reason is that outcome
-evals for AI-assisted work require infrastructure that doesn't exist yet
-(reproducible agent harness, golden test set, scoring function, baseline).
-See `docs/rationale.md` for the full discussion.
+The Playbook verifies that artifacts **adhere to the spec** (a structural
+check), not that they **produce good outcomes** (a behavioral eval). The
+reason isn't that outcomes don't matter — they do. The reason is that
+outcome evals for AI-assisted work require infrastructure that doesn't
+exist yet (reproducible agent harness, golden test set, scoring function,
+baseline). See `docs/rationale.md` for the full discussion.
 
-When the infrastructure exists, we'll add outcome checks. Until then,
-"this looks like itself" is the best we can do automatically. "This is
-good" is a human judgment, made at the GATES.md decision point.
+When the infrastructure exists, the Playbook adds outcome checks.
+Until then, "this looks like itself" is the best the check can do
+automatically. "This is good" is a human judgment, made at the
+GATES.md decision point.
 
 ## 3. Lean is a discipline, not a posture
 

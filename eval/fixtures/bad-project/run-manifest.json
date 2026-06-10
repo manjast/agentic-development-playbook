@@ -1,0 +1,28 @@
+{
+  "task_id": "T-bad",
+  "run_id": "20260608-120000-T-bad",
+  "commit": "deadbeef",
+  "started_at_utc": null,
+  "finished_at_utc": null,
+  "inputs": {
+    "artifact_pointers": [],
+    "config": "configs/bad.yaml",
+    "baseline_ref": null
+  },
+  "reproducibility": {
+    "seed_policy": 42,
+    "seed_values": [],
+    "nondeterminism_notes": "kinda",
+    "acceptable_variance": null
+  },
+  "environment": {
+    "python": "3.12.0",
+    "key_libraries": {},
+    "hardware": "laptop"
+  },
+  "budget": {
+    "runtime_minutes": 1,
+    "cost_usd": 0.01
+  },
+  "notes": "Bad fixture — wrong type for reproducibility.seed_policy (int instead of str)."
+}

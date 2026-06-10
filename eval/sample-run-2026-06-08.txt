@@ -1,0 +1,19 @@
+check_template_fields/AGENTS.md                                     PASS  all required fields present
+check_template_fields/CLAUDE.md                                     PASS  all required fields present
+check_template_fields/DECISIONS.md                                  PASS  all required fields present
+check_template_fields/GATES.md                                      PASS  all required fields present
+check_template_fields/POC-BRIEF.md                                  PASS  all required fields present
+check_template_fields/POC-CLOSURE.md                                PASS  all required fields present
+check_template_fields/REPORT.md                                     PASS  all required fields present
+check_template_fields/SOURCE-DIGEST.md                              PASS  all required fields present
+check_template_fields/STATUS.md                                     PASS  all required fields present
+check_template_fields/TASKS.md                                      PASS  all required fields present
+check_template_fields/gitignore-poc.append.txt                      PASS  all required fields present
+check_template_fields/questions-triage.md                           PASS  all required fields present
+check_template_fields/task-card.md                                  PASS  all required fields present
+check_run_manifest/eval/fixtures/example-project/run-manifest.json  PASS  all required keys present (8 top-level)
+check_run_manifest/templates/run-manifest.json                      PASS  all required keys present (8 top-level)
+check_gates_ml_eval/eval/fixtures/example-project/GATES.ml-eval.md  PASS  7/7 sub-checks present
+check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 sub-checks present
+
+Total: 17  Pass: 17  Fail: 0

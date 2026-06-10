@@ -1,0 +1,28 @@
+{
+  "task_id": "T-001",
+  "run_id": "20260608-120000-T-001-rag-readiness",
+  "commit": "abc1234",
+  "started_at_utc": "2026-06-08T12:00:00Z",
+  "finished_at_utc": "2026-06-08T12:05:00Z",
+  "inputs": {
+    "artifact_pointers": ["artifacts/sample-corpus.artifact.json"],
+    "config": "configs/rag-readiness.yaml",
+    "baseline_ref": "T-000"
+  },
+  "reproducibility": {
+    "seed_policy": "fixed",
+    "seed_values": [42],
+    "nondeterminism_notes": null,
+    "acceptable_variance": null
+  },
+  "environment": {
+    "python": "3.12.0",
+    "key_libraries": {"langchain": "0.1.0", "openai": "1.0.0"},
+    "hardware": "laptop"
+  },
+  "budget": {
+    "runtime_minutes": 5,
+    "cost_usd": 0.50
+  },
+  "notes": "Sample fixture for the conformance check."
+}

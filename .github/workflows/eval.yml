@@ -1,0 +1,41 @@
+name: eval
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run conformance check
+        run: python eval/check.py
+      - name: Run self-test
+        run: python eval/check.py --self-test
+      - name: "Stale-guard: verify sample-run artifact matches a fresh run"
+        run: |
+          python eval/check.py > /tmp/eval-fresh.txt
+          diff -u eval/sample-run-2026-06-08.txt /tmp/eval-fresh.txt
+      - name: "Stale-guard: verify README inline block matches a fresh run"
+        run: |
+          python eval/check.py > /tmp/eval-fresh.txt
+          # Extract the README's fenced conformance block (from the heading
+          # through the closing ``` fence).
+          awk '/^## Conformance check \(latest run\)/{flag=1; next} flag && /^```$/{fence++; if(fence==2){flag=0; next}} flag' README.md > /tmp/readme-block.txt
+          # Strip fences, the Total line, and blank lines from both sides
+          # so trailing/leading newlines don't cause false diffs.
+          grep -v '^```' /tmp/readme-block.txt | grep -v '^Total:' | grep -v '^$' > /tmp/readme-clean.txt
+          grep -v '^Total:' /tmp/eval-fresh.txt | grep -v '^$' > /tmp/fresh-clean.txt
+          diff -u /tmp/readme-clean.txt /tmp/fresh-clean.txt
+      - name: Upload eval output as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-output
+          path: eval/sample-run-*.txt

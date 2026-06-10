@@ -19,7 +19,7 @@ Repo / demo link (optional):
 - Supporting reports:
 - Key artifact pointers:
 
-## 3) What we learned
+## 3) What was learned
 
 - What worked:
 - What did not work:

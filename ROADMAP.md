@@ -26,14 +26,12 @@ below corresponds to a concrete change set.
   (`GATES.ml-eval.md`, `run-manifest.json`) + CI workflow with two
   stale-guards. See the v1.2.0 release notes for the full list.
 
-## v1.2.3 (next)
+## v1.2.3
 
-- Semantic checks on `run-manifest.json`: enum-validate
-  `nondeterminism_notes` against the closed set `[none, low, high, n/a]`.
-- Add a second adversarial self-test break (e.g. wrong-type on a
-  different field, to make the type check less single-point-of-failure).
-- Update the `task-card-example*` worked examples to reflect the new
-  `examples/` location.
+- Add 3 wrong-type breaks to the bad-project `run-manifest.json`
+  fixture (`seed_values`, `artifact_pointers`, `environment.python`),
+  alongside the existing `seed_policy` break, so the type check is
+  exercised on every field it covers.
 
 ## v1.3.0 (later)
 

@@ -44,6 +44,13 @@ below corresponds to a concrete change set.
   `required_strings` entry in `eval/check.py`. Bump `pyproject.toml` version
   to 1.2.4.
 
+## v1.2.5
+
+- Add a concrete workflow rule for new dependencies: a decision entry
+  in `DECISIONS.md` and a stop-condition pass in
+  `templates/AGENTS.md:143`. Bump `pyproject.toml` version 1.2.4 to
+  1.2.5.
+
 ## v1.3.0 (later)
 
 - Investigate whether a headless agent harness is viable for an

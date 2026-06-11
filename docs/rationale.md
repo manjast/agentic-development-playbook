@@ -34,8 +34,8 @@ An outcome-based check would require:
 
 - **A reproducible agent harness** — a deterministic way to spawn an agent
   with a given config + inputs and capture the output. None exists for
-  Claude Code, Cursor, Codex, or Gemini CLI as of 2026-06. (They are
-  client-side IDE tools, not server-side APIs with stable test interfaces.)
+  Claude Code, Cursor, Codex, or Gemini CLI. (They are client-side IDE
+  tools, not server-side APIs with stable test interfaces.)
 - **A golden test set** — a curated set of tasks with known-good outputs.
   This exists for some benchmarks (SWE-bench, MMLU) but not for the
   Playbook's "real projects" use case.

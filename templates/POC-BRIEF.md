@@ -19,7 +19,7 @@ What do we believe is true, and what would disprove it?
 In:
 - ...
 
-Out (non-goals):
+Out of scope (non-goals):
 - ...
 
 ## 4) Constraints

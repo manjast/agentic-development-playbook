@@ -97,7 +97,7 @@ TEMPLATE_REQUIRED_FIELDS: dict[str, dict] = {
             "## 7) Metrics",
         ],
         "required_strings": [
-            "Out (non-goals):",
+            "Out of scope (non-goals):",
         ],
     },
     "POC-CLOSURE.md": {
@@ -246,7 +246,7 @@ def check_template_fields(templates_dir: Path) -> list[CheckResult]:
 
         spec = TEMPLATE_REQUIRED_FIELDS.get(path.name)
         if spec is None:
-            # Drift: file in templates/ that's not in our required-fields dict
+            # Drift: file in templates/ that's not in TEMPLATE_REQUIRED_FIELDS
             results.append(CheckResult(
                 name=f"check_template_fields/{path.name}",
                 status="FAIL",

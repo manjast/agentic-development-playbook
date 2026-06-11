@@ -4,7 +4,7 @@ This repo is maintained and intentionally selective. The discipline is
 "a template earns its slot by being used in real work." Each version
 below corresponds to a concrete change set.
 
-## v1.2.2 (this release)
+## v1.2.2
 
 - Tighten the README opener (drop the adjective stack) and the
   `pyproject.toml` description to match.
@@ -32,6 +32,17 @@ below corresponds to a concrete change set.
   fixture (`seed_values`, `artifact_pointers`, `environment.python`),
   alongside the existing `seed_policy` break, so the type check is
   exercised on every field it covers.
+
+## v1.2.4
+
+- Generalize the "as of" date in `docs/rationale.md` (drop the date, keep the
+  substance); drop the redundant 2nd "Note on the folder name" disclaimer in
+  `eval/README.md`; add an illustrative-not-runnable disclaimer on the `curl`
+  commands in `examples/worked-example.md`; drop a first-person plural from a
+  Python comment in `eval/check.py`; rename "Out (non-goals):" to "Out of
+  scope (non-goals):" in `templates/POC-BRIEF.md` and the corresponding
+  `required_strings` entry in `eval/check.py`. Bump `pyproject.toml` version
+  to 1.2.4.
 
 ## v1.3.0 (later)
 

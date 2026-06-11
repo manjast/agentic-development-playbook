@@ -85,6 +85,11 @@ Move/Rename:
 - `curl -f http://localhost:8000/healthz` -> 200 + body contains `status`
 - `curl -f http://localhost:8000/readyz` -> 200 when DB is up
 
+(The `curl` commands above are illustrative; the example is a worked
+task card for a fictional project, not a runnable end-to-end demo. To
+see the conformance check in action against a real repo, see
+[`eval/sample-run-2026-06-08.txt`](../eval/sample-run-2026-06-08.txt).)
+
 Expected outputs / artifacts:
 - `reports/20260126-T-012-health-endpoints.md` (optional summary)
 - Raw outputs/logs/caches -> `runs/<run_id>/` (ignored)

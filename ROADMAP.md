@@ -53,18 +53,25 @@ below corresponds to a concrete change set.
 
 ## v1.3.0 (later)
 
-- Investigate whether a headless agent harness is viable for an
-  outcome-check stub. Depends on whether any of Claude Code, Cursor,
-  Codex, or Gemini CLI ships a server-side API with a stable test
-  interface (see `docs/rationale.md` for the current assessment).
 - Add a one-paragraph note to `AGENTS.md` on how the template
   discipline coexists with MCP/agent-tool protocols.
+- Extend the conformance check to cover the DS/AI pack's
+  `GATES.ds-ai.md` (structurally parallel to `check_gates_ml_eval_any`;
+  ~30 lines of code). The public repo does not ship the DS/AI pack
+  today; this is a candidate that depends on whether the pack pattern
+  is adopted as a public feature. See the private repo's
+  `ROADMAP.md` "v1.3.0 candidates (deferred)" section for the
+  design notes.
 
 ## v2.0 (far)
 
 - Outcome-based check: spawn headless agent on a fixed test set, score
   against a baseline, report variance. This is gated on a reproducible
   agent harness existing (none does as of 2026-06).
+- Investigate whether a headless agent harness is viable for an
+  outcome-check stub. Depends on whether any of Claude Code, Cursor,
+  Codex, or Gemini CLI ships a server-side API with a stable test
+  interface (see `docs/rationale.md` for the current assessment).
 
 ## Not the goal
 

@@ -140,7 +140,7 @@ Task: T-XXX
 ## Rules
 - One task = one commit.
 - No commit if verification fails.
-- Do not add dependencies without approval.
+- New dependencies require a decision entry in `DECISIONS.md` and a stop-condition pass.
 - If iterative work is needed, use a task branch and squash into one final task
   commit before merging to main.
 

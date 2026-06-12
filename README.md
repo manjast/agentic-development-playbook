@@ -154,6 +154,8 @@ Recommended minimum layout:
 
 If your tool expects a different instruction filename, keep it as a short pointer to `AGENTS.md`. For example, if you use Gemini CLI, copy `CLAUDE.md` to `GEMINI.md` in your project.
 
+For adopting the Playbook into an existing project, see [`docs/migration.md`](docs/migration.md).
+
 ## Example
 
 See `examples/worked-example.md` for a simple end-to-end example of the core task flow.

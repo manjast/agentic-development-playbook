@@ -65,11 +65,11 @@ latest captured run (17/17 PASS, ~1.2s on Python 3.13).
 ## Self-test
 
 `--self-test` runs the check against `eval/fixtures/bad-project/`, which
-contains 6 deliberately broken files. The self-test asserts that all 6
+contains 9 deliberately broken files. The self-test asserts that all 9
 breaks are caught. If any break slips through, the self-test exits
 non-zero — meaning the check has a gap and needs fixing.
 
-The 6 breaks are listed in `eval/fixtures/bad-project/_README.md`.
+The 9 breaks are listed in `eval/fixtures/bad-project/_README.md`.
 
 ## Exit codes
 

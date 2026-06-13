@@ -64,13 +64,19 @@ below corresponds to a concrete change set.
 ## v1.3.0 candidates (deferred) — retired
 
 - A one-paragraph note to `AGENTS.md` on how the template discipline
-  coexists with MCP / agent-tool protocols. Considered 2026-06-12;
-  retired because the existing rules in `templates/AGENTS.md` already
-  apply when the agent is invoked through MCP or any other agent-tool
-  protocol (the protocol is an invocation layer, not a different
-  operating mode). A dedicated note would restate the rule without
-  adding a new rule, and a thin release of one paragraph is not
-  justified. The Playbook remains tool-agnostic by design.
+  coexists with MCP / agent-tool protocols. Drafted 2026-06-12; retired
+  the same day. The plan-doc was 115 lines, the section draft was 5
+  sentences, and at that point the framing collapsed: the note would
+  restate that the existing rules in `templates/AGENTS.md` apply when
+  the agent is invoked through MCP or any other agent-tool protocol,
+  without adding a new rule. A 1-paragraph release is a thin release,
+  and a thin release sets a bad precedent for what "v1.3.0" means.
+  The Playbook stays tool-agnostic by design, and the existing rules
+  already cover this. The public ROADMAP v1.3.0 (later) section now
+  contains the DS/AI pack conformance check extension as its single
+  remaining bullet; a v1.3.0 release is gated on that decision (see
+  the private repo's `ROADMAP.md` "v1.3.0 candidates (deferred)"
+  section).
 
 ## v2.0 (far)
 

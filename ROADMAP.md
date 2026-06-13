@@ -53,8 +53,6 @@ below corresponds to a concrete change set.
 
 ## v1.3.0 (later)
 
-- Add a one-paragraph note to `AGENTS.md` on how the template
-  discipline coexists with MCP/agent-tool protocols.
 - Extend the conformance check to cover the DS/AI pack's
   `GATES.ds-ai.md` (structurally parallel to `check_gates_ml_eval_any`;
   ~30 lines of code). The public repo does not ship the DS/AI pack
@@ -62,6 +60,17 @@ below corresponds to a concrete change set.
   is adopted as a public feature. See the private repo's
   `ROADMAP.md` "v1.3.0 candidates (deferred)" section for the
   design notes.
+
+## v1.3.0 candidates (deferred) — retired
+
+- A one-paragraph note to `AGENTS.md` on how the template discipline
+  coexists with MCP / agent-tool protocols. Considered 2026-06-12;
+  retired because the existing rules in `templates/AGENTS.md` already
+  apply when the agent is invoked through MCP or any other agent-tool
+  protocol (the protocol is an invocation layer, not a different
+  operating mode). A dedicated note would restate the rule without
+  adding a new rule, and a thin release of one paragraph is not
+  justified. The Playbook remains tool-agnostic by design.
 
 ## v2.0 (far)
 

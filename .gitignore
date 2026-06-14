@@ -4,6 +4,8 @@ Thumbs.db
 .vscode/
 .venv/
 LOCAL-BRANCH-NOTES.md
+__pycache__/
+*.pyc
 *.swp
 *.swo
 *.tmp

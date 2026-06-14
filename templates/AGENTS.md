@@ -129,7 +129,8 @@ Security scanning:
 - Rule: include scan command in Verify if tooling exists.
 
 ## Commit Format
-Use a conventional subject with a Task trailer:
+Use a conventional subject with a Task trailer (3-digit
+zero-padded, e.g., `T-001`, `T-012`, `T-123`):
 
 ```
 type(scope): short description
@@ -140,6 +141,11 @@ Task: T-XXX
 ## Rules
 - One task = one commit.
 - No commit if verification fails.
+- If a verification check is bypassed (e.g., `git commit --no-verify`),
+  the bypass is observable after the fact: the optional enforcement
+  layer's verifier (see `enforcement/README.md`) reports the bypassed
+  commit as drift in `reports/session-drift.md`. The commit is not
+  retroactively rejected.
 - New dependencies require a decision entry in `DECISIONS.md` and a stop-condition pass.
 - If iterative work is needed, use a task branch and squash into one final task
   commit before merging to main.
@@ -165,3 +171,30 @@ cards only from that marker-delimited section. Create a task card under `tasks/`
 Implement one task at a time (WIP=1). Follow the `AGENTS.md`
 "After Completing" checklist, including updating the tracker with `commit: <hash>` and archiving the task card
 to `tasks/archive/`.
+
+## Optional: enforcement layer
+
+The Playbook ships an optional `enforcement/` directory. The
+directory is a v1.3.0 candidate; the 4 documented components (git
+hooks via lefthook, opencode TypeScript plugin, verifier subagent,
+cron/CI executor) ship in subsequent releases. This section is a
+high-level description of the layer's intended behaviors. The
+layer is opt-in; projects that adopt the Playbook can install the
+enforcement tools or not.
+
+If the optional enforcement layer is installed, three behaviors apply
+on top of the rules above:
+
+- The commit-msg hook requires a `Task: T-XXX` trailer (the same rule
+  as the "Commit Format" section above; the hook enforces it strictly).
+- The pre-commit hook requires `TASKS.md` or `tasks/done/DONE.md` in
+  the diff (the atomic-commit rule).
+- The post-commit hook records the commit hash to `tasks/done/DONE.md`
+  (a hash-index ledger, distinct from `tasks/archive/` which holds the
+  full task card). The format is `- {hash} {T-XXX} {subject}`, one line
+  per commit, append-only with a de-dup check on the hash.
+
+`enforcement/README.md` is the canonical entry point for the layer.
+The hooks are universal (work for any agent, not just opencode); the
+plugin, verifier, and executor are opencode-specific. The discipline
+itself stays tool-agnostic.

@@ -61,6 +61,21 @@ below corresponds to a concrete change set.
   `ROADMAP.md` "v1.3.0 candidates (deferred)" section for the
   design notes.
 
+## v1.3.0 candidates (deferred) — open
+
+- Add an optional `enforcement/` directory with 4 components (git
+  hooks via lefthook, opencode TypeScript plugin, verifier subagent,
+  cron/CI executor) that enforce the discipline and detect drift.
+  3 small additions to `templates/AGENTS.md` ship alongside (3-digit
+  task IDs, bypass-observability, a new "Optional: enforcement
+  layer" section). The 4 components live in
+  `enforcement/{hooks,plugin,verifier,executor}/` with an
+  `enforcement/eval/` subdir for component conformance tests.
+  Opt-in; the opencode plugin and verifier are one
+  opencode-specific implementation; other agents can implement the
+  same pattern following a tool-portable abstraction (private
+  research notes, not part of the public discipline).
+
 ## v1.3.0 candidates (deferred) — retired
 
 - A one-paragraph note to `AGENTS.md` on how the template discipline
@@ -72,10 +87,12 @@ below corresponds to a concrete change set.
   without adding a new rule. A 1-paragraph release is a thin release,
   and a thin release sets a bad precedent for what "v1.3.0" means.
   The Playbook stays tool-agnostic by design, and the existing rules
-  already cover this. The public ROADMAP v1.3.0 (later) section now
+  already cover this. The public ROADMAP v1.3.0 (later) section
   contains the DS/AI pack conformance check extension as its single
-  remaining bullet; a v1.3.0 release is gated on that decision (see
-  the private repo's `ROADMAP.md` "v1.3.0 candidates (deferred)"
+  remaining bullet; the optional enforcement layer is a deferred
+  candidate (see the "v1.3.0 candidates (deferred) — open" section
+  above). A v1.3.0 release is gated on those decisions (see the
+  private repo's `ROADMAP.md` "v1.3.0 candidates (deferred)"
   section).
 
 ## v2.0 (far)

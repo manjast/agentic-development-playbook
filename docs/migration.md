@@ -113,6 +113,26 @@ Then run the check without `--self-test` to verify the project's own state.
 
 ---
 
+## Optional: Adopting the Enforcement Tools
+
+The Playbook ships an **optional** `enforcement/` directory containing
+4 components that enforce the discipline at the local-machine level
+and detect drift over time. The layer is opt-in: projects that adopt
+the Playbook can install the enforcement tools or not.
+
+`enforcement/README.md` is the canonical entry point. The 4
+components (git hooks, opencode plugin, verifier subagent, cron/CI
+executor) ship in subsequent releases; this section is a high-level
+pointer. The hooks are universal (work for any agent, not just
+opencode); the plugin, verifier, and executor are opencode-specific.
+The discipline itself stays tool-agnostic; the opencode
+implementation is one option among several possible. 3 small
+additions to `templates/AGENTS.md` ship alongside the layer (3-digit
+task IDs, bypass-observability, and a new "Optional: enforcement
+layer" section documenting the hook behaviors).
+
+---
+
 ## If neither case fits
 
 File a GitHub issue at `manjast/agentic-development-playbook/issues` with:

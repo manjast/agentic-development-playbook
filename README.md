@@ -156,6 +156,8 @@ If your tool expects a different instruction filename, keep it as a short pointe
 
 For adopting the Playbook into an existing project, see [`docs/migration.md`](docs/migration.md).
 
+See also: [`enforcement/README.md`](enforcement/README.md) (optional layer; v1.3.0 candidate).
+
 ## Example
 
 See `examples/worked-example.md` for a simple end-to-end example of the core task flow.

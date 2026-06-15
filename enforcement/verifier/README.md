@@ -146,18 +146,19 @@ permissions (if `jq` is installed and `opencode.json` exists).
 
 ## Conformance test
 
-The 12-case conformance test verifies the detection algorithm.
+The 13-case conformance test verifies the detection algorithm.
 It uses `node:test` (Node 20+) and runs without opencode
 installed. Cases cover the 4 drift categories, the missing-
 archive scenarios, the no-trailer cases, the missing-input
 cases, the cross-format compatibility (hook + plugin hashes
-coexist), and the no-LLM JSON pipeline.
+coexist), the no-LLM JSON pipeline, and the sh report
+renderer's drift count for single-line JSON.
 
 ```sh
 npx tsx enforcement/eval/test-verifier.test.ts
 ```
 
-12/12 PASS expected. The cases are:
+13/13 PASS expected. The cases are:
 
 1. Clean session: 0 drift
 2. Missing archive: 1 commit not in DONE.md
@@ -172,6 +173,8 @@ npx tsx enforcement/eval/test-verifier.test.ts
 11. Cross-format: hook-format (40-char) + plugin-format (7-char)
     hashes coexist
 12. No-LLM path: JSON output is valid and matches the schema
+13. sh renderer: drift count is correct for single-line JSON
+    with 50 items (regression test for the F-03 summary count fix)
 
 ## The no-LLM path
 
@@ -240,7 +243,7 @@ The verifier observes; it does not enforce. Bypasses:
 - `drift.schema.json` — JSON Schema contract for the
   `DriftReport` output
 - `bootstrap.sh` — installation script
-- `eval/test-verifier.test.ts` — 12-case conformance test
+- `eval/test-verifier.test.ts` — 13-case conformance test
 
 The full enforcement stack (hooks + plugin + verifier +
 executor) is documented in `enforcement/README.md` at the

@@ -19,8 +19,12 @@ fi
 WARN=0
 while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
   [ -z "$LOCAL_SHA" ] && continue
-  # On force-push, LOCAL_SHA may be all zeros; skip.
+  # On force-push, LOCAL SHA may be all zeros; skip.
   case "$LOCAL_SHA" in 0000000000000000000000000000000000000000) continue ;; esac
+  # On a new branch with no upstream, REMOTE SHA is all zeros
+  # (git's sentinel for "no such ref"). Skip — there are no
+  # new commits to check on a new branch.
+  case "$REMOTE_SHA" in 0000000000000000000000000000000000000000) continue ;; esac
   # No-op push (local == remote): no new commits to check.
   [ "$LOCAL_SHA" = "$REMOTE_SHA" ] && continue
   # Collect commit messages for this ref (cap at 100 to avoid runaway).

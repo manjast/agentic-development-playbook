@@ -91,6 +91,14 @@ check "amend with valid trailer" pass \
 check "--no-verify bypass" pass \
   'git commit -q --allow-empty --no-verify -m "bypass"'
 
+# Case 9: pre-push on new branch with no upstream (REMOTE_SHA
+# is all zeros). The hook must skip — there are no new commits
+# to check. Without the F-D01 fix, the hook would attempt
+# `git log 00000..HEAD`, which would error, and the awk would
+# emit a spurious "missing Task: T-XXX trailer" warning.
+check "pre-push new branch (no upstream) no false-positive" pass \
+  'printf "refs/heads/main %s refs/heads/main 0000000000000000000000000000000000000000\n" "$(git rev-parse HEAD)" | .lefthook/pre-push origin test'
+
 rm -f /tmp/m.test.$$
 
 printf '\nResult: %d PASS, %d FAIL\n' "$PASS" "$FAIL"

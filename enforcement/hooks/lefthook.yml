@@ -1,0 +1,24 @@
+# lefthook.yml — local enforcement hooks
+# Runs 4 hooks (commit-msg, pre-commit, post-commit, pre-push) to
+# enforce the discipline on every commit.
+min_version: 1.0.0
+output: false
+
+commit-msg:
+  commands:
+    check-task-trailer:
+      run: .lefthook/commit-msg {1}
+      skip: "merge"
+pre-commit:
+  commands:
+    check-atomic-commit:
+      run: .lefthook/pre-commit
+      skip: "merge"
+post-commit:
+  commands:
+    archive-commit:
+      run: .lefthook/post-commit
+pre-push:
+  commands:
+    replay-commit-checks:
+      run: .lefthook/pre-push {1} {2}

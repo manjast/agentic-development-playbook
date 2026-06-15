@@ -1,0 +1,26 @@
+#!/bin/sh
+# .lefthook/pre-commit — enforce atomic commit.
+# Git's pre-commit hook does not receive command-line arguments
+# from `git commit`, so `--allow-empty` cannot be detected here.
+# Empty commits are not supported by the discipline; use a normal
+# commit with at least one of TASKS.md or tasks/done/DONE.md.
+set -e
+command -v git >/dev/null 2>&1 || { printf 'pre-commit: git not in PATH.\n' >&2; exit 1; }
+STAGED=$(git diff --cached --name-only)
+
+if [ -z "$STAGED" ]; then
+  printf 'pre-commit: no files staged. Empty commits are not supported.\n' >&2
+  printf '  Stage TASKS.md or tasks/done/DONE.md, or use git commit --no-verify.\n' >&2
+  exit 1
+fi
+
+if printf '%s\n' "$STAGED" | grep -qE '^(TASKS\.md|tasks/done/DONE\.md)$'; then
+  exit 0
+fi
+
+printf 'pre-commit: atomic-commit rule violated.\n' >&2
+printf '  Every commit must touch TASKS.md, tasks/done/DONE.md, or both.\n' >&2
+printf '  Staged files:\n' >&2
+printf '%s\n' "$STAGED" | sed 's/^/    /' >&2
+printf '  Bypass: git commit --no-verify\n' >&2
+exit 1

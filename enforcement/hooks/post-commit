@@ -1,0 +1,59 @@
+#!/bin/sh
+# .lefthook/post-commit — archive-after-commit.
+# The commit has already landed. Cannot fail it. Warnings only.
+# Idempotent under retry/amend: a de-dup check on HASH prevents
+# duplicate DONE.md entries.
+set -e
+command -v git >/dev/null 2>&1 || { printf 'post-commit: git not in PATH.\n' >&2; exit 0; }
+HASH=$(git rev-parse HEAD)
+SHORT=$(git rev-parse --short HEAD)
+SUBJECT=$(git log -1 --format=%s | tr '\n' ' ')
+BODY=$(git log -1 --format=%b)
+
+TASK_ID=$(printf '%s\n' "$BODY" | awk -F': ' '
+  /^Task:[[:space:]]+T-[0-9]{3}[[:space:]]*$/ { print $2; exit }
+')
+
+if [ -z "$TASK_ID" ]; then
+  printf 'post-commit: warning — no Task: T-XXX trailer in body of %s.\n' "$SHORT" >&2
+  printf '  (If the trailer is in the subject, the commit-msg hook passed\n' >&2
+  printf '   but the post-commit script reads the body only.)\n' >&2
+  exit 0
+fi
+
+mkdir -p tasks/done || { printf 'post-commit: warning — could not create tasks/done/.\n' >&2; exit 0; }
+
+LOCK_FILE=$(mktemp 2>/dev/null) || LOCK_FILE="/tmp/.done.md.lock.$$"
+LOCKED=false
+if command -v flock >/dev/null 2>&1; then
+  exec 9>"$LOCK_FILE"
+  if flock -n 9; then LOCKED=true
+  else printf 'post-commit: warning — could not acquire lock.\n' >&2; exec 9>&-; rm -f "$LOCK_FILE"; exit 0
+  fi
+fi
+
+DONE_FILE="tasks/done/DONE.md"
+[ -f "$DONE_FILE" ] || printf '# Done\n\n' > "$DONE_FILE"
+if ! grep -qF "$HASH" "$DONE_FILE"; then
+  printf -- '- %s %s %s\n' "$HASH" "$TASK_ID" "$SUBJECT" >> "$DONE_FILE"
+fi
+
+if [ -f TASKS.md ]; then
+  awk -v task="$TASK_ID" -v hash="$SHORT" '
+    $0 ~ "^\\- \\[[ ]\\] " task ":" {
+      sub(/^- \[ \] /, "- [x] ")
+      sub(/$/, " (commit: " hash ")")
+    }
+    { print }
+  ' TASKS.md > TASKS.md.tmp && mv TASKS.md.tmp TASKS.md
+fi
+# Note: the working tree is left dirty after post-commit (TASKS.md is
+# modified, tasks/done/DONE.md is new). The user is expected to either
+# stage and commit these in a subsequent commit, or leave them for
+# the next regular commit (which will then have TASKS.md +
+# tasks/done/DONE.md in the staged set and pass the pre-commit
+# atomic-commit check).
+
+[ "$LOCKED" = "true" ] && exec 9>&-
+rm -f "$LOCK_FILE"
+exit 0

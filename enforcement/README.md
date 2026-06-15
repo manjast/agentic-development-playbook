@@ -68,7 +68,7 @@ The 4 components have different effectiveness ratings because they enforce diffe
 - The hooks run at commit time on the developer's machine, where the developer has full control. The hooks are 5/5 deterministic: every commit is checked, every check either passes or rejects the commit.
 - The plugin runs inside opencode's tool-execution layer. The plugin can only *observe* (the bash tool has already returned by the time the plugin fires), not enforce. The plugin is 4-5/5 on bash-level commits: it auto-records the hash correctly, but it cannot prevent a misformatted commit.
 - The verifier reads `tasks/done/DONE.md`, `TASKS.md`, and the git log, and reports drift. The verifier is 3/5: it detects drift after the fact but cannot prevent it. To be truly load-bearing when the developer is absent, the executor (cron/CI) is required.
-- The executor is automation infrastructure; it does not enforce or detect anything by itself. It triggers the verifier on a schedule or on push.
+- The executor is automation infrastructure; it does not enforce or detect anything by itself. It triggers the verifier on a schedule (cron) and after the conformance check completes on push to main (via the `workflow_run` chain).
 
 ## Bootstrap script
 
@@ -81,8 +81,9 @@ Each component has a conformance test. The tests ship in a subsequent release al
 - `enforcement/eval/test-hooks.sh` — 8 test cases for the hook scripts
 - `enforcement/eval/test-plugin.test.ts` — 6 test cases for the opencode plugin
 - `enforcement/eval/test-verifier.test.ts` — 10 test cases for the verifier subagent
+- `enforcement/eval/test-executor.sh` — 8 test cases for the cron/CI executor
 
-The tests are independent; a project can run all 3 or just the ones for the components it has installed.
+The tests are independent; a project can run all 4 or just the ones for the components it has installed.
 
 ## Cross-references
 

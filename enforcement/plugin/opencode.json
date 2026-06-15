@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["./plugins/discipline.ts"],
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git log *": "allow",
+      "git diff *": "allow",
+      "git status *": "allow",
+      "git show *": "allow",
+      "git commit": "allow",
+      "git commit *": "allow",
+      "git commit *--no-verify*": "deny"
+    },
+    "read": {
+      "TASKS.md": "allow",
+      "tasks/done/DONE.md": "allow"
+    },
+    "write": {
+      "TASKS.md": "allow",
+      "tasks/done/DONE.md": "allow"
+    }
+  }
+}

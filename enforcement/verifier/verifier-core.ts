@@ -60,10 +60,11 @@ export async function detectDrift(worktree: string): Promise<DriftReport> {
   const doneContent = doneExists ? readFileSync(donePath, "utf8") : ""
   const tasksContent = tasksExists ? readFileSync(tasksPath, "utf8") : ""
 
-  // Build DONE.md hash index: full-hash -> { taskId, subject }
-  // The hash can be 7-40 chars (the hook writes 40, the plugin
-  // writes 7 from the bash output). The de-dup check is a
-  // substring match, so either length is correct as a key.
+  // Build DONE.md hash index: hash-key -> { taskId, subject }.
+  // The hash key is whatever was written to DONE.md: 40
+  // chars (hook format) or 7 chars (plugin format). The
+  // de-dup check is a substring match against the commit's
+  // 40-char hash, so either length is recognized.
   const doneIndex = new Map<string, { taskId: string; subject: string }>()
   for (const line of doneContent.split("\n")) {
     const m = /^- ([0-9a-f]{7,40}) (T-\d{3}) (.*)$/.exec(line)
@@ -209,7 +210,15 @@ export async function detectDrift(worktree: string): Promise<DriftReport> {
       continue
     }
     const taskId = trailerMatches[0][1]
-    if (!doneIndex.has(c.hash)) {
+    // De-dup is a SUBSTRING match, not strict equality.
+    // The commit's 40-char hash is a substring-prefix of the
+    // hook's 40-char DONE.md entry; the plugin's 7-char
+    // short-hash DONE.md entry is a substring of the 40-char
+    // hash. Either form matches the commit.
+    const inDone = Array.from(doneIndex.keys()).some(k =>
+      c.hash.startsWith(k) || k.startsWith(c.hash) || c.hash === k,
+    )
+    if (!inDone) {
       items.push({
         category: "missing-archive",
         hash: c.hash,

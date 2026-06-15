@@ -78,10 +78,10 @@ A combined bootstrap script installs all 4 components in dependency order. The s
 
 Each component has a conformance test. The tests ship in a subsequent release alongside the components:
 
-- `enforcement/eval/test-hooks.sh` — 8 test cases for the hook scripts
+- `enforcement/eval/test-hooks.sh` — 10 test cases for the hook scripts
 - `enforcement/eval/test-plugin.test.ts` — 6 test cases for the opencode plugin
-- `enforcement/eval/test-verifier.test.ts` — 10 test cases for the verifier subagent
-- `enforcement/eval/test-executor.sh` — 8 test cases for the cron/CI executor
+- `enforcement/eval/test-verifier.test.ts` — 13 test cases for the verifier subagent
+- `enforcement/eval/test-executor.sh` — 10 test cases for the cron/CI executor
 
 The tests are independent; a project can run all 4 or just the ones for the components it has installed.
 

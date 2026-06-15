@@ -7,7 +7,7 @@ set -e
 command -v git >/dev/null 2>&1 || { printf 'post-commit: git not in PATH.\n' >&2; exit 0; }
 HASH=$(git rev-parse HEAD)
 SHORT=$(git rev-parse --short HEAD)
-SUBJECT=$(git log -1 --format=%s | tr '\n' ' ')
+SUBJECT=$(git log -1 --format=%s | tr -d '\n')
 BODY=$(git log -1 --format=%b)
 
 TASK_ID=$(printf '%s\n' "$BODY" | awk -F': ' '

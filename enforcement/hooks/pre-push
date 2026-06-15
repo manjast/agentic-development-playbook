@@ -21,6 +21,8 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
   [ -z "$LOCAL_SHA" ] && continue
   # On force-push, LOCAL_SHA may be all zeros; skip.
   case "$LOCAL_SHA" in 0000000000000000000000000000000000000000) continue ;; esac
+  # No-op push (local == remote): no new commits to check.
+  [ "$LOCAL_SHA" = "$REMOTE_SHA" ] && continue
   # Collect commit messages for this ref (cap at 100 to avoid runaway).
   git log --max-count=100 --format='%H%n%b' "$REMOTE_SHA..$LOCAL_SHA" 2>/dev/null | \
     awk -v sha="$LOCAL_SHA" '

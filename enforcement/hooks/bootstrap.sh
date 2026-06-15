@@ -4,7 +4,7 @@
 # Source: enforcement/hooks/ (from the agentic-development-playbook
 # clone or release tarball).
 set -e
-SRC="$(dirname "$0")"
+SRC="$(cd "$(dirname "$0")" && pwd)"
 command -v lefthook >/dev/null 2>&1 || \
   { printf 'lefthook not found; install per enforcement/hooks/README.md §Installation.\n' >&2; exit 1; }
 mkdir -p .lefthook

@@ -8,7 +8,8 @@ agent — runs regardless of who invokes `git commit`).
 ## What the hooks enforce
 
 1. **`commit-msg`** — every commit message must carry a `Task: T-XXX`
-   trailer in the body (3-digit zero-padded task ID).
+   trailer in the body (3-digit zero-padded task ID). The trailer
+   must be at the start of the line (no leading whitespace).
 2. **`pre-commit`** — atomic-commit rule: every commit must touch
    `TASKS.md`, `tasks/done/DONE.md`, or both.
 3. **`post-commit`** — archive-after-commit: the commit hash is

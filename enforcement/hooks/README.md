@@ -58,10 +58,10 @@ not a general bypass.
 
 ## Conformance test
 
-The 8-case conformance test lives in the sibling `eval/` directory.
-It creates a temporary git repo, installs the hooks, and runs 8
-cases that exercise the trailer, atomic-commit, and bypass rules.
-8/8 PASS expected.
+The 10-case conformance test lives in the sibling `eval/` directory.
+It creates a temporary git repo, installs the hooks, and runs 10
+cases that exercise the trailer, atomic-commit, bypass, and
+bootstrap-idempotency rules. 10/10 PASS expected.
 
 To run it, from the consumer repo's root after the hooks are
 installed:
@@ -98,7 +98,7 @@ commits after the fact by reading the git log and `TASKS.md`.
 - `post-commit` — hash ledger + TASKS.md update
 - `pre-push` — trailer check on pushed commits
 - `bootstrap.sh` — installation script
-- `eval/test-hooks.sh` — 8-case conformance test
+- `eval/test-hooks.sh` — 10-case conformance test
 
 The full enforcement stack (hooks + plugin + verifier + executor)
 is documented in `enforcement/README.md` at the parent directory.

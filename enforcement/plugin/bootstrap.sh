@@ -21,7 +21,8 @@ PERMISSION='  "permission": {
       "git show *": "allow",
       "git commit": "allow",
       "git commit *": "allow",
-      "git commit *--no-verify*": "deny"
+      "git commit *--no-verify*": "deny",
+      "git --no-pager commit *": "deny"
     },
     "read": {
       "TASKS.md": "allow",

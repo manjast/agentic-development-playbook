@@ -80,6 +80,9 @@ discipline's permission rules:
   semantics).
 - `git commit *--no-verify*` → `deny` (the discipline's bypass path
   is observed, not prevented; the verifier catches the drift).
+- `git --no-pager commit *` → `deny` (covers the bash-flag form
+  where the global `--no-pager` flag precedes the `commit`
+  subcommand; the substring match catches the common case).
 - `git log *`, `git diff *`, `git status *`, `git show *` → `allow`
   (read-only git, no prompt fatigue).
 - `read` / `write` for `TASKS.md` and `tasks/done/DONE.md` →

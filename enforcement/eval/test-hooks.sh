@@ -1,7 +1,7 @@
 #!/bin/sh
 # enforcement/eval/test-hooks.sh — conformance test for the
 # local enforcement hooks (4-hook lefthook config).
-# 8 cases; 8/8 PASS expected on a POSIX host with git and lefthook installed.
+# 10 cases; 10/10 PASS expected on a POSIX host with git and lefthook installed.
 # Run from the consumer repo root after the hooks are installed:
 #   sh enforcement/eval/test-hooks.sh
 set -e
@@ -100,6 +100,27 @@ check "pre-push new branch (no upstream) no false-positive" pass \
   'printf "refs/heads/main %s refs/heads/main 0000000000000000000000000000000000000000\n" "$(git rev-parse HEAD)" | .lefthook/pre-push origin test'
 
 rm -f /tmp/m.test.$$
+
+# Case 10: bootstrap is idempotent — re-running the
+# bootstrap on a fully-bootstrapped repo must exit 0
+# silently (no "nothing to commit" error). The test
+# creates a fresh consumer repo, runs the bootstrap
+# once, then runs it a second time, and asserts exit 0.
+# Regression test for F-D02: pre-fix, the second run
+# would fail with "nothing to commit, working tree
+# clean" and exit non-zero, breaking `set -e` in any
+# wrapper script.
+CONSUMER=$(mktemp -d)
+( cd "$CONSUMER" \
+  && git init -q \
+  && git config user.email "t@t" \
+  && git config user.name "T" \
+  && echo "x" > a && git add a && git commit -q -m "initial" \
+  && sh "$HOOKS_DIR/bootstrap.sh" >/dev/null 2>&1 \
+  && sh "$HOOKS_DIR/bootstrap.sh" >/dev/null 2>&1 )
+bs_exit=$?
+rm -rf "$CONSUMER"
+check "bootstrap idempotent on re-run" pass "[ $bs_exit -eq 0 ]"
 
 printf '\nResult: %d PASS, %d FAIL\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

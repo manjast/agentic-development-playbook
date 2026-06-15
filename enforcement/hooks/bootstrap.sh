@@ -18,5 +18,15 @@ chmod +x .lefthook/* && lefthook install -f
 [ -d tasks/done ] || mkdir -p tasks/done
 [ -f tasks/done/DONE.md ] || printf '# Done\n\n' > tasks/done/DONE.md
 git add lefthook.yml .lefthook/ TASKS.md tasks/done/DONE.md
+# Idempotency: if nothing changed since the last install,
+# `git commit` would fail with "nothing to commit, working
+# tree clean". Re-running the script is a real use case
+# (re-install after a botched uninstall, re-install on a
+# new machine with an existing clone, etc.). The script
+# should be a no-op on a re-run, not a hard error.
+# `git diff --cached --quiet` exits 0 if there are no
+# staged changes; the early `exit 0` makes the script
+# return success on a no-op.
+git diff --cached --quiet && exit 0
 git commit -m "Add local enforcement hooks" --no-verify
 printf 'Hooks installed. Run "git commit" to test.\n'

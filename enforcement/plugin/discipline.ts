@@ -74,11 +74,16 @@ export const DisciplinePlugin: Plugin = async ({ worktree }) => ({
         const p = join(worktree, TASKS_FILE)
         if (!existsSync(p)) return // plugin does not create TASKS.md
         const content = await readFile(p, "utf8")
-        const re = new RegExp(`^(\\s*)-\\s\\[[ ]\\]\\s+(${taskId}):([^\\n]*)$`, "m")
+        // Capture the colon as a separate group so the
+        // reconstruction template can re-insert it. The
+        // colon must be preserved for the verifier's
+        // TASKS.md regex (`^- \[x\] (T-\d{3}):`) to match
+        // the plugin's output.
+        const re = new RegExp(`^(\\s*)-\\s\\[[ ]\\]\\s+(${taskId})(:)([^\\n]*)$`, "m")
         if (!re.test(content)) return
-        await writeFile(p, content.replace(re, (_m, ind, id, rest = "") => {
+        await writeFile(p, content.replace(re, (_m, ind, id, colon, rest = "") => {
           const cleaned = rest.replace(/\(commit:\s+[0-9a-f]+\)/, "").trimEnd()
-          return `${ind}- [x] ${id}${cleaned} (commit: ${shortHash})`
+          return `${ind}- [x] ${id}${colon}${cleaned} (commit: ${shortHash})`
         }), "utf8")
       })
     } catch (err) {

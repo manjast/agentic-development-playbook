@@ -36,14 +36,15 @@ Concretely, the plugin:
 ### Format differences from the hook layer
 
 The local enforcement hooks write the **full 40-char hash** to
-`DONE.md` and preserve the `: {title}` colon in `TASKS.md`. The
-plugin writes the **7-char short hash** (because that's what git
-prints in the bash output) and drops the colon (because the
-TASKS.md update regex consumes it as a literal separator). The
-verifier accepts both formats — the de-dup check is a substring
-match, so a 7-char hash substring-matches the 40-char form. The
-`: {title}` colon difference is purely cosmetic and the verifier
-does not depend on it.
+`DONE.md`. The plugin writes the **7-char short hash** (because
+that's what git prints in the bash output). Both formats are
+accepted by the verifier — the verifier's DONE.md regex accepts
+7-40 char hashes, and the de-dup check is a substring match,
+so a 7-char hash substring-matches the 40-char form.
+
+The plugin preserves the `: {title}` colon in `TASKS.md`, matching
+the hook's format exactly. The verifier's TASKS.md regex requires
+the colon.
 
 ## Installation
 

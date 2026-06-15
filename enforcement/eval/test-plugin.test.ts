@@ -71,7 +71,10 @@ test("1: valid commit appends DONE.md and updates TASKS.md", async () => {
     const done = readFileSync(join(d, "tasks/done/DONE.md"), "utf8")
     assert.match(done, new RegExp(`- ${h} T-001 test`))
     const tasks = readFileSync(join(d, "TASKS.md"), "utf8")
-    assert.match(tasks, new RegExp(`- \\[x\\] T-001 test \\(commit: ${h.slice(0, 7)}\\)`))
+    // The plugin must preserve the colon between task ID
+    // and title (matches the hook's format and the
+    // verifier's TASKS.md regex).
+    assert.match(tasks, new RegExp(`- \\[x\\] T-001: test \\(commit: ${h.slice(0, 7)}\\)`))
   })
 })
 

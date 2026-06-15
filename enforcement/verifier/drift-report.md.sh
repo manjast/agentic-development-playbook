@@ -69,15 +69,24 @@ printf -- '- **Timestamp:** %s\n' "${TIMESTAMP:-unknown}"
 printf -- '- **Range:** %s..%s\n' "${FROM:-root}" "${TO:-HEAD}"
 printf -- '- **Total commits analyzed:** %s\n\n' "${TOTAL:-0}"
 
-# Count items by category. Grep -c counts matching lines;
-# for our generated JSON, each item is on its own line(s)
-# and the category is unambiguous.
+# Count items by category. The DriftReport JSON is emitted
+# on a single line by verifier-core.ts, so `grep -c` (which
+# counts matching LINES, not matches) would always return 0
+# or 1 regardless of how many items the report contains.
+# Fix: extract each `"category":"..."` match to its own line
+# with `grep -o`, then `wc -l` to count. Works for both
+# single-line and pretty-printed JSON. tr strips the leading
+# whitespace that `wc -l` adds on some platforms.
 count_category() {
   _cat="$1"
-  printf '%s' "$REPORT_JSON" | grep -c "\"category\":\"$_cat\"" || true
+  printf '%s' "$REPORT_JSON" \
+    | grep -o "\"category\":\"$_cat\"" \
+    | wc -l | tr -d ' '
 }
 
-ITEM_COUNT=$(printf '%s' "$REPORT_JSON" | grep -c '"category":' || true)
+ITEM_COUNT=$(printf '%s' "$REPORT_JSON" \
+  | grep -o '"category":"[^"]*"' \
+  | wc -l | tr -d ' ')
 MISSING_ARCHIVE=$(count_category missing-archive)
 MISSING_HASH=$(count_category missing-hash)
 MULTIPLE_TRAILERS=$(count_category multiple-trailers)

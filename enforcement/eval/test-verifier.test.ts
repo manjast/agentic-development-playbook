@@ -1,6 +1,6 @@
 // enforcement/eval/test-verifier.test.ts
 // Conformance test for the local enforcement verifier.
-// 10 cases; 10/10 PASS expected.
+// 13 cases; 13/13 PASS expected.
 // Run: npx tsx enforcement/eval/test-verifier.test.ts (Node 20+).
 //
 // The test imports the deterministic re-implementation
@@ -269,5 +269,68 @@ test("12: no-LLM path — JSON output is valid and matches schema", async () => 
     assert.equal(parsed.items.length, 0)
     // No warnings
     assert.equal(parsed.warnings.length, 0)
+  })
+})
+
+test("13: sh renderer — drift count is correct for single-line JSON with 50 items", async () => {
+  // Regression test for F-03: drift-report.md.sh used
+  // `grep -c '"category":'` to count drift items, but grep
+  // -c counts matching LINES, not matches. The
+  // verifier-core.ts emits the DriftReport JSON on a
+  // single line, so the count was always 1 regardless of
+  // how many drift items the verifier detected. This test
+  // exercises the sh renderer end-to-end on a 50-commit
+  // session with 50 no-trailer items, and asserts the
+  // rendered markdown's `Drift count:` line shows 50 (not
+  // 1, not 0).
+  await withRepo(async (d) => {
+    // 50 commits, none with trailers — all become
+    // no-trailer drift items.
+    for (let i = 1; i <= 50; i++) {
+      commit(d, `feat: commit ${i}`)
+    }
+    // Resolve the runtime path: the test framework's
+    // runtime uses tsx to import verifier-core.ts. We
+    // need to invoke verifier-core.ts as a CLI to get
+    // the JSON output, then pipe it through
+    // drift-report.md.sh.
+    const { execFileSync } = await import("node:child_process")
+    const path = await import("node:path")
+    const fs = await import("node:fs")
+    const CORE = join(__dirname, "..", "verifier", "verifier-core.ts")
+    const SH = join(__dirname, "..", "verifier", "drift-report.md.sh")
+    // Find tsx the same way test 12 does.
+    const candidates = [
+      path.join(process.cwd(), "node_modules", ".bin", "tsx"),
+      path.join(path.dirname(process.execPath), "..", "node_modules", ".bin", "tsx"),
+    ]
+    let tsxBin: string | null = null
+    for (const c of candidates) {
+      if (fs.existsSync(c)) { tsxBin = c; break }
+    }
+    if (!tsxBin) {
+      try { require.resolve("tsx") } catch { return }
+    }
+    // Generate the JSON.
+    const jsonOut = tsxBin
+      ? execFileSync(tsxBin, [CORE, d], { encoding: "utf8" })
+      : execFileSync(process.execPath, ["--import", "tsx/esm", CORE, d], { encoding: "utf8" })
+    // Sanity: the JSON has 50 items on a single line.
+    const parsed = JSON.parse(jsonOut)
+    assert.equal(parsed.items.length, 50, "verifier should detect 50 no-trailer items")
+    assert.ok(!jsonOut.includes("\n") || jsonOut.split("\n").filter(l => l.trim()).length <= 2,
+      "verifier-core.ts should emit compact (single-line) JSON")
+    // Pipe through the sh renderer.
+    const mdOut = execFileSync("sh", [SH], { input: jsonOut, encoding: "utf8" })
+    // The bug: the rendered Drift count was 1 (one matching
+    // line, not 50 matches). The fix: extract each match
+    // to its own line, count lines, get 50.
+    const m = /\*\*Drift count:\*\*\s+(\d+)/.exec(mdOut)
+    assert.ok(m, `expected rendered markdown to contain "**Drift count:** N", got:\n${mdOut.slice(0, 500)}`)
+    assert.equal(m![1], "50", `Drift count must be 50 (one per commit), got ${m![1]}`)
+    // Per-category counts are also affected.
+    const noTrailerMatch = /\*\*No trailer:\*\*\s+(\d+)/.exec(mdOut)
+    assert.ok(noTrailerMatch, "expected rendered markdown to contain 'No trailer' count")
+    assert.equal(noTrailerMatch![1], "50")
   })
 })

@@ -4,6 +4,18 @@
 # 10 cases; 10/10 PASS expected on a POSIX host with git and lefthook installed.
 # Run from the consumer repo root after the hooks are installed:
 #   sh enforcement/eval/test-hooks.sh
+#
+# Cases (in execution order):
+#   1. valid trailer + TASKS.md staged         (expect: pass)
+#   2. valid trailer, no TASKS.md staged      (expect: fail; pre-commit rejects)
+#   3. no Task: trailer                       (expect: fail; commit-msg rejects)
+#   4. malformed trailer (1-digit)             (expect: fail; commit-msg rejects)
+#   5. malformed trailer (4-digit)             (expect: fail; commit-msg rejects)
+#   6. multiple Task: trailers                (expect: fail; commit-msg rejects)
+#   7. amend with valid trailer               (expect: pass; post-commit idempotent)
+#   8. --no-verify bypass                     (expect: pass; bypass acknowledged)
+#   9. pre-push new branch (no upstream)       (expect: pass; no false-positive)
+#  10. bootstrap idempotent on re-run          (expect: pass; no re-commit)
 set -e
 command -v lefthook >/dev/null 2>&1 || \
   { printf 'lefthook not found; install per enforcement/hooks/README.md §Installation.\n' >&2; exit 1; }

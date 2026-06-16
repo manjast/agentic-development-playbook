@@ -44,6 +44,14 @@
 #   2 — prerequisite missing (git, sh, the verifier
 #       script not present).
 
+# Symbolic exit codes (set here once, used by the prereq-check
+# and run-verifier phases below). The numeric values are the
+# source of truth; the symbolic names make the script's intent
+# explicit at the use sites.
+EXIT_OK=0
+EXIT_DRIFT=1
+EXIT_PREREQ_MISSING=2
+
 set -e
 
 # --- 1. Environment setup -----------------------------------
@@ -73,13 +81,13 @@ log "executor starting (mode=$MODE, use_llm=$USE_LLM, report=$REPORT_PATH)"
 # --- 2. Prerequisite check -----------------------------------
 
 command -v git >/dev/null 2>&1 || {
-  log "git not in PATH"
-  exit 2
+  log "git not in PATH (required: git on PATH for branch detection and verifier invocation)"
+  exit "$EXIT_PREREQ_MISSING"
 }
 
 command -v sh >/dev/null 2>&1 || {
-  log "sh not in PATH"
-  exit 2
+  log "sh not in PATH (required: POSIX sh for the verifier script)"
+  exit "$EXIT_PREREQ_MISSING"
 }
 
 # --- 3. Idempotency check ------------------------------------
@@ -142,7 +150,7 @@ fi
 if [ ! -x "$VERIFIER_SCRIPT" ]; then
   log "verifier script not found or not executable: $VERIFIER_SCRIPT"
   log "(the verifier ships with the local enforcement stack; install via enforcement/verifier/bootstrap.sh)"
-  exit 2
+  exit "$EXIT_PREREQ_MISSING"
 fi
 
 log "running verifier (--no-llm=$([ "$USE_LLM" = "1" ] && echo false || echo true))"
@@ -159,9 +167,9 @@ fi
 
 if "$VERIFIER_SCRIPT" $VERIFIER_ARGS; then
   log "verifier passed: no drift detected"
-  exit 0
+  exit "$EXIT_OK"
 else
   RC=$?
   log "verifier reported drift (exit code $RC); report at $REPORT_PATH"
-  exit 1
+  exit "$EXIT_DRIFT"
 fi

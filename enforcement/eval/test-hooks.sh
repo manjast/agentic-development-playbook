@@ -1,7 +1,7 @@
 #!/bin/sh
 # enforcement/eval/test-hooks.sh — conformance test for the
 # local enforcement hooks (4-hook lefthook config).
-# 10 cases; 10/10 PASS expected on a POSIX host with git and lefthook installed.
+# 11 cases; 11/11 PASS expected on a POSIX host with git and lefthook installed.
 # Run from the consumer repo root after the hooks are installed:
 #   sh enforcement/eval/test-hooks.sh
 #
@@ -16,6 +16,7 @@
 #   8. --no-verify bypass                     (expect: pass; bypass acknowledged)
 #   9. pre-push new branch (no upstream)       (expect: pass; no false-positive)
 #  10. bootstrap idempotent on re-run          (expect: pass; no re-commit)
+#  11. pre-push on force-push (REMOTE_SHA all zeros) (expect: pass; no false-positive)
 set -e
 command -v lefthook >/dev/null 2>&1 || \
   { printf 'lefthook not found; install per enforcement/hooks/README.md §Installation.\n' >&2; exit 1; }
@@ -133,6 +134,41 @@ CONSUMER=$(mktemp -d)
 bs_exit=$?
 rm -rf "$CONSUMER"
 check "bootstrap idempotent on re-run" pass "[ $bs_exit -eq 0 ]"
+
+# Case 11: pre-push on force-push where LOCAL_SHA is real and
+# REMOTE_SHA is all zeros (the git sentinel for a ref that doesn't
+# exist on the remote). This is the force-push case: the local
+# branch's commits are being pushed to replace whatever the remote
+# has. The pre-push script must NOT false-positive (it should
+# treat the all-zeros REMOTE_SHA as "no new commits to check",
+# matching the new-branch-with-no-upstream case). The test sets up
+# a local-only branch (no upstream), simulates a force-push by
+# piping the refspec with all-zeros REMOTE_SHA, and asserts exit 0
+# + no warning.
+CONSUMER=$(mktemp -d)
+( cd "$CONSUMER" \
+  && git init -q \
+  && git config user.email "t@t" \
+  && git config user.name "T" \
+  && cp "$HOOKS_DIR/lefthook.yml" . \
+  && mkdir -p .lefthook \
+  && cp "$HOOKS_DIR/commit-msg" .lefthook/commit-msg \
+  && cp "$HOOKS_DIR/pre-commit" .lefthook/pre-commit \
+  && cp "$HOOKS_DIR/post-commit" .lefthook/post-commit \
+  && cp "$HOOKS_DIR/pre-push" .lefthook/pre-push \
+  && chmod +x .lefthook/* \
+  && lefthook install -f \
+  && printf '# Tasks\n- [ ] T-001: test\n## Done\n' > TASKS.md \
+  && echo "x" > a && git add a TASKS.md \
+  && git commit -q -m "feat: T-001
+
+Task: T-001" \
+  && LOCAL_SHA=$(git rev-parse HEAD) \
+  && printf "refs/heads/main %s refs/heads/main 0000000000000000000000000000000000000000\n" "$LOCAL_SHA" \
+       | .lefthook/pre-push origin test >/dev/null 2>&1 )
+fp_exit=$?
+rm -rf "$CONSUMER"
+check "pre-push on force-push (REMOTE_SHA all zeros) is a no-op" pass "[ $fp_exit -eq 0 ]"
 
 printf '\nResult: %d PASS, %d FAIL\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

@@ -1,117 +1,79 @@
-# Roadmap
+# Redesign Roadmap
 
-This repo is maintained and intentionally selective. The discipline is
-"a template earns its slot by being used in real work." Each version
-below corresponds to a concrete change set.
+This roadmap is intentionally short. The September 2026 redesign is a correction of scope and control semantics, not a plan to replace the retired machinery with a new framework.
 
-## v1.3.0 (this release)
+## Stage 1 — Establish a truthful baseline
 
-- Add an optional `enforcement/` directory with 4 components (git
-  hooks via lefthook, opencode TypeScript plugin, verifier,
-  cron/CI executor) that enforce the discipline and detect drift.
-  3 small additions to `templates/AGENTS.md` ship alongside (3-digit
-  task IDs, bypass-observability, a new "Optional: enforcement
-  layer" section). The 4 components live in
-  `enforcement/{hooks,plugin,verifier,executor}/` with an
-  `enforcement/eval/` subdir for component conformance tests.
-  Opt-in; the opencode plugin and verifier are one
-  opencode-specific implementation; other agents can implement the
-  same pattern following a tool-portable abstraction (private
-  research notes, not part of the public discipline).
-- Conformance: 17/17 (existing) + 10/10 (hooks) + 6/6 (plugin) +
-  13/13 (verifier) + 10/10 (executor) = 56/56 PASS.
-- Bump `pyproject.toml` version 1.2.5 to 1.3.0.
-- New `docs/migration.md` adoption guide with an "Optional:
-  Adopting the Enforcement Tools" section. New
-  `docs/migration.md` cross-linked from `README.md`.
+- retire the legacy commit-bookkeeping enforcement stack;
+- retire the scheduled verifier/executor workflow;
+- retire the structural conformance harness that hard-coded the legacy template architecture;
+- remove `one task = one commit` and tracked commit-hash completion semantics from standing guidance;
+- replace stale claims that conformance or local hooks establish assurance;
+- shrink `AGENTS.md` to durable authority, scope, verification, stop, candidate, and acceptance guidance.
 
-## v1.2.2
+This stage should leave the repository smaller and internally coherent even if no replacement code is ever built.
 
-- Tighten the README opener (drop the adjective stack) and the
-  `pyproject.toml` description to match.
-- Drop the "16 surgical fixes" process-narration from the v1.2.0
-  entry below; describe the v1.2.0 release as a single change set.
-- Drop the first-person plural from `templates/POC-CLOSURE.md:22`
-  (the only such instance in a user-facing template).
-- Correct stale section-count comments in `eval/check.py`.
+## Stage 2 — Resolve the remaining semantic uncertainties
 
-## v1.2.1
+Use bounded evidence rather than another broad architecture review.
 
-- Voice pass on `docs/principles.md`, `docs/rationale.md`, the README
-  opener, and `eval/check.py` design notes. No template, check, or
-  schema changes. 17/17 PASS, 6/6 self-test, both stale-guards green.
+Questions still being tested in the private research checkpoint:
 
-## v1.2.0
+1. **Independent review yield** — which findings in the existing T-006 audit practice were genuine escapes beyond sensible deterministic checks and producer self-review?
+2. **Trigger usefulness** — which observable change properties route meaningful additional obligations without creating excessive noise or misses?
+3. **Terminal boundary** — what general wording cleanly covers both incorporation-only work and deployed work that requires confirmation in effect?
 
-- Add the conformance check + 2 promoted templates
-  (`GATES.ml-eval.md`, `run-manifest.json`) + CI workflow with two
-  stale-guards. See the v1.2.0 release notes for the full list.
+Cross-repository practice can supply examples and counterexamples, but non-adoption of the unfinished Playbook is not a redesign gate.
 
-## v1.2.3
+## Stage 3 — Publish the minimal acceptance contract
 
-- Add 3 wrong-type breaks to the bad-project `run-manifest.json`
-  fixture (`seed_values`, `artifact_pointers`, `environment.python`),
-  alongside the existing `seed_policy` break, so the type check is
-  exercised on every field it covers.
+Once Stage 2 is sufficiently settled, add one short normative acceptance document covering only the concepts that survived testing:
 
-## v1.2.4
+- minimum readiness / work contract;
+- candidate identity and freshness;
+- baseline obligations;
+- triggered obligations where evidence supports them;
+- verification vs review vs acceptance;
+- authority and exception semantics;
+- truthful terminal-state claims.
 
-- Generalize the "as of" date in `docs/rationale.md` (drop the date, keep the
-  substance); drop the redundant 2nd "Note on the folder name" disclaimer in
-  `eval/README.md`; add an illustrative-not-runnable disclaimer on the `curl`
-  commands in `examples/worked-example.md`; drop a first-person plural from a
-  Python comment in `eval/check.py`; rename "Out (non-goals):" to "Out of
-  scope (non-goals):" in `templates/POC-BRIEF.md` and the corresponding
-  `required_strings` entry in `eval/check.py`. Bump `pyproject.toml` version
-  to 1.2.4.
+Do not add a separate subsystem for each concept.
 
-## v1.2.5
+## Stage 4 — Test native enforcement before writing custom code
 
-- Add a concrete workflow rule for new dependencies: a decision entry
-  in `DECISIONS.md` and a stop-condition pass in
-  `templates/AGENTS.md:143`. Bump `pyproject.toml` version 1.2.4 to
-  1.2.5.
+Exercise the actual surviving obligations on a disposable/scratch repository using native GitHub/CI capabilities first:
 
-## v1.3.0 (later)
+- required checks and freshness;
+- review/ownership rules where applicable;
+- rulesets / protected branches;
+- deployment/environment protections where relevant;
+- negative cases such as missing checks, changed candidates, weakened policy, forgotten triggered review, and unauthorized exceptions.
 
-- Extend the conformance check to cover the DS/AI pack's
-  `GATES.ds-ai.md` (structurally parallel to `check_gates_ml_eval_any`;
-  ~30 lines of code). The public repo does not ship the DS/AI pack
-  today; this is a candidate that depends on whether the pack pattern
-  is adopted as a public feature. See the private repo's
-  `ROADMAP.md` "v1.3.0 candidates (deferred)" section for the
-  design notes.
+If native mechanisms cover the load-bearing boundary, build no Playbook checker.
 
-## v1.3.0 candidates (deferred) — retired
+If one narrow consequential gap remains, build the smallest repository-specific helper and only generalize it after repeated real demand.
 
-- A one-paragraph note to `AGENTS.md` on how the template discipline
-  coexists with MCP / agent-tool protocols. Drafted 2026-06-12; retired
-  the same day. The plan-doc was 115 lines, the section draft was 5
-  sentences, and at that point the framing collapsed: the note would
-  restate that the existing rules in `templates/AGENTS.md` apply when
-  the agent is invoked through MCP or any other agent-tool protocol,
-  without adding a new rule. A 1-paragraph release is a thin release,
-  and a thin release sets a bad precedent for what "v1.3.0" means.
-  The Playbook stays tool-agnostic by design, and the existing rules
-  already cover this. The public ROADMAP v1.3.0 (later) section
-  contains the DS/AI pack conformance check extension as its single
-  remaining bullet; the optional enforcement layer is now shipped
-  (see "v1.3.0 (this release)" above). A v1.3.0 release is gated on
-  the DS/AI pack conformance check decision (see the private repo's
-  `ROADMAP.md` "v1.3.0 candidates (deferred)" section).
+## Stage 5 — Add examples that reflect real use
 
-## v2.0 (far)
+Examples should be written after the protocol is exercised, not before.
 
-- Outcome-based check: spawn headless agent on a fixed test set, score
-  against a baseline, report variance. This is gated on a reproducible
-  agent harness existing (none does as of 2026-06).
-- Investigate whether a headless agent harness is viable for an
-  outcome-check stub. Depends on whether any of Claude Code, Cursor,
-  Codex, or Gemini CLI ships a server-side API with a stable test
-  interface (see `docs/rationale.md` for the current assessment).
+Likely modes:
 
-## Not the goal
+- a PR/CI delivery flow with candidate-bound evidence and, where relevant, post-deployment confirmation;
+- a linear-main/research flow using exact-candidate review and durable decisions.
 
-- Expanding into a broader public framework
-- Publishing the full upstream/downstream methodology stack
-- Adding surface area faster than the repo's examples and real use can support
+Add a generalized reviewer contract only if the independent-review yield analysis supports it. Add optional empirical/evaluation guidance only if it remains useful without turning this repository into an evaluation platform.
+
+## Explicit non-roadmap
+
+Do not plan to build:
+
+- a universal harness lifecycle abstraction;
+- agent orchestration / task claiming / leases;
+- a telemetry or trace-normalization platform;
+- a new spec-generation workflow;
+- a generic ruleset manager;
+- a mirrored public/private release train;
+- a permanent behavioral benchmark platform for the Playbook.
+
+The default response to uncertainty about a new subsystem is **do not build it yet**.

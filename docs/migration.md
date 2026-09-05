@@ -1,144 +1,72 @@
 # Adopting the Playbook into an existing project
 
-> A short orientation page for the reader who has a 2-year-old codebase and wants a consistent operating shape for repo-level work.
->
-> See [`docs/rationale.md`](rationale.md) for the philosophy, [`docs/principles.md`](principles.md) for the 3 design principles, and [`README.md`](../README.md) "Quick start" for the templates overview.
+The September 2026 redesign removes the old assumption that adoption means copying a fixed set of task, status, gate, and enforcement files.
 
-## What this is
+Adoption now starts by identifying the boundaries the project already has and adding only the missing assurance semantics.
 
-A 4-step adoption path for an existing project. Two common cases (Python project with a `pyproject.toml` and a `README.md`; research / notebook / DS-style project), and an honest fallback for projects that fit neither.
+## 1. Name the authoritative work source
 
-## What this is not
+Use the system that already owns the intent and work state: a GitHub issue, Spec Kit artifact, Jira/Linear item, `TASKS.md`, or another maintained source.
 
-- A tutorial or a methodology framework.
-- A CLI or an automation tool.
-- A per-tool guide (Claude Code / Cursor / Codex / Gemini CLI). The Playbook is tool-agnostic; the `AGENTS.md` template is the canonical instruction file. For tools expecting a different filename, keep a 1-line pointer to `AGENTS.md` (the public repo's `CLAUDE.md` is one such example).
-- A real evaluation. The Playbook is a conformance check (structural lint), not an outcome eval. See `docs/rationale.md` for why outcome-based is out of scope.
-- A wrapper for an existing test suite. The conformance check is a standalone script (`python eval/check.py`); integrating it into a test suite is the user's job.
+The next bounded change should expose enough information to determine:
 
----
+- intended observable outcome;
+- material scope and exclusions;
+- success / acceptance criteria or other oracle;
+- unresolved material questions;
+- relevant durable decisions / constraints;
+- decision authority that could block the work.
 
-## Common case: Python project with a `pyproject.toml` and a `README.md`
+Do not create a second tracker merely to satisfy the Playbook.
 
-Four steps. The conformance check at the end of each step is the feedback signal.
+## 2. Add concise repository instructions
 
-### Step 1: Pick the 7 core templates
+Use `templates/AGENTS.md` as a starting point, then keep only information that is durable and non-obvious for this repository:
 
-From `templates/`, copy into the project root:
+- authority/source precedence;
+- important verification entry points;
+- execution bounds;
+- stop/escalation conditions;
+- pointers to authoritative policy and durable decisions.
 
-- `AGENTS.md` (canonical instruction file)
-- `CLAUDE.md` only if the project uses Claude Code; otherwise skip
-- `TASKS.md` (in progress / ready / blocked / done)
-- `DECISIONS.md` (append-only `D-NNN` entries: question, options, decision, follow-up)
-- `STATUS.md` (Date + Tracker + one-line current state)
-- `GATES.md` only if the project uses gates; otherwise skip
-- `task-card.md` (small reviewable unit of work; "In scope" / "Out of scope" sub-bullets)
+If a tool expects another instruction filename, use a short pointer where practical rather than duplicating policy.
 
-Minimum layout:
+## 3. Identify the candidate and authoritative verification boundary
 
-```text
-<repo>/
-  AGENTS.md
-  TASKS.md
-  DECISIONS.md
-  tasks/
-```
+Choose how an exact proposed change is identified in this project: usually a pull request and candidate revision, or an exact commit/range for a linear-main workflow.
 
-### Step 2: Fill the 3 required templates
+Use normal local verification for fast feedback. Use the project's authoritative CI/review boundary for evidence that must hold before incorporation.
 
-- `AGENTS.md`: set the spec root, the tool filename (if not `AGENTS.md`), and the project's "rules" (the template ships with default rules; edit them).
-- `TASKS.md`: start with a single task card. The template's 4 sections (In Progress, Ready, Blocked, Done) are the operating shape.
-- `DECISIONS.md`: one entry per decision the project has made (the 3 design decisions, the tooling choices, etc.). Append-only.
+Do not require one task to equal one commit. Do not copy commit hashes into tracked completion ledgers when Git or the hosting platform already owns that state.
 
-### Step 3: Run the conformance check
+## 4. Separate evidence, judgment, and authority
 
-```bash
-python eval/check.py
-```
+For the boundary that matters in this project, identify:
 
-The check verifies every template's structural integrity (required fields, required sections, required patterns). At this point, expect failures on `task-card.md` (not yet used) and possibly on `AGENTS.md` (the spec-root placeholder). Each failure is a checklist item, not a "wrong answer."
+- what mechanical evidence must be current for the candidate;
+- when additional judgment is required;
+- who or what policy has authority to accept the candidate;
+- what stronger post-incorporation claim, if any, must be confirmed before the work is considered complete.
 
-Re-run after each edit. The check is fast (<5 sec on stdlib Python 3.12 or 3.13) and has no dependencies.
+The exact reusable trigger catalogue and reviewer-contract guidance are still being validated in this redesign. Do not invent a large local policy matrix just to match a future Playbook shape.
 
-### Step 4: Add templates one at a time
+## Existing project artifacts
 
-For each new template:
+These may remain useful when they contain unique information:
 
-1. Copy from `templates/`.
-2. Fill the required fields.
-3. Re-run `python eval/check.py`.
-4. Address any failures.
+- `DECISIONS.md` or ADRs for rationale not recoverable from the diff;
+- `TASKS.md` for repositories that genuinely need an in-repo work tracker;
+- project-specific quality/acceptance policy where it encodes real failure history;
+- evaluation provenance when the deliverable is an empirical/probabilistic result rather than ordinary software behavior.
 
-End state: `python eval/check.py` reports 17/17 PASS. The number 17 reflects the public's template discipline (15 templates + 2 promoted eval-meta files) and is not a target for the adopting project; the project's own template count drives its own check result.
+They are not universally mandatory.
 
----
+## Retired adoption machinery
 
-## Secondary case: research / notebook / DS-style project
+The redesign no longer recommends installing the legacy `enforcement/` stack, post-commit completion bookkeeping, verifier/executor, or the old template-conformance harness.
 
-Four steps. The PoC/eval templates and the eval-meta files are the focus.
+Those implementations remain available in Git history for provenance. They should not be copied into new projects.
 
-### Step 1: Pick the PoC / evaluation templates
+## Current limitation
 
-From `templates/`, copy into the project root:
-
-- `POC-BRIEF.md` (decision question, metrics, evaluation plan, artifact policy)
-- `POC-CLOSURE.md` (close-out; the equivalent of a "definition of done" for a PoC)
-- `REPORT.md` (the report format that supports a gate decision)
-- `SOURCE-DIGEST.md` (smaller-than-raw source digests)
-- `questions-triage.md` (when the project has enough open questions to warrant a separate tracker)
-- `gitignore-poc.append.txt` (recommended gitignore additions for the PoC local artifacts)
-
-Plus the 2 eval-meta files (structurally enforced by the conformance check):
-
-- `GATES.ml-eval.md` (ML-eval decision gate with 7 sub-checks)
-- `run-manifest.json` (run reproducibility schema)
-
-### Step 2: Set up `artifacts/`
-
-The PoC/eval templates reference tracked pointer files under `artifacts/`. The pattern is human-readable pointers, not the raw artifacts (datasets, exports, PDFs, zips, logs). The public's `POC-BRIEF.md` template's "Artifact policy" section and the `AGENTS.md` rule on not committing large artifacts are the source of truth.
-
-### Step 3: Set up `GATES.ml-eval.md`
-
-The ML-eval gate is a `GATES.ml-eval.md` file with 7 required sub-checks (each a markdown checkbox). The check verifies the 7 sub-checks are present; it does not verify the content. The 7 sub-checks are listed in the public `GATES.ml-eval.md` template.
-
-### Step 4: Run the conformance check
-
-```bash
-python eval/check.py --self-test
-```
-
-The `--self-test` flag runs the check against `eval/fixtures/bad-project/`, a fixture with 9 deliberately broken files (4 presence breaks + 4 type breaks + 1 enum break). The self-test asserts that all 9 breaks are caught. If any break slips through, the self-test exits non-zero, meaning the check has a gap. This is a sanity check on the check itself, not on the project.
-
-Then run the check without `--self-test` to verify the project's own state.
-
----
-
-## Optional: Adopting the Enforcement Tools
-
-The Playbook ships an **optional** `enforcement/` directory containing
-4 components that enforce the discipline at the local-machine level
-and detect drift over time. The layer is opt-in: projects that adopt
-the Playbook can install the enforcement tools or not.
-
-`enforcement/README.md` is the canonical entry point. The 4
-components (git hooks, opencode plugin, verifier subagent, cron/CI
-executor) ship in subsequent releases; this section is a high-level
-pointer. The hooks are universal (work for any agent, not just
-opencode); the plugin, verifier, and executor are opencode-specific.
-The discipline itself stays tool-agnostic; the opencode
-implementation is one option among several possible. 3 small
-additions to `templates/AGENTS.md` ship alongside the layer (3-digit
-task IDs, bypass-observability, and a new "Optional: enforcement
-layer" section documenting the hook behaviors).
-
----
-
-## If neither case fits
-
-File a GitHub issue at `manjast/agentic-development-playbook/issues` with:
-
-- The project shape (language, framework, size, what "repo-level work" looks like in the project).
-- The templates already tried.
-- The conformance-check output if `python eval/check.py` has been run.
-
-The Playbook is intentionally narrower than a full public methodology stack. Projects that don't fit either of the two cases above are most often upstream of where the Playbook starts (requirements shaping, discovery, broad methodology design); solve that first.
+This migration page deliberately describes only the high-confidence redesign direction. The final public acceptance baseline, reusable trigger examples, reviewer-contract treatment, and native GitHub/CI example will be added only after their bounded falsification work is complete.

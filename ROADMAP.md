@@ -4,7 +4,7 @@ This roadmap is intentionally short. The September 2026 redesign is a correction
 
 ## Stage 1 — Establish a truthful baseline
 
-**Status: complete on `redesign/acceptance-protocol`.**
+**Status: complete.**
 
 Completed changes:
 
@@ -19,33 +19,42 @@ Completed changes:
 
 Stage 1 intentionally leaves the repository smaller and internally coherent even if no replacement code is ever built.
 
-## Stage 2 — Resolve the remaining semantic uncertainties
+## Stage 2 — Resolve product-shaping semantic uncertainties
 
-Use bounded evidence rather than another broad architecture review.
+**Status: sufficiently complete to proceed.**
 
-Questions still being tested in the private research checkpoint:
+Bounded private research produced decision-useful results for:
 
-1. **Independent review yield** — which findings in the existing T-006 audit practice were genuine escapes beyond sensible deterministic checks and producer self-review?
-2. **Trigger usefulness** — which observable change properties route meaningful additional obligations without creating excessive noise or misses?
-3. **Terminal boundary** — what general wording cleanly covers both incorporation-only work and deployed work that requires confirmation in effect?
+- **independent review yield** — independent challenge can expose missing invariants/oracles after ordinary verification is green, but should be conditional rather than universal;
+- **trigger routing** — high-signal mechanical triggers are useful, while semantic classes need project-specific mapping and impact/reviewer fallback rather than a universal path catalogue;
+- **terminal outcome semantics** — the work contract names the terminal outcome boundary; incorporation is enough for some work, while other work requires deployment/release/confirmation evidence.
 
-Cross-repository practice can supply examples and counterexamples, but non-adoption of the unfinished Playbook is not a redesign gate.
+These results constrain the public protocol but do not justify separate subsystems for each concept.
 
-## Stage 3 — Publish the minimal acceptance contract
+Cross-repository practice remains useful for examples and counterexamples, but non-adoption of the unfinished Playbook is not a redesign gate.
 
-Once Stage 2 is sufficiently settled, add one short normative acceptance document covering only concepts that survived testing:
+## Stage 3 — Publish and dogfood the minimal acceptance contract
+
+**Status: next.**
+
+Add one short normative `ACCEPTANCE.md` covering only concepts that survived testing:
 
 - minimum readiness / work contract;
 - candidate identity and freshness;
-- baseline obligations;
-- triggered obligations where evidence supports them;
+- minimal baseline obligations;
+- conditional obligations;
 - verification vs review vs acceptance;
-- authority and exception semantics;
-- truthful terminal-state claims.
+- execution authority vs acceptance authority;
+- exception / stop semantics;
+- truthful terminal-outcome claims.
 
-Do not add a separate subsystem for each concept.
+Then exercise that protocol on this redesign candidate itself before freezing the exact baseline fields. The dogfood pass should answer whether any proposed field is redundant, ambiguous, or duplicated by Git/PR/CI state.
+
+Do not add a trigger engine, reviewer framework, Skill, vendor adapter, or generic checker during this stage.
 
 ## Stage 4 — Test native enforcement before writing custom code
+
+**Status: after Stage 3 dogfooding.**
 
 Exercise the actual surviving obligations on a disposable/scratch repository using native GitHub/CI capabilities first:
 
@@ -53,22 +62,25 @@ Exercise the actual surviving obligations on a disposable/scratch repository usi
 - review/ownership rules where applicable;
 - rulesets / protected branches;
 - deployment/environment protections where relevant;
-- negative cases such as missing checks, changed candidates, weakened policy, forgotten triggered review, and unauthorized exceptions.
+- negative cases such as missing checks, changed candidates, weakened policy, forgotten triggered review, unauthorized exceptions, and deployment-dependent completion.
 
 If native mechanisms cover the load-bearing boundary, build no Playbook checker.
 
 If one narrow consequential gap remains, build the smallest repository-specific helper and only generalize it after repeated real demand.
 
-## Stage 5 — Add examples that reflect real use
+## Stage 5 — Add examples only where use earns them
 
 Examples should be written after the protocol is exercised, not before.
 
-Likely modes:
+Potential additions, only if they materially improve use:
 
-- a PR/CI delivery flow with candidate-bound evidence and, where relevant, post-deployment confirmation;
-- a linear-main/research flow using exact-candidate review and durable decisions.
+- one GitHub-native PR/CI acceptance recipe;
+- concise conditional independent-review guidance;
+- a few trigger examples clearly labeled as examples rather than a universal catalogue;
+- a linear-main/research example using exact-candidate review and durable decisions;
+- a small optional empirical/probabilistic evidence guide.
 
-Add a generalized reviewer contract only if the independent-review yield analysis supports it. Add optional empirical/evaluation guidance only if it remains useful without turning this repository into an evaluation platform.
+A standalone reviewer contract, custom checker, broad trigger catalogue, multiple vendor recipes, or evaluation platform requires additional demonstrated need.
 
 ## Explicit non-roadmap
 

@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 
-> **Redesign branch:** this branch is the September 2026 architecture reset. Stage 1 removes the legacy commit-bookkeeping enforcement, structural template-conformance machinery, and stale artifact lifecycle before the remaining acceptance semantics are finalized.
+> **Redesign branch:** this branch is the September 2026 architecture reset. The subtractive/truthfulness baseline is complete. The next slice is the minimal normative `ACCEPTANCE.md` protocol, followed by dogfooding and native-platform enforcement testing.
 
 ## What this is becoming
 
@@ -77,6 +77,22 @@ Use the strongest inexpensive boundary available:
 
 Local hooks may improve ergonomics but are not an authoritative acceptance boundary.
 
+### Route extra obligations selectively
+
+Bounded historical replay supports deterministic triggers for high-signal mechanical classes such as dependency manifests, CI/policy files, deployment configuration, and explicitly configured migration/schema locations.
+
+Do not assume a universal path catalogue can identify all semantic privacy, authorization, API, or other consequential changes. Where paths are insufficient, combine small project-specific maps with impact declaration and reviewer inspection.
+
+A trigger attaches an **obligation**. It does not automatically imply a reviewer, a universal risk tier, or a new Playbook subsystem.
+
+### Use independent challenge where it earns its cost
+
+Independent review can add value when residual risk is dominated by missing invariants, weak test oracles, semantic/privacy/provenance mistakes, or producer self-confirmation.
+
+Its differentiated role is challenge and oracle discovery, not manual duplication of CI. Fresh context, independent derivation, adversarial counterexamples, and exact-candidate binding are useful properties. Repeated mechanically decidable escapes should move into deterministic checks when inexpensive.
+
+This does not make independent review mandatory for every candidate or require a different model universally.
+
 ### Do not overclaim state
 
 These are different claims:
@@ -95,11 +111,13 @@ deployed
 != confirmed working
 ```
 
-A project should define the boundary relevant to the promised outcome. The exact general wording for incorporation versus downstream confirmation is still being validated during this redesign.
+The work contract names the terminal outcome boundary. Work is complete when evidence establishes that promised outcome. For some changes incorporation is enough; for others deployment, release, or confirmation in effect is part of the promise.
+
+Never claim a stronger state than the evidence establishes.
 
 ## Current redesign baseline
 
-Stage 1 has deliberately removed:
+The completed subtractive stage removed:
 
 - the legacy `enforcement/` stack and scheduled executor;
 - the old template-conformance/eval harness and CI badge;
@@ -110,7 +128,7 @@ Stage 1 has deliberately removed:
 
 All retired material remains available in Git history.
 
-The active template surface is intentionally small while the protocol is being validated:
+The active template surface is intentionally small:
 
 - [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository authority, execution, verification, stop, candidate, and acceptance guidance;
 - [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to the canonical `AGENTS.md` policy;
@@ -123,18 +141,21 @@ See:
 
 - [`docs/principles.md`](docs/principles.md) — durable redesign principles;
 - [`docs/migration.md`](docs/migration.md) — current migration guidance;
-- [`ROADMAP.md`](ROADMAP.md) — bounded redesign sequence.
+- [`ROADMAP.md`](ROADMAP.md) — current redesign sequence.
 
-## What remains deliberately unresolved
+## Where the redesign currently stands
 
-Before the protocol surface is frozen, the redesign is still testing:
+Private falsification work has already produced decision-useful results for:
 
-- the real yield and proper scope of independent review;
-- which observable change triggers create useful additional obligations without excessive noise;
-- the clean general wording for incorporation-only versus runtime-confirmed outcomes;
-- how much of the resulting acceptance boundary can be expressed with native GitHub/CI controls before any custom checker is justified.
+- independent-review yield;
+- trigger routing architecture;
+- terminal outcome semantics.
 
-These questions affect what may be **added** later. They do not justify restoring the retired bookkeeping architecture.
+Those results are now reflected in the public direction above.
+
+The next public step is to write the minimal normative `ACCEPTANCE.md` and exercise it on this redesign candidate. That dogfooding should determine the smallest useful baseline obligations before they are frozen.
+
+The principal remaining enforcement question is whether native GitHub/CI/ruleset/environment mechanisms can express those surviving obligations without a generic Playbook checker. Native controls are tested first; custom code remains presumptively unnecessary unless a material recurring gap is demonstrated.
 
 ## Repository topology
 

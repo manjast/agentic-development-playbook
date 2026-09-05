@@ -1,17 +1,23 @@
 # Redesign Roadmap
 
-This roadmap is intentionally short. The September 2026 redesign is a correction of scope and control semantics, not a plan to replace the retired machinery with a new framework.
+This roadmap is intentionally short. The September 2026 redesign is a correction of scope and control semantics, not a plan to replace retired machinery with a new framework.
 
 ## Stage 1 — Establish a truthful baseline
 
-- retire the legacy commit-bookkeeping enforcement stack;
-- retire the scheduled verifier/executor workflow;
-- retire the structural conformance harness that hard-coded the legacy template architecture;
-- remove `one task = one commit` and tracked commit-hash completion semantics from standing guidance;
-- replace stale claims that conformance or local hooks establish assurance;
-- shrink `AGENTS.md` to durable authority, scope, verification, stop, candidate, and acceptance guidance.
+**Status: complete on `redesign/acceptance-protocol`.**
 
-This stage should leave the repository smaller and internally coherent even if no replacement code is ever built.
+Completed changes:
+
+- retired the legacy commit-bookkeeping enforcement stack;
+- retired the scheduled verifier/executor workflow;
+- retired the structural conformance harness that hard-coded the legacy template architecture;
+- removed `one task = one commit` and tracked commit-hash completion semantics from standing guidance;
+- removed the mandatory task-card/archive lifecycle;
+- removed the old PoC/eval template suite from the active public surface;
+- removed stale claims that conformance or local hooks establish assurance;
+- reduced the active template surface to repository instructions, durable decisions, and an optional tracker example.
+
+Stage 1 intentionally leaves the repository smaller and internally coherent even if no replacement code is ever built.
 
 ## Stage 2 — Resolve the remaining semantic uncertainties
 
@@ -27,7 +33,7 @@ Cross-repository practice can supply examples and counterexamples, but non-adopt
 
 ## Stage 3 — Publish the minimal acceptance contract
 
-Once Stage 2 is sufficiently settled, add one short normative acceptance document covering only the concepts that survived testing:
+Once Stage 2 is sufficiently settled, add one short normative acceptance document covering only concepts that survived testing:
 
 - minimum readiness / work contract;
 - candidate identity and freshness;

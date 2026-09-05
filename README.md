@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 
-> **Redesign branch:** this branch is the September 2026 architecture reset. It deliberately removes the legacy commit-bookkeeping enforcement and template-conformance machinery before adding replacement controls. The exact public acceptance baseline, trigger examples, reviewer contract, and any native-platform enforcement example are still being validated.
+> **Redesign branch:** this branch is the September 2026 architecture reset. Stage 1 removes the legacy commit-bookkeeping enforcement, structural template-conformance machinery, and stale artifact lifecycle before the remaining acceptance semantics are finalized.
 
 ## What this is becoming
 
@@ -34,7 +34,7 @@ Upstream tools such as issue trackers and specification systems may provide the 
 
 ### Start with minimum readiness
 
-Do not treat a label such as “approved” as sufficient by itself. Before bounded implementation, the next change needs enough clarity to identify:
+Before bounded implementation, the next change needs enough clarity to identify:
 
 - the intended observable outcome;
 - material scope and exclusions;
@@ -83,31 +83,58 @@ These are different claims:
 
 ```text
 tests passed
-≠ accepted
+!= accepted
 
 accepted for incorporation
-≠ incorporated
+!= incorporated
 
 incorporated
-≠ deployed
+!= deployed
 
 deployed
-≠ confirmed working
+!= confirmed working
 ```
 
 A project should define the boundary relevant to the promised outcome. The exact general wording for incorporation versus downstream confirmation is still being validated during this redesign.
 
-## Current repository state
+## Current redesign baseline
 
-The legacy enforcement stack and its scheduled executor have been retired on this redesign branch. The old structural conformance harness has also been retired because it hard-coded the legacy template architecture and did not establish behavioral assurance.
+Stage 1 has deliberately removed:
 
-The remaining templates and examples are **migration material, not a frozen future public surface**. They will be kept, rewritten, moved, or removed only as the acceptance protocol and its remaining falsification tests settle.
+- the legacy `enforcement/` stack and scheduled executor;
+- the old template-conformance/eval harness and CI badge;
+- the mandatory one-task/one-commit rule;
+- tracked task→commit completion bookkeeping;
+- the mandatory task-card/archive lifecycle;
+- the old PoC/eval template suite from the active public surface.
+
+All retired material remains available in Git history.
+
+The active template surface is intentionally small while the protocol is being validated:
+
+- [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository authority, execution, verification, stop, candidate, and acceptance guidance;
+- [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to the canonical `AGENTS.md` policy;
+- [`templates/DECISIONS.md`](templates/DECISIONS.md) — durable rationale/ADR example;
+- [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker example for projects that do not already have an authoritative work system.
+
+None of these filenames except the repository instruction mechanism should be interpreted as a mandatory storage architecture.
 
 See:
 
-- [`docs/principles.md`](docs/principles.md) — durable redesign principles
-- [`docs/migration.md`](docs/migration.md) — current migration guidance
-- [`ROADMAP.md`](ROADMAP.md) — bounded redesign sequence
+- [`docs/principles.md`](docs/principles.md) — durable redesign principles;
+- [`docs/migration.md`](docs/migration.md) — current migration guidance;
+- [`ROADMAP.md`](ROADMAP.md) — bounded redesign sequence.
+
+## What remains deliberately unresolved
+
+Before the protocol surface is frozen, the redesign is still testing:
+
+- the real yield and proper scope of independent review;
+- which observable change triggers create useful additional obligations without excessive noise;
+- the clean general wording for incorporation-only versus runtime-confirmed outcomes;
+- how much of the resulting acceptance boundary can be expressed with native GitHub/CI controls before any custom checker is justified.
+
+These questions affect what may be **added** later. They do not justify restoring the retired bookkeeping architecture.
 
 ## Repository topology
 

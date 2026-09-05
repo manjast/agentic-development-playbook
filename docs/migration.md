@@ -46,9 +46,34 @@ For the boundary that matters in this project, identify:
 - what mechanical evidence must be current for the candidate;
 - when additional judgment is required;
 - who or what policy has authority to accept the candidate;
-- what stronger post-incorporation claim, if any, must be confirmed before the work is considered complete.
+- what terminal outcome the work actually promises and what evidence establishes it.
 
-The exact reusable trigger catalogue and reviewer-contract guidance are still being validated in this redesign. Do not invent a large local policy matrix just to match a future Playbook shape.
+Independent challenge review is useful conditionally when residual risk is dominated by missing invariants, weak oracles, semantic/privacy/provenance mistakes, or producer self-confirmation. It is not required for every candidate.
+
+For additional obligations, start with high-signal mechanical triggers such as dependency manifests, CI/policy files, deployment configuration, and explicitly configured migration/schema locations. Use small project-specific semantic maps plus impact declaration/reviewer fallback where paths cannot reliably establish consequential meaning.
+
+Do not invent a large universal policy matrix merely to imitate these examples.
+
+## 5. Name the completion boundary truthfully
+
+Do not equate merge with every stronger outcome.
+
+The work contract should make clear whether the promised outcome is satisfied at incorporation or whether deployment, release, or confirmation in effect is part of the obligation.
+
+Examples:
+
+```text
+accepted for incorporation
+!= incorporated
+
+incorporated
+!= deployed
+
+deployed
+!= confirmed working
+```
+
+Claim only the strongest state for which current evidence exists.
 
 ## Existing project artifacts
 
@@ -69,4 +94,6 @@ Those implementations remain available in Git history for provenance. They shoul
 
 ## Current limitation
 
-This migration page deliberately describes only the high-confidence redesign direction. The final public acceptance baseline, reusable trigger examples, reviewer-contract treatment, and native GitHub/CI example will be added only after their bounded falsification work is complete.
+The exact minimal baseline obligations are not frozen yet. The next redesign step is to publish and dogfood the short normative `ACCEPTANCE.md`, then test whether native GitHub/CI/ruleset/environment controls can express the surviving obligations before considering any custom checker.
+
+Detailed trigger catalogues, standalone reviewer-contract packaging, multi-vendor recipes, and a generic acceptance checker are intentionally not part of the current adoption surface.

@@ -1,182 +1,94 @@
 # Agentic Development Playbook
 
-> A spec-driven workflow for AI coding agents with the repo as the source of truth: specs, decisions, tasks, and run records live in versioned files.
->
-> Targets the Claude Code / Cursor / Codex / Gemini CLI ecosystem. Tool-agnostic by design — see [`docs/rationale.md`](docs/rationale.md) for why no per-tool guidance is shipped.
+> A lightweight, harness-independent assurance protocol for turning sufficiently ready software intent into an acceptable change.
 
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
-[![Conformance](https://github.com/manjast/agentic-development-playbook/actions/workflows/eval.yml/badge.svg)](https://github.com/manjast/agentic-development-playbook/actions/workflows/eval.yml)
 
-> **Note on the folder name:** `eval/` is historical. This is a conformance check
-> (structural lint), not a behavioral evaluation. See [`docs/rationale.md`](docs/rationale.md)
-> for why outcome-based evals are out of scope.
+> **Redesign branch:** the subtractive baseline and acceptance-protocol dogfood/challenge pass are complete. Stage 4 / F-004 is underway: native GitHub/CI controls already have decision-useful evidence, while a few protection/review/exception cases remain to be exercised safely before the enforcement decision is closed.
 
-## Conformance check (latest run)
+## What this is becoming
 
-```
-check_template_fields/AGENTS.md                                     PASS  all required fields present
-check_template_fields/CLAUDE.md                                     PASS  all required fields present
-check_template_fields/DECISIONS.md                                  PASS  all required fields present
-check_template_fields/GATES.md                                      PASS  all required fields present
-check_template_fields/POC-BRIEF.md                                  PASS  all required fields present
-check_template_fields/POC-CLOSURE.md                                PASS  all required fields present
-check_template_fields/REPORT.md                                     PASS  all required fields present
-check_template_fields/SOURCE-DIGEST.md                              PASS  all required fields present
-check_template_fields/STATUS.md                                     PASS  all required fields present
-check_template_fields/TASKS.md                                      PASS  all required fields present
-check_template_fields/gitignore-poc.append.txt                      PASS  all required fields present
-check_template_fields/questions-triage.md                           PASS  all required fields present
-check_template_fields/task-card.md                                  PASS  all required fields present
-check_run_manifest/eval/fixtures/example-project/run-manifest.json  PASS  all required keys present (8 top-level)
-check_run_manifest/templates/run-manifest.json                      PASS  all required keys present (8 top-level)
-check_gates_ml_eval/eval/fixtures/example-project/GATES.ml-eval.md  PASS  7/7 sub-checks present
-check_gates_ml_eval/templates/GATES.ml-eval.md                      PASS  7/7 sub-checks present
+The Playbook focuses on the control boundary between **authorized intent** and an **accepted software change**.
 
-Total: 17  Pass: 17  Fail: 0
-```
+[`ACCEPTANCE.md`](ACCEPTANCE.md) is the normative protocol. Its model is intentionally small:
 
-The conformance check verifies (a) every template has its required fields, (b) any `run-manifest.json` conforms to the run-reproducibility schema, (c) any `GATES.ml-eval.md` has the 7 required sub-checks (each as a markdown checkbox; per-check content is not verified — see `eval/check.py:476-481` for the design rationale). Runs in <5 sec on stdlib Python 3.12 or 3.13.
+1. **Work contract** — enough authorized intent and context to execute and judge the next bounded change.
+2. **Candidate** — the identifiable proposed change and relevant target/integration context.
+3. **Obligations** — required evidence, judgment, authority, or downstream confirmation.
+4. **Acceptance decision** — an authorized disposition permitting the candidate to cross a named boundary.
 
-**This is a structural check, not a behavioral evaluation** — see [`docs/rationale.md`](docs/rationale.md) for why outcome-based is out of scope, and `python eval/check.py --self-test` to verify the check itself is not vacuous.
+The protocol distinguishes verification, review, acceptance, execution authority, acceptance authority, and truthful terminal-outcome claims. It also defines how candidate/context changes affect evidence freshness and why additional obligations should be routed selectively rather than through a universal risk taxonomy.
 
-## What this prevents
-
-The Playbook's discipline prevents five specific failure modes that plague AI-assisted coding work. Each prevention is **supported by** templates in this repo. **#4 is structurally verified by the conformance check; #1–#3 and #5 are template-presence-supported but not content-verified by the current check — a known scope limit, see [`docs/rationale.md`](docs/rationale.md).**
-
-1. **Lost decisions across context windows** — `DECISIONS.md` (every `D-NNN` entry is dated: question, options, decision, follow-up; append-only)
-2. **Drift between TASKS and reality** — `TASKS.md` (4 sections: In Progress, Ready, Blocked, Done) + `STATUS.md` (Date + Tracker + one-line current state)
-3. **Unreviewable mega-diffs** — `task-card.md` (explicit "In scope" / "Out of scope" sub-bullets)
-4. **Eval claims without evidence** — `GATES.ml-eval.md` (7 sub-checks) + `run-manifest.json` (structured run record: commit, seed, environment, budget)
-5. **Template sprawl that no one maintains** — the 15-template discipline (13 user-facing + 2 eval-meta, with structure enforcement)
-
-## What this is
-
-- A repo-native execution discipline for implementation work that needs clear scope, explicit verification, and reviewable task boundaries
-- A set of templates for teams or solo builders who want a consistent operating shape once work becomes repo-level
-- A light PoC/evaluation path for work that needs evidence, reports, and closure before hardening further
-- A provider-agnostic setup built around `AGENTS.md` as the canonical instruction file
+For the actual requirements, read [`ACCEPTANCE.md`](ACCEPTANCE.md). This README intentionally does not restate the full protocol.
 
 ## What this is not
 
-- A requirements or spec-generation system
-- A CLI or automation framework
-- A multi-agent orchestration product
-- A full public methodology stack covering every upstream and downstream phase
+- A discovery, requirements, or specification-generation methodology
+- An agent harness or cross-vendor hook abstraction
+- A task scheduler, agent orchestrator, or memory system
+- A CI, code-review, merge, deployment, or observability platform
+- A universal telemetry or benchmark service
 
-## Core path
+Upstream tools such as issue trackers and specification systems may supply the work contract. Coding harnesses produce candidates. CI and repository rules establish mechanical facts and merge policy. Review systems provide judgment. Sandboxes, IAM, protected environments, and resource controls constrain execution authority.
 
-Use the core path when specs or architecture decisions already exist and the main need is disciplined implementation.
+The Playbook should not duplicate those systems.
 
-Core artifacts:
+## Design principles
 
-- `AGENTS.md`
-- `TASKS.md`
-- `DECISIONS.md`
-- `task-card.md`
-- `GATES.md` (optional)
-- `STATUS.md` (optional)
+The redesign keeps a few durable principles around the normative protocol:
 
-Core rules:
+- preserve authority instead of duplicating state;
+- accept identifiable candidates rather than enforcing task/commit cardinality;
+- treat evidence, judgment, and authority as different things;
+- enforce consequential invariants at the strongest inexpensive boundary available;
+- use baseline assurance plus selectively triggered obligations;
+- keep execution authority distinct from acceptance authority;
+- never claim a stronger completion state than the evidence establishes;
+- add custom machinery only after a recurring material gap is demonstrated.
 
-- repo files are the source of truth
-- one task = one commit
-- verification before commit
-- no drive-by refactors
-- keep tasks small and reviewable
+See [`docs/principles.md`](docs/principles.md) for the rationale behind these choices.
 
-## PoC / evaluation path
+## Current public surface
 
-Use the PoC path when the first phase needs decision-grade evidence rather than a production-ready finish.
+The active surface is intentionally small:
 
-The public first pass includes templates for:
+- [`ACCEPTANCE.md`](ACCEPTANCE.md) — normative change-acceptance protocol;
+- [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository-specific authority, execution, evidence, stop, and completion guidance;
+- [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to canonical `AGENTS.md` policy;
+- [`templates/DECISIONS.md`](templates/DECISIONS.md) — simple durable-decision/ADR example;
+- [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker for projects without an authoritative external work system.
 
-- `POC-BRIEF.md`
-- `POC-CLOSURE.md`
-- `REPORT.md`
-- `SOURCE-DIGEST.md`
-- `questions-triage.md`
-- `GATES.ml-eval.md` (ML-eval gate, with 7 sub-checks)
-- `run-manifest.json` (run reproducibility schema)
+These filenames are examples of representation, not a mandatory storage architecture.
 
-The `eval/` folder in this repo is itself a working PoC of this path.
+The completed subtractive stage removed the legacy enforcement/verifier/executor stack, structural conformance harness, mandatory one-task/one-commit rule, tracked task→commit bookkeeping, mandatory task-card/archive lifecycle, and the old PoC/eval template suite from the active public surface. Retired material remains available in Git history.
 
-This path is useful when you need to:
+## Where the redesign stands
 
-- make the decision question explicit before implementation expands
-- keep source digests smaller than raw inputs
-- write reports that can support a gate decision
-- close a PoC cleanly instead of letting it drift into pseudo-production
+Bounded research and dogfooding have already shaped the protocol:
 
-## Templates included (15)
+- independent challenge is useful conditionally for missing invariants, weak oracles, semantic/provenance mistakes, and producer self-confirmation;
+- high-signal mechanical trigger routing is useful, while semantic consequences need project-specific knowledge and impact/reviewer fallback;
+- the work contract names the terminal outcome boundary, so incorporation is sufficient for some work while other work needs deployment/release/confirmation evidence;
+- the first protocol dogfood found a missing named acceptance boundary and a premature packaging reference;
+- the exact-candidate consistency challenge then removed duplicated baseline wording and bound acceptance explicitly to candidate + context + boundary;
+- F-004 has directly demonstrated exact-SHA check freshness, native required-check blocking, the danger of candidate-controlled self-weakening CI, and a concrete deployment-freshness pattern.
 
-### Core (7)
+The six-condition minimum invariant in [`ACCEPTANCE.md`](ACCEPTANCE.md) remains the leading semantic baseline. Current evidence increasingly supports the native composition:
 
-- `AGENTS.md`
-- `CLAUDE.md` (pointer to `AGENTS.md` for Claude Code)
-- `TASKS.md`
-- `DECISIONS.md`
-- `STATUS.md`
-- `GATES.md`
-- `task-card.md`
+> **candidate-bound evidence + required native policy + protected authority boundary**
 
-### PoC / evaluation (6)
+rather than a generic Playbook acceptance checker.
 
-- `POC-BRIEF.md`
-- `POC-CLOSURE.md`
-- `REPORT.md`
-- `SOURCE-DIGEST.md`
-- `questions-triage.md`
-- `gitignore-poc.append.txt`
+F-004 is not closed yet. Remaining safe empirical work concerns missing/never-run required evidence, strict integration freshness, protected review for policy/control changes, and explicit exception/bypass authority. These should be exercised on existing read-only evidence or an explicitly disposable protection-capable repository, not by weakening a production repository merely to complete the dataset.
 
-### Eval-meta (2 — structurally enforced by the conformance check)
+See [`ROADMAP.md`](ROADMAP.md) for the current sequence and [`docs/migration.md`](docs/migration.md) for adoption guidance.
 
-- `GATES.ml-eval.md` (ML-eval decision gate with 7 sub-checks)
-- `run-manifest.json` (run reproducibility schema)
+## Repository topology
 
-## Quick start
+The public repository is the maintained product.
 
-1. Copy the core templates from `templates/` into your repo.
-2. Fill in `AGENTS.md` and set your spec root.
-3. Create `TASKS.md` and your first task card.
-4. If the work is still decision-heavy, add the PoC/evaluation templates as needed.
-
-Recommended minimum layout:
-
-```text
-<repo>/
-  <SPEC_ROOT>/
-  AGENTS.md
-  TASKS.md
-  DECISIONS.md
-  tasks/
-```
-
-If your tool expects a different instruction filename, keep it as a short pointer to `AGENTS.md`. For example, if you use Gemini CLI, copy `CLAUDE.md` to `GEMINI.md` in your project.
-
-For adopting the Playbook into an existing project, see [`docs/migration.md`](docs/migration.md).
-
-See also: [`enforcement/README.md`](enforcement/README.md) (optional layer; v1.3.0 candidate).
-
-## Example
-
-See `examples/worked-example.md` for a simple end-to-end example of the core task flow.
-
-For a short PoC/evaluation-oriented flow, see `examples/worked-example-poc.md`.
-
-For filled-in task card examples (low-risk and high-risk variants), see `examples/task-card-example.md` and `examples/task-card-example-high-risk.md`.
-
-The `eval/` folder in this repo is also a runnable example: `python eval/check.py` shows the structural check in action, and `python eval/check.py --self-test` shows it catching deliberately broken inputs.
-
-## Where this fits
-
-This repo assumes specs or architecture decisions already exist and focuses on making implementation legible and verifiable.
-
-If your bigger problem is still upstream discovery, requirements shaping, or broad methodology design, solve that first. This playbook is intentionally narrower than that.
-
-## Principles
-
-For the philosophy behind the Playbook, see [`docs/principles.md`](docs/principles.md).
+Private research, confidential examples, falsification results, and design evidence may live in a separate private incubator, but the public and private repositories should not be maintained as mirrored implementations or synchronized release trains.
 
 ## License
 

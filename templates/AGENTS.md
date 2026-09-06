@@ -3,198 +3,66 @@
 ## Project
 <One sentence describing the project and stack.>
 
-## Source of Truth
-- Specs: <SPEC_ROOT> (do not fork)
-- Tasks: TASKS.md (or the canonical tracker it points to)
-- Decisions: DECISIONS.md
-- Questions (optional): `questions-triage.md` (or equivalent unresolved-question backlog)
-- Task cards: tasks/
-- Archived task cards: tasks/archive/
+## Authority and sources
 
-## Question tracking (optional but recommended for PoCs)
-- If present, `questions-triage.md` is the canonical unresolved-question backlog.
-- Use it for owner-needed answers, evidence links, and questions that survive across tasks/sessions.
-- Do not use it for ordered execution (use `TASKS.md` or the canonical tracker) or for committed decisions (use `DECISIONS.md`).
+- Authoritative work / intent: <ISSUE, SPEC, TRACKER, OR FILE>
+- Durable decisions / ADRs: <DECISION SOURCE>
+- Project verification entrypoint: <VERIFY COMMAND OR CI JOB>
+- Acceptance policy / decision authority: <POLICY OR OWNER>
+- Execution constraints / permission policy: <POLICY LOCATION OR NONE>
 
-## Doc precedence (avoid drift) (optional)
-- `<SPEC_ROOT>` is the canonical spec source of truth.
-- `TASKS.md` (or the canonical tracker it points to) is the canonical backlog/status.
-- Any schedule/architecture docs are narrative/intent; avoid restating task scope/acceptance criteria.
+Use the systems that already own these facts. Do not create tracked mirrors merely for the agent.
 
-Drift rule:
-- If a task completion changes scope/timing/assumptions reflected in schedule/architecture docs, update the
-  relevant doc(s) in the same commit, or create an explicit follow-up task.
+## Before making a change
 
-## PoC Mode (Recommended Default)
-- Maintain `<SPEC_ROOT>/poc-brief.md` (decision question, metrics, evaluation plan, artifact policy).
-- Keep only gate-level unresolved questions in `<SPEC_ROOT>/poc-brief.md`; keep the full working question backlog in `questions-triage.md` when used.
-- Treat `reports/` as tracked outputs; keep them small and reviewable.
-- Do not commit large/binary/high-churn artifacts (datasets, exports, PDFs, zips, logs).
-  Store them in your external system of record and commit human-readable pointers under `artifacts/`.
-- Append `templates/gitignore-poc.append.txt` to your project `.gitignore` (or ensure `runs/` and `data/` are ignored).
-- Use small task cards with explicit decision questions and reproducible verification for experiment/evaluation work.
-- PoC iteration: prefer multiple small experiment task cards; each produces a tracked `reports/` output and references pinned inputs.
-- For experiment/review outputs, label whether the result is exploratory or anchor evidence. If an anchor changes, say what it supersedes.
+Confirm the next bounded change is sufficiently ready to execute and judge:
 
-## Context budget (avoid transcript blowups)
-- Do not load or paste large raw sources (transcripts, exports, vendor docs) into the agent context.
-- If a source is longer than ~200 lines (or not diff-friendly), first create a short digest (1–2 pages) and reference it in task cards.
-  - Template: `templates/SOURCE-DIGEST.md`
-  - Recommended location: `<SPEC_ROOT>/sources/` (or your spec system)
+- intended observable outcome;
+- material scope and exclusions;
+- success / acceptance criteria or other oracle;
+- relevant constraints and durable decisions;
+- unresolved material questions or stop conditions;
+- when the promised outcome extends beyond incorporation, the required downstream boundary.
 
-## Privacy / PII / secrets
-- Some raw sources may contain personal data, sensitive details, or secrets.
-- Do not copy/paste PII or secrets into digests, reports, or task cards; redact or use pointer-only.
-- If a source may contain secrets/PII and is not sanitized, stop and ask before proceeding.
+If a consequential ambiguity remains, stop and ask rather than inventing the missing requirement.
 
-## Before Starting a Task
-1) Read `TASKS.md` for current state (or open the canonical tracker it points to).
-   - If the canonical tracker is off-repo and not available in this session, ask the human to paste the eligible item into a task card (and/or `STATUS.md`).
-2) If the canonical tracker includes `<!-- AGENT_BACKLOG_START -->` / `<!-- AGENT_BACKLOG_END -->`, create task
-   cards only from that marker-delimited section.
-3) Read the task card.
-4) Validate the task card is runnable (Goal/Scope/Acceptance/Verify are filled; Verify commands are executable or have a recorded reason).
-5) Load only the relevant spec excerpts and digests.
-6) Confirm scope and verification commands.
+## While working
 
-## While Working
-1) Modify only files in scope.
-2) No drive-by refactors.
-3) Ask if requirements are unclear.
-4) Run verification commands frequently (prefer the repo's standard entrypoint, e.g. `./verify` or `make verify`).
-   - In Python-first repos: prefer `uv run ...` (avoid bare `python`, `pytest`, `ruff`).
-5) Prefer automated verification with expected outputs; manual-only verification
-   requires a recorded reason.
+- Stay within authorized scope; do not add drive-by refactors.
+- Use the repository's normal verification commands as implementation feedback.
+- Do not weaken tests, CI, policy, security controls, or acceptance criteria merely to make the candidate pass.
+- Keep concurrent mutable work isolated where needed and make candidate ownership clear.
+- Do not take external, production, destructive, credential-bearing, or otherwise hard-to-reverse actions without explicit execution authority.
+- Record a durable decision only when its rationale or rejected alternatives should survive the current session.
 
-## After Completing
-1) Run all verification commands.
-2) Update the task card context pack with latest verification outputs.
-3) Write outputs to the right place:
-   - Results summaries / metrics -> `reports/` (tracked)
-   - External dataset/doc pointers -> `artifacts/` (tracked)
-   - Raw run outputs / logs / caches -> `runs/` (ignored) or `data/` (ignored)
-4) Commit with task ID in the message.
-5) Update TASKS.md (or canonical tracker) with status and commit hash.
-6) If the task answered/created/changed an open question, update `questions-triage.md` (status + evidence link) if your project uses it.
-7) Update DECISIONS.md if a real decision was made.
-8) Update STATUS.md if your project uses it.
-9) Archive the completed task card under `tasks/archive/` (do not delete).
+## Candidate and evidence
 
-TASKS state rules:
-- Ready -> In Progress -> Done
-- Ready/In Progress -> Blocked -> Ready
-- WIP limit: 1 task per developer (unless explicitly agreed)
+- Treat the identifiable candidate change as the acceptance subject; do not require one task to equal one commit.
+- Evidence must apply to the candidate and relevant target/integration context being evaluated.
+- If candidate content, material integration context, or authoritative intent changes, refresh whatever evidence or approval no longer applies.
+- Treat local verification as feedback. Use the project's authoritative boundary for claims that must hold before incorporation.
+- Apply any additional obligations required by project policy or declared impact.
+- Do not write Git-derived commit hashes into tracked completion state merely because Git already owns that fact.
 
-Decision threshold:
-Only log decisions that change behavior, data model, security boundary, or
-operational posture.
+## Stop / escalate
 
-Stop conditions (ask the human):
-- RLS/policy changes
-- Schema changes
-- Auth boundary changes
-- New dependency additions
-- Conflicting specs or unclear requirements
-- Need to load large raw sources beyond the context budget (create a digest first)
-- Sources may contain secrets/PII and are not sanitized
-- Verification harness missing (cannot run Verify commands as written)
-- Verification is manual only but no reason is recorded
-- Project-specific stop conditions (if applicable): performance-critical paths,
-  public API changes.
-If a stop condition triggers, add a short note to the task card (reason + 1-2
-options) and halt.
+Stop and ask when any of these is true:
 
-Gate usage:
-If `GATES.md` exists, run the relevant gate checks before marking a phase complete.
+- authoritative intent is materially unclear or conflicting;
+- the requested implementation exceeds authorized scope;
+- a consequential execution or external-side-effect boundary would be crossed without permission;
+- required evidence is unavailable, invalid for the candidate, or would need to be weakened to pass;
+- a blocking finding, project invariant, or durable decision remains unresolved;
+- the work requires an acceptance or exception decision the current actor is not authorized to make.
 
-## Optional Policies (Activate by Trigger)
-Plan approval:
-- Trigger: auth/RLS/schema/infra change, new dependency, or spec conflict.
-- Rule: produce a short plan (files, approach, risks) and wait for human LGTM.
+Add project-specific stop conditions only when they address a real failure mode or consequential invariant.
 
-Multi-agent split:
-- Trigger: >1 risk type, >5 files, or unclear spec interpretation.
-- Rule: planner pass first, then implementer, then verifier.
+## Acceptance and completion
 
-Test-first tasks:
-- Trigger: bugfix or behavior change with a clear spec.
-- Rule: include a failing test and do not modify tests.
+Verification establishes evidence. Review supplies judgment where required. Acceptance is an authorized decision; do not collapse these into one state.
 
-Human review step:
-- Trigger: multiple contributors or high-risk task.
-- Rule: brief review checklist before merge (use a PR/branch when reviews are expected).
+Use the terminal outcome boundary promised by the work. Do not claim `done`, `shipped`, deployed, or confirmed unless the evidence establishes that state.
 
-Security scanning:
-- Trigger: pre-release or dependency changes.
-- Rule: include scan command in Verify if tooling exists.
+## Commit convention
 
-## Commit Format
-Use a conventional subject with a Task trailer (3-digit
-zero-padded, e.g., `T-001`, `T-012`, `T-123`):
-
-```
-type(scope): short description
-
-Task: T-XXX
-```
-
-## Rules
-- One task = one commit.
-- No commit if verification fails.
-- If a verification check is bypassed (e.g., `git commit --no-verify`),
-  the bypass is observable after the fact: the optional enforcement
-  layer's verifier (see `enforcement/README.md`) reports the bypassed
-  commit as drift in `reports/session-drift.md`. The commit is not
-  retroactively rejected.
-- New dependencies require a decision entry in `DECISIONS.md` and a stop-condition pass.
-- If iterative work is needed, use a task branch and squash into one final task
-  commit before merging to main.
-
-## Starter loop (new agents)
-
-If you are a new agent, run this loop:
-
-1. Read this file fully, then open `TASKS.md` (or follow it if it is a pointer).
-2. Pick one Ready item (WIP=1) and create a task card under `tasks/` using `templates/task-card.md`.
-3. Implement the task, running verification commands as you go.
-4. Commit (one task = one commit), update `TASKS.md` with `commit: <hash>`, archive the task card.
-5. Update `DECISIONS.md` only if a real decision was made; update `questions-triage.md` if a question was answered.
-6. For the full workflow details, see the "Before Starting a Task" / "While Working" / "After Completing" sections above.
-
-## Starter prompt (copy/paste)
-
-Use this when asking a coding agent to start executing tasks in a repo using this playbook:
-
-Read `AGENTS.md` first. Use `TASKS.md` as the canonical backlog (or follow it if it is a pointer).
-If the canonical tracker includes `<!-- AGENT_BACKLOG_START -->` / `<!-- AGENT_BACKLOG_END -->`, create task
-cards only from that marker-delimited section. Create a task card under `tasks/` using `templates/task-card.md`.
-Implement one task at a time (WIP=1). Follow the `AGENTS.md`
-"After Completing" checklist, including updating the tracker with `commit: <hash>` and archiving the task card
-to `tasks/archive/`.
-
-## Optional: enforcement layer
-
-The Playbook ships an optional `enforcement/` directory. The
-directory is a v1.3.0 candidate; the 4 documented components (git
-hooks via lefthook, opencode TypeScript plugin, verifier subagent,
-cron/CI executor) ship in subsequent releases. This section is a
-high-level description of the layer's intended behaviors. The
-layer is opt-in; projects that adopt the Playbook can install the
-enforcement tools or not.
-
-If the optional enforcement layer is installed, three behaviors apply
-on top of the rules above:
-
-- The commit-msg hook requires a `Task: T-XXX` trailer (the same rule
-  as the "Commit Format" section above; the hook enforces it strictly).
-- The pre-commit hook requires `TASKS.md` or `tasks/done/DONE.md` in
-  the diff (the atomic-commit rule).
-- The post-commit hook records the commit hash to `tasks/done/DONE.md`
-  (a hash-index ledger, distinct from `tasks/archive/` which holds the
-  full task card). The format is `- {hash} {T-XXX} {subject}`, one line
-  per commit, append-only with a de-dup check on the hash.
-
-`enforcement/README.md` is the canonical entry point for the layer.
-The hooks are universal (work for any agent, not just opencode); the
-plugin, verifier, and executor are opencode-specific. The discipline
-itself stays tool-agnostic.
+Follow the repository's own commit convention. The Playbook does not require a universal task trailer, commit format, or one-task/one-commit cardinality.

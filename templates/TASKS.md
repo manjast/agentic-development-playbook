@@ -1,22 +1,34 @@
-# Task Backlog
+# Optional In-Repo Work Tracker
 
-STOP (agents/tools): read `AGENTS.md` first.
+Use this file only when the repository does not already have an authoritative work system. GitHub Issues, Spec Kit, Jira/Linear, or another maintained tracker are equally valid.
 
-Last updated: YYYY-MM-DD
-Current focus: T-XXX
-Blockers: none
-State rules: Ready -> In Progress -> Done; Ready/In Progress -> Blocked -> Ready
-WIP limit: 1 task in progress per developer (unless explicitly agreed)
-Task cards: `tasks/` (archive completed cards under `tasks/archive/`)
+Do not duplicate external tracker state here merely for the agent.
 
-## In Progress
-- [ ] T-XXX: short title (owner, depends: T-YYY)
+Each active item should either contain or link to enough information to make the next bounded change executable and judgeable: intended outcome, material scope, success/acceptance criteria, relevant constraints, and unresolved blockers.
+
+Local IDs and state names are project conventions, not Playbook invariants.
+
+## Active
+
+- [ ] <ID>: <short title>
+  - Intent: <authoritative link or short statement>
+  - Scope: <material in/out boundary>
+  - Acceptance: <observable success or link>
+  - Owner: <role/name if useful>
 
 ## Ready
-- [ ] T-YYY: short title (depends: T-XXX)
+
+- [ ] <ID>: <short title>
+  - Intent: <authoritative link or short statement>
+  - Acceptance: <observable success or link>
 
 ## Blocked
-- [ ] T-ZZZ: short title (blocked by T-YYY)
+
+- [ ] <ID>: <short title>
+  - Blocked by: <material unresolved condition>
 
 ## Done
-- [x] T-AAA: short title (commit: abc1234)
+
+- [x] <ID>: <short title>
+
+Do not require commit hashes or moved/archive files as completion bookkeeping. Use Git/PR/tracker history for state that those systems already own.

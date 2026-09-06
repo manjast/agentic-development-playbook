@@ -1,36 +1,51 @@
 # Principles
 
-The Agentic Development Playbook is built on three principles that guide
-what the Playbook includes, what it excludes, and how the surface evolves.
+The Agentic Development Playbook is being redesigned around a small number of durable assurance principles.
 
-## 1. The repo is the source of truth
+## 1. Preserve authority, not duplicate state
 
-Every decision, status update, and run record lives in a versioned file.
-This is non-negotiable. If a decision isn't in `DECISIONS.md`, it didn't
-happen. If a run isn't in `run-manifest.json`, it didn't get reviewed.
-The repo outlives the agent's context window, the agent's session, and
-the agent's provider.
+Use the system that already owns a fact.
 
-## 2. Conformance over outcome
+Git owns commit history. The repository host owns pull-request and check state. A tracker/specification system may own work intent. Runtime platforms own sandbox and permission enforcement.
 
-The Playbook verifies that artifacts **adhere to the spec** (a structural
-check), not that they **produce good outcomes** (a behavioral eval). The
-reason isn't that outcomes don't matter — they do. The reason is that
-outcome evals for AI-assisted work require infrastructure that doesn't
-exist yet (reproducible agent harness, golden test set, scoring function,
-baseline). See `docs/rationale.md` for the full discussion.
+Store information in the Playbook only when it is not already authoritative elsewhere or when a durable rationale must survive the original session.
 
-When the infrastructure exists, the Playbook adds outcome checks.
-Until then, "this looks like itself" is the best the check can do
-automatically. "This is good" is a human judgment, made at the
-GATES.md decision point.
+## 2. Bind assurance to the candidate
 
-## 3. Lean is a discipline, not a posture
+Evidence and approval must refer to the actual proposed change and the context in which it will be accepted.
 
-15 templates (13 user-facing + 2 eval-meta) is selective on purpose.
-Every template that ships in the public repo costs the next maintainer
-time to keep consistent. The discipline is: a template earns its slot
-by being used in real work, not by being clever. The conformance check
-enforces the discipline: adding a template requires updating
-`TEMPLATE_REQUIRED_FIELDS` and passing the check.
+Tasks and commits are useful organizational units, but neither is a universal acceptance identity. Candidate content or material integration-context changes invalidate whatever evidence or approval no longer applies.
 
+## 3. Evidence is not authority
+
+Verification establishes facts. Review supplies judgment. Acceptance grants permission to cross a named boundary.
+
+A passing test, successful agent review, or structurally valid artifact can be valuable evidence without being sufficient authority to merge, release, deploy, or claim success.
+
+## 4. Make important boundaries deterministic where practical
+
+Do not attempt to make open-ended reasoning deterministic. Make consequential boundaries deterministic when a machine can establish them cheaply and reliably.
+
+Use local checks for feedback, CI for candidate facts, rulesets for merge invariants, review requirements for judgment routing, and sandbox/IAM/resource controls for execution authority.
+
+The old enforcement stack failed because it mechanized derived task bookkeeping rather than the acceptance properties that mattered.
+
+## 5. Start with just enough readiness
+
+The Playbook does not own a complete specification methodology. It does require enough authorized intent to make the next bounded change executable and judgeable without inventing consequential requirements.
+
+If that condition is not met, the correct behavior is to stop and resolve the missing intent rather than create more downstream process.
+
+## 6. Add controls from failure models, and remove controls that stop earning their cost
+
+A control should have a concrete reason, an owner, an enforcement location, and a condition for reconsideration.
+
+Controls may be justified by local incidents, external incidents, threat models, architecture invariants, regulation, or high-consequence exposure. Rarely firing catastrophic controls should not be removed merely because they are rare.
+
+At the same time, rules should not accumulate permanently just because they once sounded prudent. Prefer the smallest control that addresses the failure model and periodically challenge its attention/maintenance cost.
+
+## 7. Delegate commodity infrastructure
+
+The Playbook should specify assurance semantics, not reproduce the rapidly changing implementation surfaces of coding harnesses, CI systems, review agents, repository hosts, deployment systems, or observability platforms.
+
+Harness independence should come from a narrow semantic contract, not from a universal adapter layer.

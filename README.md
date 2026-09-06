@@ -5,17 +5,17 @@
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 
-> **Redesign branch:** this branch is the September 2026 architecture reset. The subtractive/truthfulness baseline is complete. The next slice is the minimal normative `ACCEPTANCE.md` protocol, followed by dogfooding and native-platform enforcement testing.
+> **Redesign branch:** the subtractive/truthfulness baseline is complete and the first normative [`ACCEPTANCE.md`](ACCEPTANCE.md) has been dogfooded once. The next step is an exact-candidate challenge review, followed by native-platform sufficiency testing before any custom enforcement is considered.
 
 ## What this is becoming
 
 The Playbook focuses on the control boundary between **authorized intent** and an **accepted software change**.
 
-The durable model is intentionally small:
+The normative protocol is [`ACCEPTANCE.md`](ACCEPTANCE.md). Its durable model is intentionally small:
 
 1. **Work contract** — enough authorized intent, scope, constraints, success criteria, and decision context to execute the next bounded change without inventing consequential requirements.
 2. **Candidate** — the exact proposed change and relevant target/integration context being evaluated.
-3. **Obligations** — baseline and condition-triggered requirements for evidence, judgment, or authority.
+3. **Obligations** — baseline and condition-triggered requirements for evidence, judgment, authority, or downstream confirmation.
 4. **Acceptance decision** — an authorized disposition that permits the candidate to cross a named boundary.
 
 The Playbook defines these semantics. Existing tools should implement them wherever they already provide the stronger boundary.
@@ -41,7 +41,8 @@ Before bounded implementation, the next change needs enough clarity to identify:
 - how success can be established;
 - the authoritative intent/constraint sources;
 - unresolved material questions and stop conditions;
-- the relevant decision authority.
+- the relevant execution and acceptance authority;
+- the terminal outcome boundary when the promised result extends beyond incorporation.
 
 The representation is deliberately not prescribed. A small issue may be enough; consequential work may point to specifications, ADRs, policies, tests, or other maintained sources.
 
@@ -49,7 +50,7 @@ The representation is deliberately not prescribed. A small issue may be enough; 
 
 `one task = one commit` is no longer a correctness rule.
 
-Tasks can split or span multiple candidates; candidates can contain multiple commits. What matters is that evidence, review, and acceptance refer to an identifiable proposed change and the context in which it will be incorporated.
+Tasks can split or span multiple candidates; candidates can contain multiple commits. What matters is that evidence, review, and acceptance refer to an identifiable proposed change, the named acceptance boundary, and the context in which it will be accepted.
 
 Do not copy Git-derived commit hashes into tracked completion ledgers as a required source of truth.
 
@@ -79,7 +80,7 @@ Local hooks may improve ergonomics but are not an authoritative acceptance bound
 
 ### Route extra obligations selectively
 
-Bounded historical replay supports deterministic triggers for high-signal mechanical classes such as dependency manifests, CI/policy files, deployment configuration, and explicitly configured migration/schema locations.
+Bounded historical replay supports deterministic routing for high-signal mechanical classes such as dependency manifests, CI/policy files, deployment configuration, and explicitly configured migration/schema locations.
 
 Do not assume a universal path catalogue can identify all semantic privacy, authorization, API, or other consequential changes. Where paths are insufficient, combine small project-specific maps with impact declaration and reviewer inspection.
 
@@ -105,10 +106,10 @@ accepted for incorporation
 != incorporated
 
 incorporated
-!= deployed
+!= deployed or released
 
-deployed
-!= confirmed working
+deployed or released
+!= confirmed in effect
 ```
 
 The work contract names the terminal outcome boundary. Work is complete when evidence establishes that promised outcome. For some changes incorporation is enough; for others deployment, release, or confirmation in effect is part of the promise.
@@ -128,9 +129,10 @@ The completed subtractive stage removed:
 
 All retired material remains available in Git history.
 
-The active template surface is intentionally small:
+The active public surface is intentionally small:
 
-- [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository authority, execution, verification, stop, candidate, and acceptance guidance;
+- [`ACCEPTANCE.md`](ACCEPTANCE.md) — normative change-acceptance protocol;
+- [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository authority, execution, evidence, stop, candidate, and acceptance guidance;
 - [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to the canonical `AGENTS.md` policy;
 - [`templates/DECISIONS.md`](templates/DECISIONS.md) — durable rationale/ADR example;
 - [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker example for projects that do not already have an authoritative work system.
@@ -145,17 +147,13 @@ See:
 
 ## Where the redesign currently stands
 
-Private falsification work has already produced decision-useful results for:
+Private falsification work has produced decision-useful results for independent-review yield, trigger routing architecture, and terminal outcome semantics. Those results are reflected in the public protocol.
 
-- independent-review yield;
-- trigger routing architecture;
-- terminal outcome semantics.
+The first dogfood pass on `ACCEPTANCE.md` found a real omission in the minimum invariant—the named acceptance boundary—and removed a premature packaging reference. The six-condition baseline is now the leading D-020 candidate, but it is not yet treated as a frozen universal schema.
 
-Those results are now reflected in the public direction above.
+Because this candidate changes the Playbook's own acceptance/control policy, the next obligation is an exact-candidate challenge/consistency review. After that, the principal remaining enforcement question is whether native GitHub/CI/ruleset/environment mechanisms can express the surviving obligations without a generic Playbook checker.
 
-The next public step is to write the minimal normative `ACCEPTANCE.md` and exercise it on this redesign candidate. That dogfooding should determine the smallest useful baseline obligations before they are frozen.
-
-The principal remaining enforcement question is whether native GitHub/CI/ruleset/environment mechanisms can express those surviving obligations without a generic Playbook checker. Native controls are tested first; custom code remains presumptively unnecessary unless a material recurring gap is demonstrated.
+Native controls are tested first; custom code remains presumptively unnecessary unless a material recurring gap is demonstrated.
 
 ## Repository topology
 

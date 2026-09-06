@@ -1,6 +1,6 @@
 # Acceptance Protocol
 
-This document defines the Playbook's minimum contract for accepting an agent-produced software change.
+This document defines the Playbook's minimum contract for accepting a software change produced in an agent-assisted workflow.
 
 It describes **assurance semantics**, not a required file layout, agent harness, review product, CI system, merge strategy, or deployment process. A project should use the systems that already own intent, candidate identity, verification, review, permissions, and repository state rather than copying those facts into Playbook-specific ledgers.
 
@@ -46,7 +46,8 @@ Before bounded implementation, the authoritative work context must be sufficient
 - how success can be established;
 - which sources of intent, constraints, and durable decisions are authoritative;
 - whether material unresolved questions or stop conditions remain;
-- what execution or decision authority is relevant to the work.
+- what execution and acceptance authority is relevant to the work;
+- when the promised outcome extends beyond incorporation, what downstream boundary must be established before claiming completion.
 
 The representation is deliberately not prescribed. A small issue may be sufficient. Consequential work may refer to specifications, ADRs, policies, tests, approval records, or other maintained sources.
 
@@ -58,7 +59,7 @@ If a consequential ambiguity remains, implementation must stop at that ambiguity
 
 Acceptance applies to the **candidate change**, not to a universal task/commit shape.
 
-The candidate must be identifiable together with the target or integration context relevant to the acceptance decision. A pull request plus its current revision is a common implementation; an exact commit or range may serve the same role in another workflow.
+The candidate must be identifiable, coherent enough to review as the unit being accepted, and associated with the target or integration context relevant to the acceptance decision. A pull request plus its current revision is a common implementation; an exact commit or range may serve the same role in another workflow.
 
 The Playbook does not require:
 
@@ -69,11 +70,11 @@ The Playbook does not require:
 
 Use Git, pull-request metadata, CI state, and the authoritative work system for facts those systems already own.
 
-If candidate content or a material integration context changes, any evidence, judgment, or approval that no longer applies must be refreshed before acceptance remains valid.
+If candidate content, material integration context, or authoritative intent/constraints change, any evidence, judgment, or approval that no longer applies must be refreshed before acceptance remains valid.
 
 ## 3. Determine obligations for this candidate
 
-Every candidate has a small baseline: its work must be sufficiently ready, the candidate and relevant boundary must be identifiable, applicable obligations must be determined, required evidence and judgment must be current enough for the decision, blocking findings or stop conditions must be resolved, and acceptance must come from an authorized actor or policy.
+Every candidate has a small baseline: its work must be sufficiently ready, the candidate and relevant boundary must be identifiable, applicable obligations must be determined, required evidence and any required judgment must be current enough for the decision, blocking findings or stop conditions must be resolved, and acceptance must come from an authorized actor or policy.
 
 Additional obligations should attach **selectively** from observable change properties, declared impact, governing decisions, project policy, or known failure models.
 
@@ -86,7 +87,7 @@ A trigger attaches an **obligation**, not automatically a reviewer, a universal 
 - explicit authority approval;
 - deployment or runtime confirmation.
 
-High-signal mechanical triggers can be routed deterministically where the relationship is reliable, such as project-recognized dependency manifests, CI/policy controls, deployment configuration, or configured schema/migration locations.
+Examples of high-signal mechanical routing include project-recognized dependency manifests, CI/policy controls, deployment configuration, or configured schema/migration locations. These are examples, not a universal path standard.
 
 Semantic impact is often not safely inferable from paths alone. Projects may use small local semantic maps and impact declarations, with reviewer inspection where warranted. The Playbook does not define a universal path catalogue, trigger DSL, fixed trigger count, or global risk taxonomy.
 
@@ -134,7 +135,7 @@ Acceptance must stop while a material required obligation is unresolved, require
 
 An exception or waiver must not be created implicitly by timeout, absent response, skipped evidence, or the inability to run a required control.
 
-Where a project permits exceptions, the exception itself must be an authorized disposition appropriate to the consequence and must make clear what obligation is being waived or replaced. The Playbook does not prescribe a universal waiver form or approval hierarchy.
+Where a project permits exceptions, the exception itself must be an authorized disposition appropriate to the consequence and must make clear what obligation is being waived or replaced. A waived obligation is not the same as a satisfied obligation. The Playbook does not prescribe a universal waiver form or approval hierarchy.
 
 ## 7. Bind the acceptance decision to what it actually authorizes
 
@@ -145,7 +146,7 @@ The decision context must be sufficient to establish:
 - which candidate is being accepted;
 - which boundary the candidate is permitted to cross;
 - which obligations were applicable;
-- which evidence and judgment support the decision;
+- which evidence and any required judgment support the decision;
 - who or what authorized policy made the disposition.
 
 This information may already be represented by the pull request, repository rules, check results, review state, issue/spec references, protected environments, or another authoritative system. The protocol does not require duplicating it into a new manifest.
@@ -204,7 +205,7 @@ A candidate may cross an acceptance boundary only when all of the following are 
 1. the work is sufficiently authorized and clear for the bounded change;
 2. the candidate and relevant target/integration context are identifiable;
 3. applicable baseline and conditional obligations have been determined;
-4. required evidence and judgment are current and adequate for that candidate and boundary;
+4. required evidence and any required judgment are current and adequate for that candidate and boundary;
 5. no material blocking finding, stop condition, or unresolved authority problem remains;
 6. the disposition is made by an authorized actor or policy.
 

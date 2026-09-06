@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 
-> **Redesign branch:** the subtractive baseline and first acceptance-protocol dogfood/challenge pass are complete. The next stage tests whether native GitHub/CI controls can express the surviving obligations before any custom enforcement is considered.
+> **Redesign branch:** the subtractive baseline and acceptance-protocol dogfood/challenge pass are complete. Stage 4 / F-004 is underway: native GitHub/CI controls already have decision-useful evidence, while a few protection/review/exception cases remain to be exercised safely before the enforcement decision is closed.
 
 ## What this is becoming
 
@@ -71,9 +71,16 @@ Bounded research and dogfooding have already shaped the protocol:
 - high-signal mechanical trigger routing is useful, while semantic consequences need project-specific knowledge and impact/reviewer fallback;
 - the work contract names the terminal outcome boundary, so incorporation is sufficient for some work while other work needs deployment/release/confirmation evidence;
 - the first protocol dogfood found a missing named acceptance boundary and a premature packaging reference;
-- the exact-candidate consistency challenge then removed duplicated baseline wording and bound acceptance explicitly to candidate + context + boundary.
+- the exact-candidate consistency challenge then removed duplicated baseline wording and bound acceptance explicitly to candidate + context + boundary;
+- F-004 has directly demonstrated exact-SHA check freshness, native required-check blocking, the danger of candidate-controlled self-weakening CI, and a concrete deployment-freshness pattern.
 
-The six-condition minimum invariant in [`ACCEPTANCE.md`](ACCEPTANCE.md) is now the leading baseline for the next test. The next question is implementation, not another architecture rewrite: can native repository/CI/review/environment controls express it without a generic Playbook checker?
+The six-condition minimum invariant in [`ACCEPTANCE.md`](ACCEPTANCE.md) remains the leading semantic baseline. Current evidence increasingly supports the native composition:
+
+> **candidate-bound evidence + required native policy + protected authority boundary**
+
+rather than a generic Playbook acceptance checker.
+
+F-004 is not closed yet. Remaining safe empirical work concerns missing/never-run required evidence, strict integration freshness, protected review for policy/control changes, and explicit exception/bypass authority. These should be exercised on existing read-only evidence or an explicitly disposable protection-capable repository, not by weakening a production repository merely to complete the dataset.
 
 See [`ROADMAP.md`](ROADMAP.md) for the current sequence and [`docs/migration.md`](docs/migration.md) for adoption guidance.
 

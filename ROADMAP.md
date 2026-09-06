@@ -35,31 +35,36 @@ Cross-repository practice remains useful for examples and counterexamples, but n
 
 ## Stage 3 — Publish and dogfood the minimal acceptance contract
 
-**Status: first draft and first dogfood complete; exact-candidate challenge remains.**
+**Status: complete for the current candidate baseline.**
 
-The branch now contains a short normative [`ACCEPTANCE.md`](ACCEPTANCE.md) covering:
+The branch now contains a normative [`ACCEPTANCE.md`](ACCEPTANCE.md) covering:
 
 - minimum readiness / work contract;
-- candidate identity, named acceptance boundary, and freshness;
-- minimal baseline obligations;
+- candidate identity, named acceptance boundary, integration context, and freshness;
+- the minimum acceptance invariant;
 - conditional obligations;
 - verification vs review vs acceptance;
 - execution authority vs acceptance authority;
 - exception / stop semantics;
 - truthful terminal-outcome claims.
 
-The first self-dogfood pass applied the protocol to the Stage-3 change itself. It found and corrected two issues:
+The first self-dogfood pass found and corrected two issues:
 
-- the final minimum invariant did not explicitly identify the **named acceptance boundary**;
+- the minimum invariant did not explicitly identify the **named acceptance boundary**;
 - the normative control-placement list prematurely mentioned Agent Skill packaging even though that packaging remains deferred.
 
-The six-condition baseline is therefore the leading D-020 candidate, not yet a frozen universal schema. The remaining Stage-3 obligation is an exact-candidate semantic/challenge review because this change modifies the Playbook's own acceptance/control policy.
+The exact-candidate consistency challenge then found and corrected two additional issues:
 
-Do not add a trigger engine, reviewer framework, Skill, vendor adapter, or generic checker during this stage.
+- the baseline was stated twice inside the normative document, creating a future drift point;
+- acceptance binding named candidate and boundary but did not explicitly bind the relevant target/integration context.
+
+The README was also reduced to an orientation/scope surface so `ACCEPTANCE.md` remains the single normative source rather than being mirrored in prose.
+
+The resulting six-condition minimum invariant is the leading D-020 baseline for native-platform testing. Stage 3 does **not** establish that every condition needs its own stored field or custom checker.
 
 ## Stage 4 — Test native enforcement before writing custom code
 
-**Status: after the exact-candidate Stage-3 challenge.**
+**Status: next.**
 
 Exercise the actual surviving obligations on a disposable/scratch repository using native GitHub/CI capabilities first:
 
@@ -67,7 +72,9 @@ Exercise the actual surviving obligations on a disposable/scratch repository usi
 - review/ownership rules where applicable;
 - rulesets / protected branches;
 - deployment/environment protections where relevant;
-- negative cases such as missing checks, changed candidates, weakened policy, forgotten triggered review, unauthorized exceptions, and deployment-dependent completion.
+- negative cases such as missing checks, changed candidates, changed integration context, weakened policy, forgotten triggered review, unauthorized exceptions, and deployment-dependent completion.
+
+The test should distinguish **semantic requirements** from **stored fields**. If GitHub/CI already derives a fact reliably, do not create a Playbook mirror merely to make the protocol look explicit.
 
 If native mechanisms cover the load-bearing boundary, build no Playbook checker.
 

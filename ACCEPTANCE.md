@@ -186,7 +186,7 @@ Do not make open-ended reasoning deterministic. Make important boundaries determ
 Typical placement is:
 
 - durable repository guidance → `AGENTS.md` or equivalent;
-- reusable procedure → project procedure or Skill when it earns that packaging;
+- reusable procedure → a project or tool-native procedure when that packaging is useful;
 - local fast feedback → local checks/hooks;
 - candidate facts → CI;
 - merge invariants → required checks/rulesets;
@@ -203,7 +203,7 @@ Prefer native platform controls over Playbook-specific infrastructure when they 
 A candidate may cross an acceptance boundary only when all of the following are true:
 
 1. the work is sufficiently authorized and clear for the bounded change;
-2. the candidate and relevant target/integration context are identifiable;
+2. the candidate, named acceptance boundary, and relevant target/integration context are identifiable;
 3. applicable baseline and conditional obligations have been determined;
 4. required evidence and any required judgment are current and adequate for that candidate and boundary;
 5. no material blocking finding, stop condition, or unresolved authority problem remains;

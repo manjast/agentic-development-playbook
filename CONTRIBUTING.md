@@ -6,7 +6,7 @@ Thanks for your interest. This repo is intentionally selective; changes should i
 
 - Open an issue for non-trivial changes.
 - Keep edits lean, harness-independent, and easy to understand.
-- If you change a rule, update the README and relevant maintained templates or docs.
+- Change normative acceptance rules in `ACCEPTANCE.md`. Update the README only when scope, orientation, or redesign status changes; update maintained templates/docs only where their operational or adoption guidance is affected.
 - Preserve the distinction between evidence, judgment, and acceptance authority.
 - Prefer native platform controls over new Playbook-specific infrastructure when they provide the stronger boundary.
 - Prefer clarity and demonstrated need over surface-area growth.

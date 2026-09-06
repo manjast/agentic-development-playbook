@@ -64,19 +64,27 @@ The resulting six-condition minimum invariant is the leading D-020 baseline for 
 
 ## Stage 4 — Test native enforcement before writing custom code
 
-**Status: next.**
+**Status: in progress; decision-useful partial evidence obtained.**
 
-Exercise the actual surviving obligations on a disposable/scratch repository using native GitHub/CI capabilities first:
+F-004 has already established several important boundaries using isolated scratch evidence plus read-only evidence from an existing protected repository:
 
-- required checks and freshness;
-- review/ownership rules where applicable;
-- rulesets / protected branches;
-- deployment/environment protections where relevant;
-- negative cases such as missing checks, changed candidates, changed integration context, weakened policy, forgotten triggered review, unauthorized exceptions, and deployment-dependent completion.
+- CI/check evidence is bound to exact candidate revisions and changed candidates receive fresh evidence;
+- a failed check becomes a real acceptance gate only when repository policy makes that check required;
+- an existing required-check ruleset can block a candidate whose exact required check fails;
+- a repository-local workflow is not automatically an independent authority boundary—a candidate that can edit its own check can weaken that oracle;
+- deployment workflows can preserve downstream freshness, while `confirmed in effect` remains product-specific evidence when the work contract promises it.
 
-The test should distinguish **semantic requirements** from **stored fields**. If GitHub/CI already derives a fact reliably, do not create a Playbook mirror merely to make the protocol look explicit.
+The increasingly supported native composition is:
 
-If native mechanisms cover the load-bearing boundary, build no Playbook checker.
+> **candidate-bound evidence + required native policy + protected authority boundary**
+
+No F-004 result so far supports a generic Playbook acceptance checker.
+
+Remaining empirical work is narrower: missing/never-run required evidence, strict integration freshness, protected review/ownership for control-changing paths, and explicit exception/bypass authority. Prefer read-only historical/configuration evidence. Do not weaken or repurpose production/default-branch protections merely to complete the falsification dataset.
+
+The test should continue to distinguish **semantic requirements** from **stored fields**. If GitHub/CI already derives a fact reliably, do not create a Playbook mirror merely to make the protocol look explicit.
+
+If native mechanisms cover the remaining load-bearing boundaries, build no Playbook checker.
 
 If one narrow consequential gap remains, build the smallest repository-specific helper and only generalize it after repeated real demand.
 

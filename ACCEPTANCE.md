@@ -74,9 +74,7 @@ If candidate content, material integration context, or authoritative intent/cons
 
 ## 3. Determine obligations for this candidate
 
-Every candidate has a small baseline: its work must be sufficiently ready, the candidate and relevant boundary must be identifiable, applicable obligations must be determined, required evidence and any required judgment must be current enough for the decision, blocking findings or stop conditions must be resolved, and acceptance must come from an authorized actor or policy.
-
-Additional obligations should attach **selectively** from observable change properties, declared impact, governing decisions, project policy, or known failure models.
+Every candidate must satisfy the minimum acceptance invariant defined below. Additional obligations should attach **selectively** from observable change properties, declared impact, governing decisions, project policy, or known failure models.
 
 A trigger attaches an **obligation**, not automatically a reviewer, a universal risk tier, or a new Playbook subsystem. Depending on the project and change, an additional obligation may require:
 
@@ -139,11 +137,12 @@ Where a project permits exceptions, the exception itself must be an authorized d
 
 ## 7. Bind the acceptance decision to what it actually authorizes
 
-An acceptance decision is valid only for the candidate and boundary it addresses.
+An acceptance decision is valid only for the candidate, relevant target/integration context, and boundary it addresses.
 
 The decision context must be sufficient to establish:
 
 - which candidate is being accepted;
+- which target or integration context is relevant to the decision;
 - which boundary the candidate is permitted to cross;
 - which obligations were applicable;
 - which evidence and any required judgment support the decision;
@@ -204,8 +203,8 @@ A candidate may cross an acceptance boundary only when all of the following are 
 
 1. the work is sufficiently authorized and clear for the bounded change;
 2. the candidate, named acceptance boundary, and relevant target/integration context are identifiable;
-3. applicable baseline and conditional obligations have been determined;
-4. required evidence and any required judgment are current and adequate for that candidate and boundary;
+3. any additional obligations applicable to the candidate have been determined;
+4. required evidence and any required judgment are current and adequate for that candidate, context, and boundary;
 5. no material blocking finding, stop condition, or unresolved authority problem remains;
 6. the disposition is made by an authorized actor or policy.
 

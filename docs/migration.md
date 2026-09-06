@@ -94,6 +94,8 @@ Those implementations remain available in Git history for provenance. They shoul
 
 ## Current limitation
 
-The exact minimal baseline obligations are not frozen yet. The next redesign step is to publish and dogfood the short normative `ACCEPTANCE.md`, then test whether native GitHub/CI/ruleset/environment controls can express the surviving obligations before considering any custom checker.
+The normative `ACCEPTANCE.md` has been published and dogfooded, and its six-condition minimum invariant is the current semantic baseline. Native-platform testing has also demonstrated exact-candidate check freshness, required-check blocking, and the danger of candidate-controlled self-weakening CI.
 
-Detailed trigger catalogues, standalone reviewer-contract packaging, multi-vendor recipes, and a generic acceptance checker are intentionally not part of the current adoption surface.
+F-004 remains open for a small set of protection-dependent cases: missing/never-run required evidence, strict integration freshness, protected review for policy/control changes, and explicit exception/bypass authority. Those cases should be exercised on an existing suitable boundary or an explicitly disposable protection-capable repository rather than by weakening production controls merely to complete the test matrix.
+
+Detailed trigger catalogues, standalone reviewer-contract packaging, multi-vendor recipes, and a generic acceptance checker are intentionally not part of the current adoption surface. Current evidence does not justify adding them.

@@ -35,12 +35,12 @@ Cross-repository practice remains useful for examples and counterexamples, but n
 
 ## Stage 3 — Publish and dogfood the minimal acceptance contract
 
-**Status: next.**
+**Status: first draft and first dogfood complete; exact-candidate challenge remains.**
 
-Add one short normative `ACCEPTANCE.md` covering only concepts that survived testing:
+The branch now contains a short normative [`ACCEPTANCE.md`](ACCEPTANCE.md) covering:
 
 - minimum readiness / work contract;
-- candidate identity and freshness;
+- candidate identity, named acceptance boundary, and freshness;
 - minimal baseline obligations;
 - conditional obligations;
 - verification vs review vs acceptance;
@@ -48,13 +48,18 @@ Add one short normative `ACCEPTANCE.md` covering only concepts that survived tes
 - exception / stop semantics;
 - truthful terminal-outcome claims.
 
-Then exercise that protocol on this redesign candidate itself before freezing the exact baseline fields. The dogfood pass should answer whether any proposed field is redundant, ambiguous, or duplicated by Git/PR/CI state.
+The first self-dogfood pass applied the protocol to the Stage-3 change itself. It found and corrected two issues:
+
+- the final minimum invariant did not explicitly identify the **named acceptance boundary**;
+- the normative control-placement list prematurely mentioned Agent Skill packaging even though that packaging remains deferred.
+
+The six-condition baseline is therefore the leading D-020 candidate, not yet a frozen universal schema. The remaining Stage-3 obligation is an exact-candidate semantic/challenge review because this change modifies the Playbook's own acceptance/control policy.
 
 Do not add a trigger engine, reviewer framework, Skill, vendor adapter, or generic checker during this stage.
 
 ## Stage 4 — Test native enforcement before writing custom code
 
-**Status: after Stage 3 dogfooding.**
+**Status: after the exact-candidate Stage-3 challenge.**
 
 Exercise the actual surviving obligations on a disposable/scratch repository using native GitHub/CI capabilities first:
 

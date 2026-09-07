@@ -1,95 +1,105 @@
 # Agentic Development Playbook
 
-> A lightweight, harness-independent assurance protocol for turning sufficiently ready software intent into an acceptable change.
+> A small **software change-acceptance protocol** for agent-assisted development.
 
-[![Release](https://img.shields.io/github/v/release/manjast/agentic-development-playbook?display_name=tag&sort=semver)](https://github.com/manjast/agentic-development-playbook/releases)
 [![License](https://img.shields.io/github/license/manjast/agentic-development-playbook)](LICENSE)
 
-> **Redesign branch:** the subtractive baseline and acceptance-protocol dogfood/challenge pass are complete. Stage 4 / F-004 is underway: native GitHub/CI controls already have decision-useful evidence, while a few protection/review/exception cases remain to be exercised safely before the enforcement decision is closed.
+A pull request can have passing checks and an approval, then change before merge. Some of that evidence and judgment may still apply; some may need to be refreshed. Before the current candidate crosses a boundary such as merge, release, or deployment, the project still needs to know which obligations apply and whether the disposition is authorized.
 
-## What this is becoming
+**Acceptance** here means an authorized decision permitting an identified change to cross a named boundary. The protocol describes what must be established around that decision; it does not execute the decision or replace the controls that enforce it.
 
-The Playbook focuses on the control boundary between **authorized intent** and an **accepted software change**.
+The Agentic Development Playbook is a small written protocol for making that decision explicit while using the systems a project already has: its work or specification source, Git, CI, review, permissions, and release or deployment controls. It requires no new tool or mandatory file layout.
 
-[`ACCEPTANCE.md`](ACCEPTANCE.md) is the normative protocol. Its model is intentionally small:
+Start with [`ACCEPTANCE.md`](ACCEPTANCE.md) beside one real change. If the project's existing workflow already satisfies the protocol, useful adoption may require adding nothing.
 
-1. **Work contract** — enough authorized intent and context to execute and judge the next bounded change.
-2. **Candidate** — the identifiable proposed change and relevant target/integration context.
-3. **Obligations** — required evidence, judgment, authority, or downstream confirmation.
+## Where the distinction matters
+
+Suppose an amendment changes a test, workflow, policy, or permission boundary used to judge the pull request. The new result can still be useful evidence, but the change to the control also needs appropriate validation and authority. A candidate should not become acceptable merely by silently lowering the bar used to judge it.
+
+The protocol does not say to reset every check or approval after every edit. It asks whether the evidence, judgment, and authority being relied on still apply to the candidate and context that will actually cross the boundary.
+
+## Core model
+
+The protocol uses four concepts:
+
+1. **Work contract** — enough authorized intent and context to make the next bounded change executable and judgeable without inventing consequential requirements.
+2. **Candidate** — the identifiable proposed change and the relevant target or integration context in which it is being evaluated.
+3. **Obligations** — the evidence, judgment, authority, or downstream confirmation required for that candidate.
 4. **Acceptance decision** — an authorized disposition permitting the candidate to cross a named boundary.
 
-The protocol distinguishes verification, review, acceptance, execution authority, acceptance authority, and truthful terminal-outcome claims. It also defines how candidate/context changes affect evidence freshness and why additional obligations should be routed selectively rather than through a universal risk taxonomy.
+The normative requirements live in [`ACCEPTANCE.md`](ACCEPTANCE.md). This README is orientation, not a second copy of the acceptance invariant.
 
-For the actual requirements, read [`ACCEPTANCE.md`](ACCEPTANCE.md). This README intentionally does not restate the full protocol.
+## Use the systems that already own the facts
+
+The mapping below is illustrative. It shows where the relevant information and controls may already live; it is not a required toolchain or file layout.
+
+| Playbook concern | Typical existing source or control |
+|---|---|
+| Work intent / work contract | Issue, specification, or maintained work system |
+| Candidate + relevant context | PR revision, exact commit/range, target or integration context |
+| Applicable obligations | Project policy, declared impact, maintained constraints |
+| Verification evidence | Tests, CI, and other authoritative check results |
+| Required judgment | Review and domain-owner assessment |
+| Execution authority | Agent permissions, sandbox, IAM, resource controls |
+| Acceptance decision / authority | Authorized actor or effective project/platform policy |
+| Downstream confirmation, when promised | Release, deployment, or application-specific runtime evidence |
+
+A platform feature can represent or enforce part of this model without establishing the whole protocol by itself. Technical permission may implement an authority decision, for example, but permission alone does not establish what that actor or policy is authorized to accept.
+
+## Try it on one change
+
+The smallest useful adoption is an examination of a real candidate, not installation.
+
+1. Read [`ACCEPTANCE.md`](ACCEPTANCE.md) alongside an existing pull request, commit/range, or other identifiable proposed change.
+2. Locate the authoritative intent, current evidence, relevant judgment, applicable policy or authority, and the boundary or terminal outcome the work actually promises.
+3. If a meaningful gap exists, improve the system that owns that fact or control rather than copying the same state into a Playbook ledger.
+4. Add durable repository guidance or one of the optional templates only when it solves a recurring, non-obvious need.
+
+A useful first result may be a concrete gap, or confirmation that the existing arrangement already expresses the required semantics. This exercise is adoption guidance, not a condensed pass/fail checklist.
+
+For a fuller adoption and v1 migration guide, see [`docs/migration.md`](docs/migration.md).
 
 ## What this is not
 
-- A discovery, requirements, or specification-generation methodology
-- An agent harness or cross-vendor hook abstraction
-- A task scheduler, agent orchestrator, or memory system
-- A CI, code-review, merge, deployment, or observability platform
-- A universal telemetry or benchmark service
+The Playbook is not:
 
-Upstream tools such as issue trackers and specification systems may supply the work contract. Coding harnesses produce candidates. CI and repository rules establish mechanical facts and merge policy. Review systems provide judgment. Sandboxes, IAM, protected environments, and resource controls constrain execution authority.
+- a discovery, requirements, or specification-generation methodology;
+- an agent harness, orchestration framework, task scheduler, or memory system;
+- a CI, code-review, merge, deployment, or observability platform;
+- a universal risk taxonomy, trigger catalogue, or reviewer hierarchy;
+- a generic acceptance checker or replacement for native repository and permission controls.
 
-The Playbook should not duplicate those systems.
+The protocol should compose with those systems, not duplicate their authoritative state or rapidly changing implementation surfaces.
 
-## Design principles
+## Maintained surface
 
-The redesign keeps a few durable principles around the normative protocol:
+The repository is intentionally small:
 
-- preserve authority instead of duplicating state;
-- accept identifiable candidates rather than enforcing task/commit cardinality;
-- treat evidence, judgment, and authority as different things;
-- enforce consequential invariants at the strongest inexpensive boundary available;
-- use baseline assurance plus selectively triggered obligations;
-- keep execution authority distinct from acceptance authority;
-- never claim a stronger completion state than the evidence establishes;
-- add custom machinery only after a recurring material gap is demonstrated.
-
-See [`docs/principles.md`](docs/principles.md) for the rationale behind these choices.
-
-## Current public surface
-
-The active surface is intentionally small:
-
-- [`ACCEPTANCE.md`](ACCEPTANCE.md) — normative change-acceptance protocol;
-- [`templates/AGENTS.md`](templates/AGENTS.md) — concise repository-specific authority, execution, evidence, stop, and completion guidance;
-- [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to canonical `AGENTS.md` policy;
-- [`templates/DECISIONS.md`](templates/DECISIONS.md) — simple durable-decision/ADR example;
-- [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker for projects without an authoritative external work system.
+- [`ACCEPTANCE.md`](ACCEPTANCE.md) — normative protocol;
+- [`docs/migration.md`](docs/migration.md) — adoption and migration guidance;
+- [`docs/principles.md`](docs/principles.md) — rationale for the durable design principles;
+- [`templates/AGENTS.md`](templates/AGENTS.md) — optional repository-specific agent guidance;
+- [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to canonical repository guidance;
+- [`templates/DECISIONS.md`](templates/DECISIONS.md) — optional durable-decision/ADR example;
+- [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker for projects without an authoritative external work system;
+- [`ROADMAP.md`](ROADMAP.md) — current direction and historical redesign context.
 
 These filenames are examples of representation, not a mandatory storage architecture.
 
-The completed subtractive stage removed the legacy enforcement/verifier/executor stack, structural conformance harness, mandatory one-task/one-commit rule, tracked task→commit bookkeeping, mandatory task-card/archive lifecycle, and the old PoC/eval template suite from the active public surface. Retired material remains available in Git history.
+## Maturity
 
-## Where the redesign stands
+The core protocol is defined and maintained. Platform-specific guidance remains intentionally limited and will expand only where real use justifies it.
 
-Bounded research and dogfooding have already shaped the protocol:
+Projects remain responsible for validating how their own work systems, repository controls, review policy, permissions, and deployment boundaries implement the protocol in their context.
 
-- independent challenge is useful conditionally for missing invariants, weak oracles, semantic/provenance mistakes, and producer self-confirmation;
-- high-signal mechanical trigger routing is useful, while semantic consequences need project-specific knowledge and impact/reviewer fallback;
-- the work contract names the terminal outcome boundary, so incorporation is sufficient for some work while other work needs deployment/release/confirmation evidence;
-- the first protocol dogfood found a missing named acceptance boundary and a premature packaging reference;
-- the exact-candidate consistency challenge then removed duplicated baseline wording and bound acceptance explicitly to candidate + context + boundary;
-- F-004 has directly demonstrated exact-SHA check freshness, native required-check blocking, the danger of candidate-controlled self-weakening CI, and a concrete deployment-freshness pattern.
+## History and contribution
 
-The six-condition minimum invariant in [`ACCEPTANCE.md`](ACCEPTANCE.md) remains the leading semantic baseline. Current evidence increasingly supports the native composition:
+The v2 line replaces the v1 enforcement/bookkeeping adoption model with the maintained change-acceptance protocol. Existing v1 tags and releases remain available as history; see [Releases](https://github.com/manjast/agentic-development-playbook/releases) and [`docs/migration.md`](docs/migration.md) for the transition.
 
-> **candidate-bound evidence + required native policy + protected authority boundary**
+Contributions should keep the surface lean and preserve the distinction between evidence, judgment, and acceptance authority. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-rather than a generic Playbook acceptance checker.
-
-F-004 is not closed yet. Remaining safe empirical work concerns missing/never-run required evidence, strict integration freshness, protected review for policy/control changes, and explicit exception/bypass authority. These should be exercised on existing read-only evidence or an explicitly disposable protection-capable repository, not by weakening a production repository merely to complete the dataset.
-
-See [`ROADMAP.md`](ROADMAP.md) for the current sequence and [`docs/migration.md`](docs/migration.md) for adoption guidance.
-
-## Repository topology
-
-The public repository is the maintained product.
-
-Private research, confidential examples, falsification results, and design evidence may live in a separate private incubator, but the public and private repositories should not be maintained as mirrored implementations or synchronized release trains.
+Maintained by [Stefan Manja](https://github.com/manjast).
 
 ## License
 
-Apache-2.0
+Apache-2.0. See [`LICENSE`](LICENSE).

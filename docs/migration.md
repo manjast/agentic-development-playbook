@@ -1,101 +1,101 @@
 # Adopting the Playbook into an existing project
 
-The September 2026 redesign removes the old assumption that adoption means copying a fixed set of task, status, gate, and enforcement files.
+Adoption starts with one real change and the systems the project already uses. You do not need to install software, copy a template, or create a Playbook-specific tracker before the protocol can be useful.
 
-Adoption now starts by identifying the boundaries the project already has and adding only the missing assurance semantics.
+Read [`../ACCEPTANCE.md`](../ACCEPTANCE.md) alongside an identifiable candidate and ask where the authoritative intent, evidence, judgment, policy, authority, and promised completion boundary already live.
 
-## 1. Name the authoritative work source
+## 1. Start with the authoritative work source
 
-Use the system that already owns the intent and work state: a GitHub issue, Spec Kit artifact, Jira/Linear item, `TASKS.md`, or another maintained source.
+Use the system that already owns the intent and work state: an issue, specification, Jira/Linear item, `TASKS.md`, or another maintained source.
 
 The next bounded change should expose enough information to determine:
 
-- intended observable outcome;
+- the intended observable outcome;
 - material scope and exclusions;
-- success / acceptance criteria or other oracle;
-- unresolved material questions;
-- relevant durable decisions / constraints;
-- decision authority that could block the work.
+- how success can be established;
+- relevant authoritative constraints and durable decisions;
+- consequential unresolved questions or stop conditions;
+- the authority relevant to execution and acceptance;
+- when the promise extends beyond incorporation, the downstream outcome that must be established before calling the work complete.
 
-Do not create a second tracker merely to satisfy the Playbook.
+Do not create a second tracker or specification merely to satisfy the Playbook.
 
-## 2. Add concise repository instructions
+## 2. Identify the candidate and boundary
 
-Use `templates/AGENTS.md` as a starting point, then keep only information that is durable and non-obvious for this repository:
+Choose how the proposed change is identified in this project: commonly a pull request and current revision, or an exact commit/range in another workflow.
 
-- authority/source precedence;
-- important verification entry points;
-- execution bounds;
-- stop/escalation conditions;
-- pointers to authoritative policy and durable decisions.
+Also identify the boundary the decision addresses: merge, release, deployment, or another project-defined transition.
 
-If a tool expects another instruction filename, use a short pointer where practical rather than duplicating policy.
+Use normal local verification for fast feedback. For claims that must hold at incorporation or another authoritative boundary, rely on evidence valid for the candidate and context at that boundary.
 
-## 3. Identify the candidate and authoritative verification boundary
+The Playbook does not require one task to equal one commit or Git-derived hashes to be copied into tracked completion ledgers.
 
-Choose how an exact proposed change is identified in this project: usually a pull request and candidate revision, or an exact commit/range for a linear-main workflow.
+## 3. Inspect evidence, judgment, obligations, and authority
 
-Use normal local verification for fast feedback. Use the project's authoritative CI/review boundary for evidence that must hold before incorporation.
+For the candidate and boundary under consideration, determine where the project already establishes:
 
-Do not require one task to equal one commit. Do not copy commit hashes into tracked completion ledgers when Git or the hosting platform already owns that state.
+- mechanical evidence relevant to the candidate;
+- any additional obligations triggered by the change or project policy;
+- judgment that cannot be reduced safely to mechanical checks;
+- execution permissions governing what an agent or other actor may do while producing the work;
+- acceptance authority governing who or what policy may permit the change to cross the boundary.
 
-## 4. Separate evidence, judgment, and authority
+Additional obligations should be selective. Project-recognized dependency manifests, CI or policy controls, deployment configuration, migration/schema locations, declared impact, architecture decisions, and known failure models may all be useful sources. They are examples, not a universal trigger catalogue.
 
-For the boundary that matters in this project, identify:
+Independent challenge review can be useful when residual uncertainty is dominated by missing invariants, weak test oracles, semantic or provenance mistakes, or producer self-confirmation. It is not required for every candidate.
 
-- what mechanical evidence must be current for the candidate;
-- when additional judgment is required;
-- who or what policy has authority to accept the candidate;
-- what terminal outcome the work actually promises and what evidence establishes it.
+If the candidate changes a control used to judge it, such as a test workflow, permission boundary, or acceptance policy, validate and authorize that control change appropriately rather than allowing the candidate to lower its own bar silently.
 
-Independent challenge review is useful conditionally when residual risk is dominated by missing invariants, weak oracles, semantic/privacy/provenance mistakes, or producer self-confirmation. It is not required for every candidate.
+## 4. Refresh only what stopped applying
 
-For additional obligations, start with high-signal mechanical triggers such as dependency manifests, CI/policy files, deployment configuration, and explicitly configured migration/schema locations. Use small project-specific semantic maps plus impact declaration/reviewer fallback where paths cannot reliably establish consequential meaning.
+Candidate content, integration context, or authoritative intent can change during implementation and review.
 
-Do not invent a large universal policy matrix merely to imitate these examples.
+Do not assume every change invalidates every prior result. Re-evaluate the evidence, judgment, or approval whose applicability was materially affected, and refresh what no longer supports the candidate and context being accepted.
+
+Likewise, missing, skipped, stale, superseded, or materially inapplicable evidence should not be represented as passing evidence.
 
 ## 5. Name the completion boundary truthfully
 
-Do not equate merge with every stronger outcome.
-
-The work contract should make clear whether the promised outcome is satisfied at incorporation or whether deployment, release, or confirmation in effect is part of the obligation.
-
-Examples:
+Acceptance and completion are not always the same event.
 
 ```text
 accepted for incorporation
 != incorporated
 
 incorporated
-!= deployed
+!= deployed or released
 
 deployed
-!= confirmed working
+!= confirmed in effect
 ```
 
-Claim only the strongest state for which current evidence exists.
+The work contract should make clear which terminal outcome the promise actually requires. Claim only the strongest state for which current evidence exists.
 
-## Existing project artifacts
+## Add repository guidance only when it earns its place
 
-These may remain useful when they contain unique information:
+An instruction file such as `AGENTS.md` helps when recurring agent work needs durable, non-obvious guidance about authoritative sources, verification entry points, execution limits, stop conditions, or escalation.
+
+If that need exists, adapt [`../templates/AGENTS.md`](../templates/AGENTS.md) or improve the project's existing repository instructions. If another tool expects a different filename, prefer a short pointer where practical rather than duplicating policy.
+
+No Playbook-specific instruction file is necessary when the project's existing work system, repository guidance, checks, review policy, permissions, and deployment evidence already express the needed semantics.
+
+Other optional artifacts may still be useful when they contain unique information:
 
 - `DECISIONS.md` or ADRs for rationale not recoverable from the diff;
 - `TASKS.md` for repositories that genuinely need an in-repo work tracker;
-- project-specific quality/acceptance policy where it encodes real failure history;
-- evaluation provenance when the deliverable is an empirical/probabilistic result rather than ordinary software behavior.
+- project-specific quality or acceptance policy grounded in real constraints or failure history;
+- evaluation provenance when the deliverable is an empirical or probabilistic result rather than ordinary software behavior.
 
-They are not universally mandatory.
+## Migrating from v1
 
-## Retired adoption machinery
+v2 retires the Playbook's old enforcement and bookkeeping adoption model. New projects should not install the legacy `enforcement/` stack, post-commit completion bookkeeping, verifier/executor, structural conformance harness, or one-task-one-commit/task→commit ledger as Playbook requirements.
 
-The redesign no longer recommends installing the legacy `enforcement/` stack, post-commit completion bookkeeping, verifier/executor, or the old template-conformance harness.
+For an existing v1 adoption, retire dependencies on those mechanisms deliberately. Do **not** delete useful tests, review rules, decision history, permissions, or project-specific controls merely because the Playbook no longer supplies or requires the old machinery. First determine which local property each integration protects, then keep, replace, or remove it on its own merits.
 
-Those implementations remain available in Git history for provenance. They should not be copied into new projects.
+Historical implementations remain available through Git history and v1 releases.
 
-## Current limitation
+## Current scope
 
-The normative `ACCEPTANCE.md` has been published and dogfooded, and its six-condition minimum invariant is the current semantic baseline. Native-platform testing has also demonstrated exact-candidate check freshness, required-check blocking, and the danger of candidate-controlled self-weakening CI.
+The maintained adoption surface is intentionally narrow. The Playbook does not currently supply a universal GitHub configuration, broad trigger catalogue, standalone reviewer framework, multi-vendor recipe set, or generic acceptance checker.
 
-F-004 remains open for a small set of protection-dependent cases: missing/never-run required evidence, strict integration freshness, protected review for policy/control changes, and explicit exception/bypass authority. Those cases should be exercised on an existing suitable boundary or an explicitly disposable protection-capable repository rather than by weakening production controls merely to complete the test matrix.
-
-Detailed trigger catalogues, standalone reviewer-contract packaging, multi-vendor recipes, and a generic acceptance checker are intentionally not part of the current adoption surface. Current evidence does not justify adding them.
+Add platform-specific guidance only when repeated real use demonstrates a concrete need that existing systems and the normative protocol do not already explain clearly.

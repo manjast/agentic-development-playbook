@@ -1,117 +1,73 @@
-# Redesign Roadmap
+# Roadmap
 
-This roadmap is intentionally short. The September 2026 redesign is a correction of scope and control semantics, not a plan to replace retired machinery with a new framework.
+The core change-acceptance protocol is defined and maintained. The roadmap is intentionally conservative: add public surface only when real use demonstrates a recurring comprehension or control gap that the existing protocol and project-native systems do not already cover.
 
-## Stage 1 — Establish a truthful baseline
+## Current direction
 
-**Status: complete.**
+### Exercise the protocol at real project boundaries
 
-Completed changes:
+Use the protocol against actual pull requests, releases, deployments, and other acceptance boundaries. The purpose is to discover where the semantics are unclear or where existing platform controls are insufficient—not to manufacture examples or infrastructure in advance.
 
-- retired the legacy commit-bookkeeping enforcement stack;
-- retired the scheduled verifier/executor workflow;
-- retired the structural conformance harness that hard-coded the legacy template architecture;
-- removed `one task = one commit` and tracked commit-hash completion semantics from standing guidance;
-- removed the mandatory task-card/archive lifecycle;
-- removed the old PoC/eval template suite from the active public surface;
-- removed stale claims that conformance or local hooks establish assurance;
-- reduced the active template surface to repository instructions, durable decisions, and an optional tracker example.
+Questions worth continuing to test include:
 
-Stage 1 intentionally leaves the repository smaller and internally coherent even if no replacement code is ever built.
+- how projects represent missing or never-run required evidence without ambiguity;
+- when integration-context movement requires evidence or judgment to be refreshed;
+- how control-changing candidates are reviewed when the control itself affects acceptance;
+- how exception or bypass authority is represented explicitly;
+- how deployment-dependent promises are confirmed without turning the Playbook into deployment tooling.
 
-## Stage 2 — Resolve product-shaping semantic uncertainties
+These are platform/composition questions around the maintained protocol, not evidence that the protocol needs a generic checker.
 
-**Status: sufficiently complete to proceed.**
+### Improve guidance only where repeated use earns it
 
-Bounded private research produced decision-useful results for:
+Potential additions are intentionally conditional:
 
-- **independent review yield** — independent challenge can expose missing invariants/oracles after ordinary verification is green, but should be conditional rather than universal;
-- **trigger routing** — high-signal mechanical triggers are useful, while semantic classes need project-specific mapping and impact/reviewer fallback rather than a universal path catalogue;
-- **terminal outcome semantics** — the work contract names the terminal outcome boundary; incorporation is enough for some work, while other work requires deployment/release/confirmation evidence.
+- a compact platform-native example if readers repeatedly struggle to map the protocol onto existing repository controls;
+- concise guidance for conditional independent challenge review if recurring use shows a stable pattern worth documenting;
+- a small set of trigger examples if they clarify selective obligations without becoming a universal catalogue;
+- additional terminal-outcome examples where merge/release/deployment distinctions remain a recurring source of confusion;
+- empirical/probabilistic evidence guidance if real adopters need a pattern beyond ordinary software verification.
 
-These results constrain the public protocol but do not justify separate subsystems for each concept.
+Any such addition should solve an observed problem, remain subordinate to `ACCEPTANCE.md`, and avoid duplicating authoritative state owned by another system.
 
-Cross-repository practice remains useful for examples and counterexamples, but non-adoption of the unfinished Playbook is not a redesign gate.
+### Keep the maintained surface small
 
-## Stage 3 — Publish and dogfood the minimal acceptance contract
-
-**Status: complete for the current candidate baseline.**
-
-The branch now contains a normative [`ACCEPTANCE.md`](ACCEPTANCE.md) covering:
-
-- minimum readiness / work contract;
-- candidate identity, named acceptance boundary, integration context, and freshness;
-- the minimum acceptance invariant;
-- conditional obligations;
-- verification vs review vs acceptance;
-- execution authority vs acceptance authority;
-- exception / stop semantics;
-- truthful terminal-outcome claims.
-
-The first self-dogfood pass found and corrected two issues:
-
-- the minimum invariant did not explicitly identify the **named acceptance boundary**;
-- the normative control-placement list prematurely mentioned Agent Skill packaging even though that packaging remains deferred.
-
-The exact-candidate consistency challenge then found and corrected two additional issues:
-
-- the baseline was stated twice inside the normative document, creating a future drift point;
-- acceptance binding named candidate and boundary but did not explicitly bind the relevant target/integration context.
-
-The README was also reduced to an orientation/scope surface so `ACCEPTANCE.md` remains the single normative source rather than being mirrored in prose.
-
-The resulting six-condition minimum invariant is the leading D-020 baseline for native-platform testing. Stage 3 does **not** establish that every condition needs its own stored field or custom checker.
-
-## Stage 4 — Test native enforcement before writing custom code
-
-**Status: in progress; decision-useful partial evidence obtained.**
-
-F-004 has already established several important boundaries using isolated scratch evidence plus read-only evidence from an existing protected repository:
-
-- CI/check evidence is bound to exact candidate revisions and changed candidates receive fresh evidence;
-- a failed check becomes a real acceptance gate only when repository policy makes that check required;
-- an existing required-check ruleset can block a candidate whose exact required check fails;
-- a repository-local workflow is not automatically an independent authority boundary—a candidate that can edit its own check can weaken that oracle;
-- deployment workflows can preserve downstream freshness, while `confirmed in effect` remains product-specific evidence when the work contract promises it.
-
-The increasingly supported native composition is:
-
-> **candidate-bound evidence + required native policy + protected authority boundary**
-
-No F-004 result so far supports a generic Playbook acceptance checker.
-
-Remaining empirical work is narrower: missing/never-run required evidence, strict integration freshness, protected review/ownership for control-changing paths, and explicit exception/bypass authority. Prefer read-only historical/configuration evidence. Do not weaken or repurpose production/default-branch protections merely to complete the falsification dataset.
-
-The test should continue to distinguish **semantic requirements** from **stored fields**. If GitHub/CI already derives a fact reliably, do not create a Playbook mirror merely to make the protocol look explicit.
-
-If native mechanisms cover the remaining load-bearing boundaries, build no Playbook checker.
-
-If one narrow consequential gap remains, build the smallest repository-specific helper and only generalize it after repeated real demand.
-
-## Stage 5 — Add examples only where use earns them
-
-Examples should be written after the protocol is exercised, not before.
-
-Potential additions, only if they materially improve use:
-
-- one GitHub-native PR/CI acceptance recipe;
-- concise conditional independent-review guidance;
-- a few trigger examples clearly labeled as examples rather than a universal catalogue;
-- a linear-main/research example using exact-candidate review and durable decisions;
-- a small optional empirical/probabilistic evidence guide.
-
-A standalone reviewer contract, custom checker, broad trigger catalogue, multiple vendor recipes, or evaluation platform requires additional demonstrated need.
-
-## Explicit non-roadmap
-
-Do not plan to build:
+There is no current plan to build:
 
 - a universal harness lifecycle abstraction;
-- agent orchestration / task claiming / leases;
+- agent orchestration, task claiming, leases, or memory infrastructure;
 - a telemetry or trace-normalization platform;
-- a new spec-generation workflow;
+- a new specification-generation workflow;
 - a generic ruleset manager;
+- a generic Playbook acceptance checker;
+- a permanent benchmark/evaluation platform;
 - a mirrored public/private release train;
-- a permanent behavioral benchmark platform for the Playbook.
+- broad vendor-specific recipe collections.
 
-The default response to uncertainty about a new subsystem is **do not build it yet**.
+The default response to uncertainty about a new subsystem remains: **do not build it yet**.
+
+## Historical redesign context
+
+The current protocol emerged from a September 2026 scope correction. This history explains why the maintained product is smaller than the v1 line; it is not the current product roadmap.
+
+### Stage 1 — establish a truthful baseline — complete
+
+The legacy commit-bookkeeping enforcement stack, verifier/executor workflow, structural conformance harness, one-task-one-commit requirement, tracked task→commit completion semantics, mandatory task-card/archive lifecycle, and old PoC/eval template suite were retired from the maintained surface.
+
+### Stage 2 — resolve the semantic model — complete
+
+The redesign established candidate-centered acceptance, selective obligations, conditional independent challenge, explicit execution/acceptance authority, and outcome-dependent completion without creating separate subsystems for each concern.
+
+### Stage 3 — publish the maintained acceptance contract — complete
+
+[`ACCEPTANCE.md`](ACCEPTANCE.md) became the normative source for work readiness, candidate/context identity, selective obligations, evidence and judgment, execution/acceptance authority, stop/exception semantics, and truthful completion claims.
+
+### Stage 4 — test native enforcement/composition — ongoing and non-blocking
+
+Bounded platform work supports a composition of candidate-bound evidence, effective native policy, and protected authority boundaries. Remaining questions are configuration-sensitive cases such as integration freshness, control-changing paths, missing required evidence, and explicit bypass authority.
+
+No result so far justifies a generic Playbook acceptance checker. Prefer existing evidence or deliberately disposable test environments; do not weaken production controls to complete platform research.
+
+### Stage 5 — add examples only where use earns them — ongoing policy
+
+Examples and platform guidance should follow demonstrated need. A standalone reviewer contract, custom checker, broad trigger catalogue, or multi-vendor recipe set requires stronger evidence than the repository currently has.

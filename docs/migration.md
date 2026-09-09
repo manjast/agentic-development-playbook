@@ -84,7 +84,7 @@ Other optional artifacts may still be useful when they contain unique informatio
 - `DECISIONS.md` or ADRs for rationale not recoverable from the diff;
 - `TASKS.md` for repositories that genuinely need an in-repo work tracker;
 - project-specific quality or acceptance policy grounded in real constraints or failure history;
-- evaluation provenance when the deliverable is an empirical or probabilistic result rather than ordinary software behavior.
+- records of where evaluation inputs and results came from and how results were produced, when the deliverable is an empirical or probabilistic result rather than ordinary software behavior.
 
 ## Migrating from v1
 

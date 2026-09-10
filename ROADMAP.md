@@ -18,7 +18,6 @@ Projects remain responsible for validating their own controls. These questions d
 
 Future guidance should address demonstrated needs, such as:
 
-- a compact example mapping the protocol to existing repository controls;
 - examples of when independent review adds useful judgment;
 - a few examples of changes that call for additional obligations;
 - examples distinguishing incorporation, release, deployment, and confirmation in effect;
@@ -42,4 +41,4 @@ Keep the maintained surface small. Add a mechanism only when it solves a demonst
 
 ## Historical redesign context
 
-v2 replaced the v1 enforcement and bookkeeping adoption model with the maintained change-acceptance protocol. [`ACCEPTANCE.md`](ACCEPTANCE.md) is the normative source. See [`docs/migration.md`](docs/migration.md) for the retired mechanisms and guidance on retaining useful project-specific controls. Historical implementations remain available through Git history and v1 releases.
+v2 replaced the v1 enforcement and bookkeeping adoption model with the maintained change-acceptance protocol. [`ACCEPTANCE.md`](ACCEPTANCE.md) is the normative source. See [`docs/adoption.md`](docs/adoption.md) for the worked example, general adoption guidance, and the v1 transition. Historical implementations remain available through Git history and v1 releases.

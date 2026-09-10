@@ -40,7 +40,7 @@ This retrospective walkthrough shows how the protocol changes the decisions arou
 
 ### Make the promised result explicit
 
-The historical commit named the intended public endpoint, but it did not record this full contract. For this retrospective walkthrough, make the work contract explicit:
+The historical commit named the intended public endpoint, but it did not record all of the context used in this retrospective walkthrough. To make the reasoning inspectable here, state that context explicitly. The blockquote below is an explanatory reconstruction, not a required Playbook artifact; in a live project, the same information may already exist in an issue, specification, policy, or other authoritative source:
 
 > Publish the site owner's agreed security-contact content at `https://example.test/.well-known/security.txt`. Success means that URL serves the agreed content with HTTP 200 and a `text/plain` media type. Scope includes content and publication configuration. The work is complete after the published response is confirmed.
 
@@ -73,7 +73,7 @@ with:
   include-hidden-files: true
 ```
 
-For this project, make archive validation part of the evidence required before merge: inspect the output of the packaging path actually used for publication, and compare the included file with the agreed content. In the original workflow, artifact upload ran only on pushes to `main`; an unrelated green PR build did not establish this property. For this replay, that means exercising the materially relevant packaging behavior—or an equivalent candidate-bound validation—on the proposed revision before relying on it for merge. The relevant packaging validation must execute at the boundary where the project relies on it. A skipped or missing run supplies no such evidence.
+For this project, make archive validation part of the evidence required before merge: inspect the output of the packaging path actually used for publication, and compare the included file with the agreed content. In the original workflow, artifact upload ran only on pushes to `main`; an unrelated green PR build did not establish this property. For this replay, that means exercising the materially relevant packaging behavior on the proposed revision—or using an equivalent candidate-bound validation that exercises the same inclusion/exclusion behavior—before relying on it for merge. This does not require running the production deployment before merge. The relevant packaging validation must execute at the boundary where the project relies on it. A skipped or missing run supplies no such evidence.
 
 The fix also broadens publication: a `.env` accidentally present in `dist/` could now be included. Inspect what the archive contains and resolve unintended additions. A directory called `dist` is not proof that everything inside it is safe to publish.
 

@@ -83,7 +83,6 @@ The repository is intentionally small:
 - [`docs/adoption.md`](docs/adoption.md) — worked example, adoption guidance, and the v1 transition;
 - [`docs/principles.md`](docs/principles.md) — rationale for the durable design principles;
 - [`templates/AGENTS.md`](templates/AGENTS.md) — optional repository-specific agent guidance;
-- [`templates/CLAUDE.md`](templates/CLAUDE.md) — optional pointer to canonical repository guidance;
 - [`templates/DECISIONS.md`](templates/DECISIONS.md) — optional durable-decision/ADR example;
 - [`templates/TASKS.md`](templates/TASKS.md) — optional in-repo tracker for projects without an authoritative external work system;
 - [`ROADMAP.md`](ROADMAP.md) — current direction and historical redesign context.

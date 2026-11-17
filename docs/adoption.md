@@ -8,7 +8,7 @@ Read [`../ACCEPTANCE.md`](../ACCEPTANCE.md) alongside one identifiable proposed 
 
 **The promise was a working public URL. The evidence established a successful workflow. Those were different claims.**
 
-A [real change](https://github.com/manjast/personal-page/commit/720a3efc15d53c40eac6c87e014fb9bf92caf6c7) added `public/.well-known/security.txt` to a site. Its [build, artifact upload, and deployment all succeeded](https://github.com/manjast/personal-page/actions/runs/33065897853). But the artifact action excluded hidden directories, including `.well-known`. The [revert records the omission](https://github.com/manjast/personal-page/commit/6ed376695b70a8941bacd2598d23231a3ca45b68); the repair [enabled hidden-file inclusion](https://github.com/manjast/personal-page/commit/aef22ffb1f825d258560d6add41f2df5ed700a11) before [republishing the file](https://github.com/manjast/personal-page/commit/36f8fae460f8517d4fc51c142630bb46d49b20d7).
+A real change added `public/.well-known/security.txt` to a static site. Its build, artifact upload, and deployment all succeeded. But the Pages artifact action excludes hidden files and directories unless [`include-hidden-files`](https://github.com/actions/upload-pages-artifact/blob/fc324d3547104276b827a68afc52ff2a11cc49c9/action.yml) is set, so `.well-known` never reached the site. A revert recorded the omission; the repair enabled hidden-file inclusion before republishing the file, which the site [now serves](https://stefanmanja.com/.well-known/security.txt). The site's source repository is not public, so its commits and workflow run are described here rather than linked.
 
 ```mermaid
 flowchart TD
@@ -164,7 +164,7 @@ The work contract should make clear which terminal outcome the promise actually 
 
 An instruction file such as `AGENTS.md` helps when recurring agent work needs durable, non-obvious guidance about authoritative sources, verification entry points, execution limits, stop conditions, or escalation.
 
-If that need exists, adapt [`../templates/AGENTS.md`](../templates/AGENTS.md) or improve the project's existing repository instructions. If another tool expects a different filename, prefer a short pointer where practical rather than duplicating policy.
+If that need exists, adapt [`../templates/AGENTS.md`](../templates/AGENTS.md) or improve the project's existing repository instructions. If another tool expects a different filename, use that tool's import or alias mechanism rather than duplicating policy, and check how a second file changes what the tool loads. Claude Code, for example, [reads `AGENTS.md`](https://code.claude.com/docs/en/memory#agents-md) directly only from version 2.1.277 and only when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working directory or above it. Where a `CLAUDE.md` must exist, or direct `AGENTS.md` support is unavailable, have a `CLAUDE.md` import `@AGENTS.md`.
 
 No Playbook-specific instruction file is necessary when the project's existing work system, repository guidance, checks, review policy, permissions, and deployment evidence already express the needed semantics.
 
